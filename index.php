@@ -28,6 +28,49 @@ try {
 
 <?php include 'layouts/header.php'; ?>
 
+<!-- Carrusel de Imágenes - Ancho completo -->
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="carousel-image" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<?php echo SITE_URL; ?>/assets/images/carrussel_3.png');">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>Contenidos y Modelos Digitales</h2>
+                    <p>Creación y desarrollo de contenidos audiovisuales digitales</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="carousel-image" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<?php echo SITE_URL; ?>/assets/images/carrussel_1.png');">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>Instituto de Formación Técnica Superior - 15</h2>
+                    <p>Carrera: Realizador y Productor Televisivo</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="carousel-image" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<?php echo SITE_URL; ?>/assets/images/carrussel_2.png');">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>Taller de Prácticas Pre Profesionales</h2>
+                    <p>Experiencia práctica en el campo audiovisual</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</div>
+
 <!-- Hero Section - Ancho completo -->
 <div class="hero-card">
     <div class="container-fluid p-0">
@@ -65,119 +108,49 @@ try {
         <div id="region-main-box" class="col-12">
             <section id="region-main" class="col-md-9" aria-label="Contenido">
                 <span id="maincontent"></span>
-
                 <!-- Contenido de la página principal -->
-                <div >
+                <div></div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- Carrera Principal - Fuera del contenedor limitado -->
+    <div class="container">
+        <div class="row mb-4 justify-content-center">
+            <div class="col-12 text-center">
+                <h2 class="h4 mb-4">
+                    <i class="fa fa-graduation-cap"></i>
+                    Nuestra Carrera
+                </h2>
+            </div>
 
-                    <!-- Carreras Destacadas -->
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <h2 class="h4 mb-3">
-                                <i class="fa fa-graduation-cap"></i>
-                                Nuestras Carreras
-                            </h2>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <i class="fa fa-laptop-code text-primary"></i>
-                                        Análisis de Sistemas
-                                    </h5>
-                                    <p class="card-text">
-                                        Formamos profesionales capaces de analizar, diseñar e implementar
-                                        sistemas de información.
-                                    </p>
-                                    <a href="<?php echo SITE_URL; ?>/pages/analisis-sistemas-nuevo.php" class="btn btn-primary btn-sm">Ver más</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <i class="fa fa-brain text-success"></i>
-                                        Ciencia de Datos e IA
-                                    </h5>
-                                    <p class="card-text">
-                                        Carrera de vanguardia enfocada en análisis de datos,
-                                        machine learning e inteligencia artificial.
-                                    </p>
-                                    <a href="<?php echo SITE_URL; ?>/pages/ciencia-datos-ia.php" class="btn btn-success btn-sm">Ver más</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <i class="fa fa-university text-warning"></i>
-                                        Administración Pública
-                                    </h5>
-                                    <p class="card-text">
-                                        Formación integral para el desempeño en organismos
-                                        del sector público.
-                                    </p>
-                                    <a href="<?php echo SITE_URL; ?>/pages/administracion-publica.php" class="btn btn-warning btn-sm">Ver más</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Accesos Rápidos -->
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <h2 class="h4 mb-3">
-                                <i class="fa fa-bolt"></i>
-                                Accesos Rápidos
-                            </h2>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <i class="fa fa-clock fa-2x text-info mb-2"></i>
-                                    <h6 class="card-title">Horarios</h6>
-                                    <a href="<?php echo SITE_URL; ?>/pages/horarios.php" class="btn btn-outline-info btn-sm">Ver</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <i class="fa fa-file-alt fa-2x text-secondary mb-2"></i>
-                                    <h6 class="card-title">SIU-Guaraní</h6>
-                                    <a href="<?php echo SITE_URL; ?>/pages/siu-guarani.php" class="btn btn-outline-secondary btn-sm">Acceder</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <i class="fa fa-question-circle fa-2x text-primary mb-2"></i>
-                                    <h6 class="card-title">Consultas</h6>
-                                    <a href="<?php echo SITE_URL; ?>/pages/consultas.php" class="btn btn-outline-primary btn-sm">Hacer</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <i class="fa fa-newspaper fa-2x text-danger mb-2"></i>
-                                    <h6 class="card-title">Novedades</h6>
-                                    <a href="<?php echo SITE_URL; ?>/pages/noticias-actuales.php" class="btn btn-outline-danger btn-sm">Leer</a>
-                                </div>
-                            </div>
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="card h-100 shadow-lg">
+                    <div class="card-body text-center p-4">
+                        <h5 class="card-title">
+                            <i class="fa fa-video text-primary fs-1 d-block mb-3"></i>
+                            Realizador y Productor Televisivo
+                        </h5>
+                        <p class="card-text lead">
+                            Carrera específica del IFTS15. Tecnología Digital plantea una visión 
+                            integral de la TV digital como parte del universo audiovisual.
+                        </p>
+                        <p class="card-text">
+                            Formamos profesionales capacitados para desenvolverse en el campo de la 
+                            producción audiovisual, con conocimientos técnicos y creativos para el 
+                            desarrollo de contenidos televisivos y multimedia.
+                        </p>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <a href="<?php echo SITE_URL; ?>/pages/realizador-productor-tv.php" class="btn btn-primary btn-lg">
+                                <i class="fa fa-info-circle"></i> Ver Información Completa
+                            </a>
+                            <a href="<?php echo SITE_URL; ?>/pages/consultas.php" class="btn btn-outline-primary btn-lg">
+                                <i class="fa fa-envelope"></i> Consultar
+                            </a>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
 </div>

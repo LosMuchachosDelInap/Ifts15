@@ -18,10 +18,46 @@ function initializeApp() {
     initializeSidebar();
     initializeAlerts();
     initializeTooltips();
+    initializeDropdowns();
+    initializeNavbarEvents();
     initializeForms();
+    initializeCarousel();
     initializeTheme();
     
     console.log('🚀 IFTS15 Sistema Web inicializado correctamente');
+}
+
+/**
+ * Inicializar carrusel
+ */
+function initializeCarousel() {
+    const carousel = document.getElementById('heroCarousel');
+    if (carousel) {
+        // Configurar carrusel automático
+        const carouselInstance = new bootstrap.Carousel(carousel, {
+            interval: 5000, // 5 segundos
+            ride: 'carousel',
+            pause: 'hover'
+        });
+        
+        console.log('✅ Carrusel inicializado');
+    }
+}
+
+/**
+ * Inicializar dropdowns de Bootstrap
+ */
+function initializeDropdowns() {
+    // Inicializar todos los dropdowns manualmente
+    const dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+    const dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl, {
+            boundary: 'viewport',
+            autoClose: true
+        });
+    });
+    
+    console.log('✅ Dropdowns inicializados:', dropdownList.length);
 }
 
 /**
@@ -383,44 +419,68 @@ window.IFTS15 = {
 };
 
 /**
- * Funciones para navbar dropdowns
+ * Funciones para modales de login/registro
  */
-function showLoginForm() {
-    // Cerrar dropdown de registro
-    const registerDropdown = document.querySelector('.register-dropdown');
-    if (registerDropdown) {
-        const dropdown = new bootstrap.Dropdown(registerDropdown.previousElementSibling);
-        dropdown.hide();
+function switchToRegister() {
+    // Cerrar modal de login
+    const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+    if (loginModal) {
+        loginModal.hide();
     }
     
-    // Abrir dropdown de login
+    // Abrir modal de registro
     setTimeout(() => {
-        const loginDropdown = document.querySelector('.login-dropdown');
-        if (loginDropdown) {
-            const dropdown = new bootstrap.Dropdown(loginDropdown.previousElementSibling);
-            dropdown.show();
-        }
-    }, 100);
+        const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+        registerModal.show();
+    }, 300);
 }
 
-function showRegisterForm() {
-    // Cerrar dropdown de login
-    const loginDropdown = document.querySelector('.login-dropdown');
-    if (loginDropdown) {
-        const dropdown = new bootstrap.Dropdown(loginDropdown.previousElementSibling);
-        dropdown.hide();
+function switchToLogin() {
+    // Cerrar modal de registro
+    const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+    if (registerModal) {
+        registerModal.hide();
     }
     
-    // Abrir dropdown de registro
+    // Abrir modal de login
     setTimeout(() => {
-        const registerDropdown = document.querySelector('.register-dropdown');
-        if (registerDropdown) {
-            const dropdown = new bootstrap.Dropdown(registerDropdown.previousElementSibling);
-            dropdown.show();
-        }
-    }, 100);
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+    }, 300);
+}
+
+/**
+ * Inicializar eventos específicos del navbar
+ */
+function initializeNavbarEvents() {
+    // Debug: Verificar que los botones de modal se inicialicen
+    const loginBtn = document.querySelector('[data-bs-target="#loginModal"]');
+    const registerBtn = document.querySelector('[data-bs-target="#registerModal"]');
+    
+    if (loginBtn) {
+        console.log('✅ Botón de login modal encontrado');
+        loginBtn.addEventListener('click', function() {
+            console.log('🖱️ Botón de login modal clickeado');
+        });
+    }
+    
+    if (registerBtn) {
+        console.log('✅ Botón de registro modal encontrado');
+        registerBtn.addEventListener('click', function() {
+            console.log('🖱️ Botón de registro modal clickeado');
+        });
+    }
+    
+    // Auto-focus en el primer campo cuando se abre un modal
+    document.getElementById('loginModal')?.addEventListener('shown.bs.modal', function () {
+        document.getElementById('modalLoginEmail')?.focus();
+    });
+    
+    document.getElementById('registerModal')?.addEventListener('shown.bs.modal', function () {
+        document.getElementById('modalRegisterNombre')?.focus();
+    });
 }
 
 // Hacer funciones globales
-window.showLoginForm = showLoginForm;
-window.showRegisterForm = showRegisterForm;
+window.switchToRegister = switchToRegister;
+window.switchToLogin = switchToLogin;

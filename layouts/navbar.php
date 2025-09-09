@@ -40,13 +40,11 @@ $isLoggedIn = isLoggedIn();
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="carrerasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-graduation-cap"></i> Carreras
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/pages/carrera-desarrollo.php">Desarrollo de Software</a></li>
-                        <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/pages/carrera-redes.php">Redes y Seguridad</a></li>
-                        <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/pages/carrera-sistemas.php">Análisis de Sistemas</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="carrerasDropdown">
+                        <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/pages/realizador-productor-tv.php">Realizador y Productor Televisivo</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -55,7 +53,7 @@ $isLoggedIn = isLoggedIn();
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo SITE_URL; ?>/pages/contacto.php">
+                    <a class="nav-link" href="<?php echo SITE_URL; ?>/pages/consultas.php">
                         <i class="fa fa-envelope"></i> Contacto
                     </a>
                 </li>
@@ -121,90 +119,118 @@ $isLoggedIn = isLoggedIn();
                     </li>
                 <?php else: ?>
                     <!-- Usuario no logueado -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li class="nav-item">
+                        <button class="nav-link btn btn-link text-white border-0" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
                             <i class="fa fa-sign-in-alt"></i> Ingresar
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end login-dropdown" style="min-width: 300px;">
-                            <form class="px-4 py-3" action="<?php echo SITE_URL; ?>/login.php" method="POST">
-                                <h6 class="dropdown-header">
-                                    <i class="fa fa-sign-in-alt"></i> Iniciar Sesión
-                                </h6>
-                                <div class="mb-3">
-                                    <label for="loginEmail" class="form-label">Email</label>
-                                    <input type="email" class="form-control form-control-sm" id="loginEmail" name="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="loginPassword" class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control form-control-sm" id="loginPassword" name="password" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-sm w-100">
-                                    <i class="fa fa-sign-in-alt"></i> Ingresar
-                                </button>
-                                <div class="dropdown-divider"></div>
-                                <small class="text-muted">
-                                    ¿No tienes cuenta? 
-                                    <a href="#" class="text-decoration-none" onclick="showRegisterForm()">Regístrate aquí</a>
-                                </small>
-                            </form>
-                        </div>
+                        </button>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li class="nav-item">
+                        <button class="nav-link btn btn-link text-white border-0" type="button" data-bs-toggle="modal" data-bs-target="#registerModal">
                             <i class="fa fa-user-plus"></i> Registrarse
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end register-dropdown" style="min-width: 350px;">
-                            <form class="px-4 py-3" action="<?php echo SITE_URL; ?>/register.php" method="POST">
-                                <h6 class="dropdown-header">
-                                    <i class="fa fa-user-plus"></i> Crear Cuenta
-                                </h6>
-                                <div class="row">
-                                    <div class="col-6 mb-3">
-                                        <label for="registerNombre" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control form-control-sm" id="registerNombre" name="nombre" required>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <label for="registerApellido" class="form-label">Apellido</label>
-                                        <input type="text" class="form-control form-control-sm" id="registerApellido" name="apellido" required>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="registerEmail" class="form-label">Email</label>
-                                    <input type="email" class="form-control form-control-sm" id="registerEmail" name="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="registerDni" class="form-label">DNI</label>
-                                    <input type="text" class="form-control form-control-sm" id="registerDni" name="dni" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="registerPassword" class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control form-control-sm" id="registerPassword" name="password" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="registerRole" class="form-label">Tipo de Usuario</label>
-                                    <select class="form-control form-control-sm" id="registerRole" name="rol" required>
-                                        <option value="">Seleccionar...</option>
-                                        <option value="estudiante">Estudiante</option>
-                                        <option value="profesor">Profesor</option>
-                                        <option value="personal">Personal</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-success btn-sm w-100">
-                                    <i class="fa fa-user-plus"></i> Registrarse
-                                </button>
-                                <div class="dropdown-divider"></div>
-                                <small class="text-muted">
-                                    ¿Ya tienes cuenta? 
-                                    <a href="#" class="text-decoration-none" onclick="showLoginForm()">Inicia sesión aquí</a>
-                                </small>
-                            </form>
-                        </div>
+                        </button>
                     </li>
                 <?php endif; ?>
             </ul>
         </div>
     </div>
 </nav>
+
+<!-- Modal de Login -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">
+                    <i class="fa fa-sign-in-alt"></i> Iniciar Sesión
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo SITE_URL; ?>/login.php" method="POST">
+                    <div class="mb-3">
+                        <label for="modalLoginEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="modalLoginEmail" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalLoginPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="modalLoginPassword" name="password" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-sign-in-alt"></i> Ingresar
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <small class="text-muted">
+                    ¿No tienes cuenta? 
+                    <a href="#" class="text-decoration-none" onclick="switchToRegister()">Regístrate aquí</a>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Registro -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">
+                    <i class="fa fa-user-plus"></i> Crear Cuenta
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo SITE_URL; ?>/register.php" method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="modalRegisterNombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="modalRegisterNombre" name="nombre" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="modalRegisterApellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="modalRegisterApellido" name="apellido" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalRegisterEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="modalRegisterEmail" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalRegisterDni" class="form-label">DNI</label>
+                        <input type="text" class="form-control" id="modalRegisterDni" name="dni" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalRegisterPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="modalRegisterPassword" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalRegisterRole" class="form-label">Tipo de Usuario</label>
+                        <select class="form-control" id="modalRegisterRole" name="rol" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="estudiante">Estudiante</option>
+                            <option value="profesor">Profesor</option>
+                            <option value="personal">Personal</option>
+                        </select>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-user-plus"></i> Registrarse
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <small class="text-muted">
+                    ¿Ya tienes cuenta? 
+                    <a href="#" class="text-decoration-none" onclick="switchToLogin()">Inicia sesión aquí</a>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Alertas del sistema -->
 <div class="toast-wrapper mx-auto py-0" role="status" aria-live="polite">

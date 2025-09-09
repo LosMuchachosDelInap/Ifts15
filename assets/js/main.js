@@ -381,3 +381,46 @@ window.IFTS15 = {
     toggleTheme,
     Utils
 };
+
+/**
+ * Funciones para navbar dropdowns
+ */
+function showLoginForm() {
+    // Cerrar dropdown de registro
+    const registerDropdown = document.querySelector('.register-dropdown');
+    if (registerDropdown) {
+        const dropdown = new bootstrap.Dropdown(registerDropdown.previousElementSibling);
+        dropdown.hide();
+    }
+    
+    // Abrir dropdown de login
+    setTimeout(() => {
+        const loginDropdown = document.querySelector('.login-dropdown');
+        if (loginDropdown) {
+            const dropdown = new bootstrap.Dropdown(loginDropdown.previousElementSibling);
+            dropdown.show();
+        }
+    }, 100);
+}
+
+function showRegisterForm() {
+    // Cerrar dropdown de login
+    const loginDropdown = document.querySelector('.login-dropdown');
+    if (loginDropdown) {
+        const dropdown = new bootstrap.Dropdown(loginDropdown.previousElementSibling);
+        dropdown.hide();
+    }
+    
+    // Abrir dropdown de registro
+    setTimeout(() => {
+        const registerDropdown = document.querySelector('.register-dropdown');
+        if (registerDropdown) {
+            const dropdown = new bootstrap.Dropdown(registerDropdown.previousElementSibling);
+            dropdown.show();
+        }
+    }, 100);
+}
+
+// Hacer funciones globales
+window.showLoginForm = showLoginForm;
+window.showRegisterForm = showRegisterForm;

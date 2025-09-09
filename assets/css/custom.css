@@ -13,7 +13,7 @@
     --light-color: #f8f9fa;
     --dark-color: #343a40;
     --sidebar-width: 280px;
-    --header-height: 70px;
+    --header-height: 140px;
 }
 
 /* Layout principal */
@@ -26,6 +26,60 @@ body {
 .navbar-brand img {
     max-height: 50px;
     width: auto;
+}
+
+/* Navbar horizontal */
+#barraHorizontal {
+    background-color: rgba(0,123,191,1) !important;
+    border-bottom: 1px solid #e8e3e3;
+}
+
+/* Selector más específico para navbar */
+nav#barraHorizontal.navbar {
+    background-color: rgba(0,123,191,1) !important;
+}
+
+/* Header main - pegado al navbar con color más claro */
+.header-main {
+    width: 100%;
+    background-color: rgba(0,123,191,0.7) !important; /* Más claro que el navbar */
+    padding: 15px 0;
+    margin: 0;
+    border-bottom: 1px solid rgba(0,123,191,0.3);
+}
+
+/* Hero card - ancho completo como navbar */
+.hero-card {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-top: 20px; /* Separación del navbar */
+}
+
+/* Contenedor principal sin márgenes laterales */
+#page.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Hero card - ancho completo como navbar */
+.hero-card {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+}
+
+/* Contenedor principal sin márgenes laterales */
+#page.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Ajuste para el contenido principal */
+#region-main {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 /* Sidebar styles */
@@ -261,4 +315,42 @@ footer a:hover {
     right: 0;
     z-index: 9999;
     font-family: 'Courier New', monospace;
+}
+
+/* Dropdowns del navbar */
+.navbar .dropdown-menu {
+    margin-top: 0;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.login-dropdown,
+.register-dropdown {
+    min-width: 300px !important;
+}
+
+.register-dropdown {
+    min-width: 350px !important;
+}
+
+.login-dropdown .dropdown-header,
+.register-dropdown .dropdown-header {
+    color: var(--primary-color);
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 15px;
+}
+
+.login-dropdown .form-control,
+.register-dropdown .form-control {
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+}
+
+.login-dropdown .form-control:focus,
+.register-dropdown .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,191,0.25);
+    border-color: rgba(0,123,191,0.5);
 }

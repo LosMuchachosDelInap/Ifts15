@@ -40,7 +40,7 @@ $isLoggedIn = isLoggedIn();
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-graduation-cap"></i> Carreras
                     </a>
                     <ul class="dropdown-menu">
@@ -121,19 +121,90 @@ $isLoggedIn = isLoggedIn();
                     </li>
                 <?php else: ?>
                     <!-- Usuario no logueado -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo SITE_URL; ?>/login.php">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-sign-in-alt"></i> Ingresar
                         </a>
+                        <div class="dropdown-menu dropdown-menu-end login-dropdown" style="min-width: 300px;">
+                            <form class="px-4 py-3" action="<?php echo SITE_URL; ?>/login.php" method="POST">
+                                <h6 class="dropdown-header">
+                                    <i class="fa fa-sign-in-alt"></i> Iniciar Sesión
+                                </h6>
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control form-control-sm" id="loginEmail" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control form-control-sm" id="loginPassword" name="password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm w-100">
+                                    <i class="fa fa-sign-in-alt"></i> Ingresar
+                                </button>
+                                <div class="dropdown-divider"></div>
+                                <small class="text-muted">
+                                    ¿No tienes cuenta? 
+                                    <a href="#" class="text-decoration-none" onclick="showRegisterForm()">Regístrate aquí</a>
+                                </small>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-user-plus"></i> Registrarse
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end register-dropdown" style="min-width: 350px;">
+                            <form class="px-4 py-3" action="<?php echo SITE_URL; ?>/register.php" method="POST">
+                                <h6 class="dropdown-header">
+                                    <i class="fa fa-user-plus"></i> Crear Cuenta
+                                </h6>
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <label for="registerNombre" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control form-control-sm" id="registerNombre" name="nombre" required>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label for="registerApellido" class="form-label">Apellido</label>
+                                        <input type="text" class="form-control form-control-sm" id="registerApellido" name="apellido" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control form-control-sm" id="registerEmail" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerDni" class="form-label">DNI</label>
+                                    <input type="text" class="form-control form-control-sm" id="registerDni" name="dni" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerPassword" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control form-control-sm" id="registerPassword" name="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerRole" class="form-label">Tipo de Usuario</label>
+                                    <select class="form-control form-control-sm" id="registerRole" name="rol" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option value="estudiante">Estudiante</option>
+                                        <option value="profesor">Profesor</option>
+                                        <option value="personal">Personal</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-sm w-100">
+                                    <i class="fa fa-user-plus"></i> Registrarse
+                                </button>
+                                <div class="dropdown-divider"></div>
+                                <small class="text-muted">
+                                    ¿Ya tienes cuenta? 
+                                    <a href="#" class="text-decoration-none" onclick="showLoginForm()">Inicia sesión aquí</a>
+                                </small>
+                            </form>
+                        </div>
                     </li>
                 <?php endif; ?>
             </ul>
         </div>
     </div>
 </nav>
-
-<!-- Espacio para compensar navbar fixed -->
-<div style="height: 70px;"></div>
 
 <!-- Alertas del sistema -->
 <div class="toast-wrapper mx-auto py-0" role="status" aria-live="polite">

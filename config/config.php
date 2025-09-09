@@ -14,8 +14,9 @@ define('DB_CHARSET', 'utf8mb4');
 
 // Configuración del sitio
 define('SITE_URL', 'http://localhost/Mis_Proyectos/Ifts15');
-define('SITE_NAME', 'INSTITUTO DE FORMACIÓN TÉCNICA SUPERIOR Nº 12');
-define('SITE_DESCRIPTION', 'Sistema de Gestión Académica del IFTS12');
+define('SITE_NAME', 'INSTITUTO DE FORMACIÓN TÉCNICA SUPERIOR Nº 15');
+define('SITE_DESCRIPTION', 'Realizador y Productor Televisivo');
+define('CARD_DESCRIPTION','Tecnología Digital plantea una visión integral de la TV digital como parte de un todo más amplio: el universo audiovisual. Explora formatos tradicionales así como los nuevos modos de creación, producción y consumo audiovisual en la era digital. Busca profundizar y articular los saberes específicos con los de las demás materias de la carrera, así como también de las materias troncales de años anteriores.');
 
 // Configuración de sessiones
 define('SESSION_TIMEOUT', 3600); // 1 hora

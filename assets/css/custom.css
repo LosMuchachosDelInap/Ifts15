@@ -52,7 +52,7 @@ nav#barraHorizontal.navbar {
 .hero-card {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
-    margin-top: 20px; /* Separación del navbar */
+    margin-top: 50px; /* Separación del navbar */
 }
 
 /* Contenedor principal sin márgenes laterales */

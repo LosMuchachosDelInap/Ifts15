@@ -1,0 +1,47 @@
+# Archivos de configuración local
+config/config-local.php
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+error_log
+
+# Archivos temporales
+tmp/
+temp/
+cache/
+
+# Uploads de usuarios
+uploads/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Dependencias Node.js (si las usas)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Builds y distribuciones
+dist/
+build/
+production-build/
+
+# Respaldos de base de datos
+*.sql.backup
+*.sql.bak
+
+# Archivos de configuración de servidores web
+.htaccess.backup

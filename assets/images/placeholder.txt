@@ -1,6 +1,0 @@
-/* Archivo CSS vacío para imágenes placeholder */
-
-/* 
-Este archivo se puede usar para agregar estilos específicos de imágenes
-o reemplazar con imágenes reales cuando estén disponibles
-*/

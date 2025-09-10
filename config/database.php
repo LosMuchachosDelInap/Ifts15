@@ -11,14 +11,20 @@ class Database {
     private function __construct() {
         try {
             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
-            $this->connection = new PDO($dsn, DB_USER, DB_PASS);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $this->connection = new PDO($dsn, DB_USER, DB_PASS, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES " . DB_CHARSET
+            ]);
         } catch (PDOException $e) {
+            // Log del error para debugging
+            error_log("Database connection error: " . $e->getMessage());
+            
             if (DEBUG_MODE) {
-                die("Error de conexión: " . $e->getMessage());
+                die("Error de conexión: " . $e->getMessage() . "<br>Host: " . DB_HOST . "<br>Database: " . DB_NAME);
             } else {
-                die("Error de conexión a la base de datos");
+                die("Error de conexión a la base de datos. Por favor, contacte al administrador.");
             }
         }
     }

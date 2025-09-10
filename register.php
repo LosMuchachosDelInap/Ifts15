@@ -25,45 +25,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Validaciones básicas
     if (empty($nombre) || empty($apellido) || empty($email) || empty($dni) || empty($password) || empty($rol)) {
-        setError('Todos los campos son obligatorios');
+        showError('Todos los campos son obligatorios');
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        setError('El email no es válido');
+        showError('El email no es válido');
     } elseif (strlen($password) < 6) {
-        setError('La contraseña debe tener al menos 6 caracteres');
+        showError('La contraseña debe tener al menos 6 caracteres');
     } elseif (!in_array($rol, ['estudiante', 'profesor', 'personal'])) {
-        setError('Rol no válido');
+        showError('Rol no válido');
     } else {
-        try {
-            $db = Database::getInstance();
-            
-            // Verificar si el email ya existe
-            $stmt = $db->prepare("SELECT id FROM usuarios WHERE email = ?");
-            $stmt->execute([$email]);
-            
-            if ($stmt->fetch()) {
-                setError('Ya existe un usuario con ese email');
-            } else {
-                // Crear usuario
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        // MODO DEMO: Solo mostrar mensaje sin procesar realmente
+        if (defined('DISABLE_DATABASE') && DISABLE_DATABASE) {
+            showError('MODO DEMO: El registro está deshabilitado. Este es solo un demo visual del formulario.');
+        } else {
+            try {
+                $db = Database::getInstance();
                 
-                $stmt = $db->prepare("
-                    INSERT INTO usuarios (nombre, apellido, email, dni, password, rol, activo, fecha_registro) 
-                    VALUES (?, ?, ?, ?, ?, ?, 1, NOW())
-                ");
+                // Verificar si el email ya existe
+                $stmt = $db->prepare("SELECT id FROM usuarios WHERE email = ?");
+                $stmt->execute([$email]);
                 
-                if ($stmt->execute([$nombre, $apellido, $email, $dni, $hashedPassword, $rol])) {
-                    setSuccess('Usuario registrado exitosamente. Ya puedes iniciar sesión.');
-                    header('Location: ' . SITE_URL . '/login.php');
-                    exit;
+                if ($stmt->fetch()) {
+                    showError('Ya existe un usuario con ese email');
                 } else {
-                    setError('Error al crear el usuario');
+                    // Crear usuario
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                    
+                    $stmt = $db->prepare("
+                        INSERT INTO usuarios (nombre, apellido, email, dni, password, rol, activo, fecha_registro) 
+                        VALUES (?, ?, ?, ?, ?, ?, 1, NOW())
+                    ");
+                    
+                    if ($stmt->execute([$nombre, $apellido, $email, $dni, $hashedPassword, $rol])) {
+                        showSuccess('Usuario registrado exitosamente. Ya puedes iniciar sesión.');
+                        header('Location: ' . SITE_URL . '/login.php');
+                        exit;
+                    } else {
+                        showError('Error al crear el usuario');
+                    }
                 }
-            }
-        } catch (Exception $e) {
-            if (DEBUG_MODE) {
-                setError("Error: " . $e->getMessage());
-            } else {
-                setError('Error interno del sistema');
+            } catch (Exception $e) {
+                if (DEBUG_MODE) {
+                    showError("Error: " . $e->getMessage());
+                } else {
+                    showError('Error interno del sistema');
+                }
             }
         }
     }

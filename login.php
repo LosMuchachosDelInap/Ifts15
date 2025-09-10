@@ -21,35 +21,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($password)) {
         $error = 'Email y contraseña son requeridos';
     } else {
-        try {
-            // Buscar usuario en la base de datos
-            $db = Database::getInstance();
-            $user = $db->fetchOne(
-                "SELECT * FROM usuarios WHERE email = ? AND activo = 1", 
-                [$email]
-            );
+        // MODO DEMO: Solo mostrar mensaje sin procesar realmente
+        if (defined('DISABLE_DATABASE') && DISABLE_DATABASE) {
+            $error = 'MODO DEMO: El login está deshabilitado. Este es solo un demo visual del formulario.';
+        } else {
+            try {
+                // Buscar usuario en la base de datos (solo cuando BD esté activa)
+                $db = Database::getInstance();
+                $user = $db->fetchOne(
+                    "SELECT * FROM usuarios WHERE email = ? AND activo = 1", 
+                    [$email]
+                );
             
-            if ($user && password_verify($password, $user['password'])) {
-                // Login exitoso
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_data'] = [
-                    'id' => $user['id'],
-                    'email' => $user['email'],
-                    'nombre' => $user['nombre'],
-                    'apellido' => $user['apellido'],
-                    'role' => $user['role']
-                ];
-                
-                showSuccess('¡Bienvenido! Has iniciado sesión correctamente.');
-                redirect('/index.php');
-            } else {
-                $error = 'Email o contraseña incorrectos';
-            }
-        } catch (Exception $e) {
-            if (DEBUG_MODE) {
-                $error = "Error de base de datos: " . $e->getMessage();
-            } else {
-                $error = "Error interno del sistema";
+                if ($user && password_verify($password, $user['password'])) {
+                    // Login exitoso
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_data'] = [
+                        'id' => $user['id'],
+                        'email' => $user['email'],
+                        'nombre' => $user['nombre'],
+                        'apellido' => $user['apellido'],
+                        'role' => $user['role']
+                    ];
+                    
+                    showSuccess('¡Bienvenido! Has iniciado sesión correctamente.');
+                    redirect('/index.php');
+                } else {
+                    $error = 'Email o contraseña incorrectos';
+                }
+            } catch (Exception $e) {
+                if (DEBUG_MODE) {
+                    $error = "Error de base de datos: " . $e->getMessage();
+                } else {
+                    $error = "Error interno del sistema";
+                }
             }
         }
     }
@@ -70,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="card-body">
                     <div class="text-center mb-3">
-                        <img src="<?php echo SITE_URL; ?>/pluginfile.php/1/theme_academi/logo/1756827567/logo-ok.png" 
+                        <img src="<?php echo SITE_URL; ?>/assets/images/logo.png" 
                              alt="<?php echo SITE_NAME; ?>" 
                              style="max-height: 80px;">
                     </div>

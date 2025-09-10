@@ -9,7 +9,14 @@ session_start();
 
 // Cargar configuración
 require_once __DIR__ . '/../config/config.php';
-require_once __DIR__ . '/../config/database.php';
+
+// DESACTIVAR BASE DE DATOS PARA DEMO VISUAL
+define('DISABLE_DATABASE', true);
+
+// Solo cargar database.php si no está desactivada
+if (!defined('DISABLE_DATABASE') || !DISABLE_DATABASE) {
+    require_once __DIR__ . '/../config/database.php';
+}
 
 // Funciones helper
 function redirect($url) {
@@ -18,19 +25,47 @@ function redirect($url) {
 }
 
 function isLoggedIn() {
+    // Para demo sin BD, siempre retorna false
+    if (defined('DISABLE_DATABASE') && DISABLE_DATABASE) {
+        return false;
+    }
     return isset($_SESSION['user_id']);
 }
 
 function getCurrentUser() {
-    if (isLoggedIn()) {
-        return $_SESSION['user_data'] ?? null;
+    // Para demo sin BD, retorna datos de ejemplo
+    if (defined('DISABLE_DATABASE') && DISABLE_DATABASE) {
+        return [
+            'id' => 1,
+            'nombre' => 'Usuario',
+            'apellido' => 'Demo',
+            'email' => 'demo@ifts15.edu.ar',
+            'rol' => 'demo'
+        ];
     }
-    return null;
+    
+    if (!isLoggedIn()) {
+        return null;
+    }
+    
+    try {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM usuarios WHERE id = ?");
+        $stmt->execute([$_SESSION['user_id']]);
+        return $stmt->fetch();
+    } catch (Exception $e) {
+        return null;
+    }
 }
 
 function hasRole($role) {
+    // Para demo sin BD, siempre retorna false
+    if (defined('DISABLE_DATABASE') && DISABLE_DATABASE) {
+        return false;
+    }
+    
     $user = getCurrentUser();
-    return $user && isset($user['role']) && $user['role'] === $role;
+    return $user && $user['rol'] === $role;
 }
 
 function sanitize($input) {

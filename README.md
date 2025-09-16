@@ -1,32 +1,72 @@
 # IFTS15 - Sistema Web Educativo
 
-Sistema web desarrollado para el Instituto de Formación Técnica Superior N° 15, convertido desde un template estático de Moodle a una aplicación PHP funcional con arquitectura MVC.
+Sistema web desarrollado para el Instituto de Formación Técnica Superior N° 15.
 
 ## 📋 Características
 
-- **Arquitectura MVC**: Separación clara de responsabilidades
-- **Autenticación**: Sistema de login con roles (admin, profesor, estudiante, personal)
-- **Responsive Design**: Compatible con dispositivos móviles
+- **Diseño Responsivo**: Compatible con dispositivos móviles
 - **Bootstrap 5**: Framework CSS moderno
-- **Base de Datos MySQL**: Con PDO para operaciones seguras
-- **Gestión de Usuarios**: Perfiles, roles y permisos
-- **Sistema de Noticias**: Publicación y gestión de contenido
-- **Gestión Académica**: Carreras, materias, inscripciones
+- **Base de Datos MySQL**: Operaciones seguras con PDO
+- **Sistema de Usuarios**: Registro y autenticación completos
+- **Gestión Académica**: Carreras, comisiones, años de cursada
+- **Arquitectura Limpia**: PHP estructurado y modular
 
 ## 🚀 Instalación
 
-### Requisitos Previos
+### Requisitos
 
-- PHP 8.0 o superior
-- MySQL 5.7 o superior / MariaDB 10.3+
-- Servidor web (Apache/Nginx)
-- Extensiones PHP: PDO, PDO_MySQL, mbstring, openssl
+- PHP 7.4 o superior
+- MySQL 5.7 o superior
+- Servidor web (Apache recomendado)
+- Extensiones PHP: PDO, PDO_MySQL
 
-### Paso 1: Clonar/Descargar el proyecto
+### Configuración
 
-```bash
-# Si usas Git
-git clone [url-del-repositorio] ifts15
+1. **Importar base de datos**:
+   ```sql
+   mysql -u usuario -p nombre_bd < database/ifts15.sql
+   ```
+
+2. **Configurar conexión**:
+   - Editar `config/config.php` 
+   - Actualizar datos de BD
+
+3. **Servidor local**:
+   ```
+   http://localhost/ruta-del-proyecto/
+   ```
+
+## 📁 Estructura
+
+```
+ifts15/
+├── assets/          # CSS, JS, imágenes
+├── config/          # Configuración
+├── database/        # SQL de la BD
+├── includes/        # Archivos PHP comunes
+├── layouts/         # Headers, footers, navegación
+├── pages/           # Páginas internas
+├── index.php        # Página principal
+├── login.php        # Acceso al sistema
+└── register.php     # Registro de usuarios
+```
+
+## 🎯 Uso
+
+1. **Registrar usuario**: Completar formulario con datos académicos
+2. **Iniciar sesión**: Email y contraseña
+3. **Navegar**: Acceso a secciones según rol
+
+## 🔧 Características Técnicas
+
+- **Roles**: Alumno (por defecto), Profesor, Administrativo, Directivo
+- **Validaciones**: Cliente y servidor
+- **Seguridad**: Contraseñas hasheadas, protección SQL injection
+- **Transacciones**: Integridad de datos garantizada
+
+## 📞 Contacto
+
+Instituto de Formación Técnica Superior N° 15
 
 # O descomprime el archivo ZIP en tu directorio web
 ```

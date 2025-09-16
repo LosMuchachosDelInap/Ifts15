@@ -7,15 +7,18 @@
 
 // Detectar entorno (localhost vs producción)
 $isLocalhost = (
-    $_SERVER['HTTP_HOST'] === 'localhost' || 
-    $_SERVER['HTTP_HOST'] === '127.0.0.1' || 
-    strpos($_SERVER['HTTP_HOST'], 'localhost:') === 0
+    (isset($_SERVER['HTTP_HOST']) && (
+        $_SERVER['HTTP_HOST'] === 'localhost' || 
+        $_SERVER['HTTP_HOST'] === '127.0.0.1' || 
+        strpos($_SERVER['HTTP_HOST'], 'localhost:') === 0
+    )) || 
+    !isset($_SERVER['HTTP_HOST']) // CLI mode (como desde terminal)
 );
 
 if ($isLocalhost) {
     // Configuración para LOCALHOST (XAMPP)
     define('DB_HOST', 'localhost');
-    define('DB_NAME', 'ifts15_db');
+    define('DB_NAME', 'ifts15'); // Nombre correcto según tu SQL
     define('DB_USER', 'root');
     define('DB_PASS', '');
     define('SITE_URL', 'http://localhost/Mis_Proyectos/Ifts15');
@@ -30,11 +33,15 @@ if ($isLocalhost) {
     
     // URL automática para producción
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-    define('SITE_URL', $protocol . '://' . $_SERVER['HTTP_HOST']);
+    $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+    define('SITE_URL', $protocol . '://' . $host);
     define('DEBUG_MODE', false);
 }
 
 define('DB_CHARSET', 'utf8mb4');
+
+// Control de base de datos - HABILITADA para desarrollo
+define('DISABLE_DATABASE', false);
 
 // Configuración del sitio
 define('SITE_NAME', 'INSTITUTO DE FORMACIÓN TÉCNICA SUPERIOR Nº 15');

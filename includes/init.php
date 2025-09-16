@@ -10,8 +10,8 @@ session_start();
 // Cargar configuración
 require_once __DIR__ . '/../config/config.php';
 
-// DESACTIVAR BASE DE DATOS PARA DEMO VISUAL
-define('DISABLE_DATABASE', true);
+// ACTIVAR BASE DE DATOS PARA FUNCIONALIDAD COMPLETA
+define('DISABLE_DATABASE', false);
 
 // Solo cargar database.php si no está desactivada
 if (!defined('DISABLE_DATABASE') || !DISABLE_DATABASE) {

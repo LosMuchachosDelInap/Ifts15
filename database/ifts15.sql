@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-09-2025 a las 23:03:52
+-- Tiempo de generación: 17-09-2025 a las 16:42:32
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,8 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `ifts15`
 --
-USE `ifts15`;
-
+ 
 -- --------------------------------------------------------
 
 --
@@ -32,7 +31,7 @@ CREATE TABLE `añocursada` (
   `id_añoCursada` int(11) NOT NULL,
   `año` int(1) NOT NULL,
   `habilitado` int(1) NOT NULL DEFAULT 1,
-  `cancelado` int(11) NOT NULL DEFAULT 0,
+  `cancelado` int(1) NOT NULL DEFAULT 0,
   `idcCreate` timestamp NOT NULL DEFAULT current_timestamp(),
   `idUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -42,9 +41,9 @@ CREATE TABLE `añocursada` (
 --
 
 INSERT INTO `añocursada` (`id_añoCursada`, `año`, `habilitado`, `cancelado`, `idcCreate`, `idUpdate`) VALUES
-(1, 1, 1, 0, '2025-09-16 20:54:25', '2025-09-16 20:54:25'),
-(2, 2, 1, 0, '2025-09-16 20:54:25', '2025-09-16 20:54:25'),
-(3, 3, 1, 0, '2025-09-16 20:54:25', '2025-09-16 20:54:25');
+(1, 1, 1, 0, '2025-09-16 17:27:52', '2025-09-16 17:27:52'),
+(2, 2, 1, 0, '2025-09-16 17:27:52', '2025-09-16 17:27:52'),
+(3, 3, 1, 0, '2025-09-16 17:27:52', '2025-09-16 17:27:52');
 
 -- --------------------------------------------------------
 
@@ -56,7 +55,7 @@ CREATE TABLE `carrera` (
   `id_carrera` int(11) NOT NULL,
   `carrera` varchar(30) NOT NULL,
   `habilitado` int(1) NOT NULL DEFAULT 1,
-  `cancelado` int(11) NOT NULL DEFAULT 0,
+  `cancelado` int(1) NOT NULL DEFAULT 0,
   `idCreate` timestamp NOT NULL DEFAULT current_timestamp(),
   `idUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -66,7 +65,7 @@ CREATE TABLE `carrera` (
 --
 
 INSERT INTO `carrera` (`id_carrera`, `carrera`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
-(1, 'Realizador y Productor Televis', 1, 0, '2025-09-16 20:52:31', '2025-09-16 20:52:31');
+(1, 'Realizador y Productor Televis', 1, 0, '2025-09-16 17:29:57', '2025-09-16 17:29:57');
 
 -- --------------------------------------------------------
 
@@ -78,7 +77,7 @@ CREATE TABLE `comision` (
   `id_comision` int(11) NOT NULL,
   `comision` varchar(1) NOT NULL,
   `habilitado` int(1) NOT NULL DEFAULT 1,
-  `cancelado` int(11) NOT NULL DEFAULT 0,
+  `cancelado` int(1) NOT NULL DEFAULT 0,
   `idcCreate` datetime NOT NULL DEFAULT current_timestamp(),
   `idUpdate` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -88,9 +87,9 @@ CREATE TABLE `comision` (
 --
 
 INSERT INTO `comision` (`id_comision`, `comision`, `habilitado`, `cancelado`, `idcCreate`, `idUpdate`) VALUES
-(1, 'A', 1, 0, '2025-09-16 17:53:28', '2025-09-16 17:54:47'),
-(2, 'B', 1, 0, '2025-09-16 17:53:28', '2025-09-16 17:54:57'),
-(3, 'C', 1, 0, '2025-09-16 17:53:28', '2025-09-16 17:55:05');
+(1, 'A', 1, 0, '2025-09-16 14:31:37', '2025-09-16 14:31:37'),
+(2, 'B', 1, 0, '2025-09-16 14:31:37', '2025-09-16 14:31:37'),
+(3, 'C', 1, 0, '2025-09-16 14:31:37', '2025-09-16 14:31:37');
 
 -- --------------------------------------------------------
 
@@ -110,6 +109,14 @@ CREATE TABLE `persona` (
   `idCreate` timestamp NOT NULL DEFAULT current_timestamp(),
   `idUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `persona`
+--
+
+INSERT INTO `persona` (`id_persona`, `apellido`, `nombre`, `telefono`, `dni`, `edad`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
+(4, 'Pérez', 'Juan', '1234567890', '12345678', 25, 1, 0, '2025-09-17 12:49:31', '2025-09-17 12:49:31'),
+(5, 'prueba', 'prueba', '1156485236', '25632589', 18, 1, 0, '2025-09-17 12:51:42', '2025-09-17 12:51:42');
 
 -- --------------------------------------------------------
 
@@ -131,10 +138,10 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id_rol`, `rol`, `habilitado`, `cancelado`, `idcCreate`, `idUpdate`) VALUES
-(1, 'Alumno', 1, 0, '2025-09-16 20:51:28', '2025-09-16 21:02:22'),
-(2, 'Profesor', 1, 0, '2025-09-16 20:51:28', '2025-09-16 21:02:29'),
-(3, 'Administrativo', 1, 0, '2025-09-16 20:51:28', '2025-09-16 21:02:35'),
-(4, 'Directivo', 1, 0, '2025-09-16 20:51:28', '2025-09-16 21:02:41');
+(1, 'Alumno', 1, 0, '2025-09-16 17:40:56', '2025-09-16 17:43:41'),
+(2, 'Profesor', 1, 0, '2025-09-16 17:40:56', '2025-09-16 17:43:51'),
+(3, 'Administrativo', 1, 0, '2025-09-16 17:40:56', '2025-09-16 17:44:00'),
+(4, 'Directivo', 1, 0, '2025-09-16 17:40:56', '2025-09-16 17:44:09');
 
 -- --------------------------------------------------------
 
@@ -146,9 +153,9 @@ CREATE TABLE `usuario` (
   `id_usuario` int(11) NOT NULL,
   `email` varchar(40) NOT NULL,
   `clave` varchar(255) NOT NULL,
-  `id_comision` int(11) DEFAULT NULL,
-  `id_carrera` int(11) DEFAULT NULL,
-  `id_añoCursada` int(11) DEFAULT NULL,
+  `id_comision` int(11) NOT NULL,
+  `id_carrera` int(11) NOT NULL,
+  `id_añoCursada` int(11) NOT NULL,
   `id_rol` int(11) NOT NULL,
   `id_persona` int(11) NOT NULL,
   `habilitado` int(1) NOT NULL DEFAULT 1,
@@ -156,6 +163,14 @@ CREATE TABLE `usuario` (
   `idCreate` timestamp NOT NULL DEFAULT current_timestamp(),
   `idUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `email`, `clave`, `id_comision`, `id_carrera`, `id_añoCursada`, `id_rol`, `id_persona`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
+(3, 'test@test.com', '$2y$10$/2C4M2Q/OaQbC0dh2Rzu7uImcekSUkNolRhwltjWqP/CBMIQKMQyy', 1, 1, 1, 1, 4, 1, 0, '2025-09-17 12:49:31', '2025-09-17 12:49:31'),
+(4, 'prueba@gmail.com', '$2y$10$OqlnxoIInkFcUs/DwezZSuh9fL0B1kNg.Ja7nVMRBikbYjftiSb1q', 1, 1, 2, 1, 5, 1, 0, '2025-09-17 12:51:42', '2025-09-17 12:51:42');
 
 --
 -- Índices para tablas volcadas
@@ -228,7 +243,7 @@ ALTER TABLE `comision`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -240,7 +255,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas

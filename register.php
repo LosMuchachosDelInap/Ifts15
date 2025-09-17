@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db = Database::getInstance();
             
             // Verificar si el email ya existe
-            $existing_user = $db->fetchOne("SELECT id FROM usuario WHERE email = ?", [$email]);
+            $existing_user = $db->fetchOne("SELECT id_usuario FROM usuario WHERE email = ?", [$email]);
             
             if ($existing_user) {
                 showError('Ya existe un usuario con ese email');
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             } else {
                 // Verificar si el DNI ya existe
-                $existing_person = $db->fetchOne("SELECT id FROM persona WHERE dni = ?", [$dni]);
+                $existing_person = $db->fetchOne("SELECT id_persona FROM persona WHERE dni = ?", [$dni]);
                 
                 if ($existing_person) {
                     showError('Ya existe una persona con ese DNI');
@@ -98,12 +98,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $persona_id = $db->lastInsertId();
                             
                             // 2. Insertar en tabla usuario (rol Alumno por defecto)
-                            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                            // TEMPORAL: Usar MD5 porque la columna clave es varchar(20)
+                                    // Hash de la contraseña
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                             
-                            // Preparar campos opcionales de datos académicos
+                            // Preparar campos opcionales de datos académicos con valores por defecto
                             $carrera_value = $carrera_id > 0 ? $carrera_id : null;
                             $comision_value = $comision_id > 0 ? $comision_id : null;
                             $anio_value = $anio_cursada_id > 0 ? $anio_cursada_id : null;
+                            
+                            // Si faltan valores, usar los primeros disponibles
+                            if (!$carrera_value) {
+                                $default_carrera = $db->fetchOne("SELECT id_carrera FROM carrera LIMIT 1");
+                                $carrera_value = $default_carrera ? $default_carrera['id_carrera'] : 1;
+                            }
+                            if (!$comision_value) {
+                                $default_comision = $db->fetchOne("SELECT id_comision FROM comision LIMIT 1");
+                                $comision_value = $default_comision ? $default_comision['id_comision'] : 1;
+                            }
+                            if (!$anio_value) {
+                                $default_anio = $db->fetchOne("SELECT id_añoCursada FROM añocursada LIMIT 1");
+                                $anio_value = $default_anio ? $default_anio['id_añoCursada'] : 1;
+                            }
                             
                             $db->query("
                                 INSERT INTO usuario (email, clave, id_persona, id_rol, id_carrera, id_comision, id_añoCursada, habilitado) 

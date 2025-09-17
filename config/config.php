@@ -16,20 +16,20 @@ $isLocalhost = (
 );
 
 if ($isLocalhost) {
-    // Configuración para LOCALHOST (XAMPP)
+    // Configuración para LOCALHOST (PHP embebido)
     define('DB_HOST', 'localhost');
-    define('DB_NAME', 'ifts15'); // Nombre correcto según tu SQL
+    define('DB_NAME', 'ifts15'); 
     define('DB_USER', 'root');
     define('DB_PASS', '');
-    define('SITE_URL', 'http://localhost/Mis_Proyectos/Ifts15');
+    define('SITE_URL', 'http://localhost:8000');
     define('DEBUG_MODE', true);
 } else {
     // Configuración para PRODUCCIÓN (InfinityFree)
-    // IMPORTANTE: Cambia estos valores por los de tu hosting
-    define('DB_HOST', 'sqlXXX.infinityfree.com'); // Cambiar por tu host de DB
-    define('DB_NAME', 'epizXXX_ifts15'); // Cambiar por tu nombre de DB
-    define('DB_USER', 'epizXXX_usuario'); // Cambiar por tu usuario de DB
-    define('DB_PASS', 'tu_password_aqui'); // Cambiar por tu password de DB
+
+    define('DB_HOST', '103sql.infinityfree.com'); 
+    define('DB_NAME', 'if0_39904770_ifts15'); 
+    define('DB_USER', 'if0_39904770'); 
+    define('DB_PASS', 'pNPtg1sJhqrygS'); 
     
     // URL automática para producción
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';

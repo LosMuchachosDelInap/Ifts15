@@ -27,10 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Buscar usuario con todos los datos relacionados
             $sql = "
                 SELECT 
-                    u.id as usuario_id,
+                    u.id_usuario as usuario_id,
                     u.email,
                     u.clave,
-                    u.activo,
+                    u.habilitado,
                     p.nombre,
                     p.apellido,
                     p.dni,
@@ -41,12 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     com.comision,
                     a.año as anio_cursada
                 FROM usuario u
-                INNER JOIN persona p ON u.idpersona = p.id
-                INNER JOIN roles r ON u.idrol = r.id_rol
-                INNER JOIN carrera c ON u.idcarrera = c.id_carrera
-                INNER JOIN comision com ON u.idcomision = com.id_comision
-                INNER JOIN añocursada a ON u.idanocursada = a.id_añoCursada
-                WHERE u.email = ? AND u.activo = 1
+                INNER JOIN persona p ON u.id_persona = p.id_persona
+                INNER JOIN roles r ON u.id_rol = r.id_rol
+                LEFT JOIN carrera c ON u.id_carrera = c.id_carrera
+                LEFT JOIN comision com ON u.id_comision = com.id_comision
+                LEFT JOIN añocursada a ON u.id_añoCursada = a.id_añoCursada
+                WHERE u.email = ? AND u.habilitado = 1
             ";
             
             $user = $db->fetchOne($sql, [$email]);

@@ -4,27 +4,67 @@
  */
 
 :root {
-    --primary-color: #007bff;
-    --secondary-color: #6c757d;
-    --success-color: #28a745;
-    --info-color: #17a2b8;
-    --warning-color: #ffc107;
-    --danger-color: #dc3545;
-    --light-color: #f8f9fa;
-    --dark-color: #343a40;
+    /* Paleta amarillo primario y gris secundario */
+    --primary-color: #FFD700;        /* Amarillo dorado - color principal */
+    --primary-dark: #DAA520;         /* Amarillo más oscuro para hover */
+    --secondary-color: #6C757D;      /* Gris como color secundario */
+    --secondary-dark: #5A6268;       /* Gris más oscuro */
+    --accent-color: #ADB5BD;         /* Gris claro como acento */
+    --success-color: #28a745;        /* Verde para éxito */
+    --info-color: #17a2b8;           /* Azul para información */
+    --warning-color: #FF8C00;        /* Naranja que combina con el amarillo */
+    --danger-color: #dc3545;         /* Rojo para errores */
+    --light-color: #F8F9FA;          /* Gris muy claro */
+    --dark-color: #343A40;           /* Gris oscuro */
+    --text-on-primary: #343A40;      /* Texto gris oscuro sobre amarillo */
+    --text-on-secondary: #FFFFFF;    /* Texto blanco sobre gris */
     --sidebar-width: 280px;
-    --header-height: 140px;
+    --header-height: 80px;           /* Aumentamos la altura del navbar */
 }
 
 /* Layout principal */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f6fa;
+    background-color: var(--light-color);
+}
+
+/* Navbar horizontal con amarillo primario y gris secundario */
+.navbar-dark {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    min-height: 80px; /* Aumentamos la altura para el logo */
+    padding: 0.8rem 0; /* Más espacio vertical */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-dark .navbar-brand {
+    color: var(--text-on-primary) !important;
+    font-weight: bold;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0;
+}
+
+.navbar-dark .navbar-brand:hover {
+    color: var(--dark-color) !important;
+    transform: scale(1.02);
+    text-decoration: none;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: var(--text-on-primary) !important;
+    font-weight: 500;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--dark-color) !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
 }
 
 /* Carrusel Hero */
 #heroCarousel {
-    margin-top: 76px; /* Espacio para navbar fijo */
+    margin-top: 80px; /* Ajustamos para el navbar más alto */
 }
 
 .carousel-image {
@@ -115,10 +155,32 @@ body {
     }
 }
 
-/* Header personalizado */
-.navbar-brand img {
-    max-height: 50px;
+/* Header personalizado - Logo optimizado */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand .navbar-logo {
+    max-height: 55px;
     width: auto;
+    transition: all 0.3s ease;
+    object-fit: contain;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.navbar-brand:hover .navbar-logo {
+    transform: scale(1.05);
+    filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.2));
+}
+
+.navbar-brand img {
+    max-height: 55px;
+    width: auto;
+    transition: all 0.3s ease;
+    margin-right: 0; /* Sin margen ya que no hay texto */
 }
 
 /* Dropdown del navbar - estilos específicos */
@@ -189,7 +251,7 @@ body {
     box-shadow: none !important;
 }
 
-/* Estilos para modales */
+/* Estilos para modales con amarillo primario y gris secundario */
 .modal-content {
     border-radius: 12px;
     border: none;
@@ -197,14 +259,19 @@ body {
 }
 
 .modal-header {
-    background: linear-gradient(135deg, var(--primary-color), #0056b3);
-    color: white;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--text-on-primary);
     border-radius: 12px 12px 0 0;
     border-bottom: none;
 }
 
+.modal-header .modal-title {
+    color: var(--text-on-primary);
+    font-weight: bold;
+}
+
 .modal-header .btn-close {
-    filter: invert(1);
+    filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
 }
 
 .modal-body {
@@ -255,22 +322,23 @@ body {
 
 /* Navbar horizontal */
 #barraHorizontal {
-    background-color: rgba(0,123,191,1) !important;
-    border-bottom: 1px solid #e8e3e3;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    border-bottom: 2px solid var(--primary-dark);
+    min-height: 80px;
 }
 
 /* Selector más específico para navbar */
 nav#barraHorizontal.navbar {
-    background-color: rgba(0,123,191,1) !important;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
 }
 
 /* Header main - pegado al navbar con color más claro */
 .header-main {
     width: 100%;
-    background-color: rgba(0,123,191,0.7) !important; /* Más claro que el navbar */
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%) !important;
     padding: 15px 0;
     margin: 0;
-    border-bottom: 1px solid rgba(0,123,191,0.3);
+    border-bottom: 1px solid var(--primary-dark);
 }
 
 /* Hero card - ancho completo como navbar */
@@ -307,14 +375,14 @@ nav#barraHorizontal.navbar {
     padding-right: 15px;
 }
 
-/* Sidebar styles */
+/* Sidebar styles con amarillo primario y gris secundario */
 #sidebar {
     position: fixed;
     top: var(--header-height);
     left: 0;
     width: var(--sidebar-width);
     height: calc(100vh - var(--header-height));
-    background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(180deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
     overflow-y: auto;
     z-index: 1000;
     transition: all 0.3s ease;
@@ -326,7 +394,7 @@ nav#barraHorizontal.navbar {
 }
 
 #sidebar .nav-link {
-    color: #ecf0f1;
+    color: var(--text-on-secondary);
     padding: 12px 20px;
     border-radius: 8px;
     margin: 4px 10px;
@@ -334,14 +402,14 @@ nav#barraHorizontal.navbar {
 }
 
 #sidebar .nav-link:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
     transform: translateX(5px);
 }
 
 #sidebar .nav-link.active {
     background-color: var(--primary-color);
-    color: #fff;
+    color: var(--text-on-primary);
 }
 
 #sidebar .nav-link i {
@@ -381,7 +449,7 @@ nav#barraHorizontal.navbar {
     font-weight: 600;
 }
 
-/* Botones personalizados */
+/* Botones personalizados con colores del logo */
 .btn {
     border-radius: 8px;
     font-weight: 500;
@@ -394,9 +462,31 @@ nav#barraHorizontal.navbar {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-on-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: var(--text-on-primary);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
 /* Hero section */
 .hero-section {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--info-color) 100%);
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 50%, var(--primary-color) 100%);
     color: white;
     border-radius: 20px;
     padding: 40px;
@@ -409,6 +499,7 @@ nav#barraHorizontal.navbar {
     font-weight: 700;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    color: var(--primary-color);
 }
 
 /* Quick access cards */
@@ -428,11 +519,11 @@ nav#barraHorizontal.navbar {
     transform: scale(1.05);
 }
 
-/* Footer styles */
+/* Footer styles con colores del logo */
 footer {
     margin-top: 50px;
     padding: 40px 0;
-    background: linear-gradient(135deg, var(--dark-color) 0%, #2c3e50 100%);
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--dark-color) 100%);
 }
 
 footer a {
@@ -505,7 +596,7 @@ footer a:hover {
     padding: 0.75rem 1rem;
 }
 
-/* Form styles */
+/* Form styles con colores del logo */
 .form-control, .form-select {
     border-radius: 8px;
     border: 2px solid #e9ecef;
@@ -515,10 +606,10 @@ footer a:hover {
 
 .form-control:focus, .form-select:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
 }
 
-/* Table styles */
+/* Table styles con colores del logo */
 .table {
     border-radius: 10px;
     overflow: hidden;
@@ -526,8 +617,8 @@ footer a:hover {
 }
 
 .table thead th {
-    background-color: var(--primary-color);
-    color: white;
+    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+    color: var(--primary-color);
     border: none;
     font-weight: 600;
 }
@@ -542,12 +633,28 @@ footer a:hover {
     font-family: 'Courier New', monospace;
 }
 
-/* Dropdowns del navbar */
+/* Dropdowns del navbar con amarillo primario y gris */
 .navbar .dropdown-menu {
     margin-top: 0;
     border: none;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     border-radius: 8px;
+    border: 2px solid var(--primary-color);
+    background-color: white;
+}
+
+.navbar .dropdown-item {
+    color: var(--secondary-color);
+}
+
+.navbar .dropdown-item:hover {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+}
+
+.navbar .dropdown-item:active {
+    background-color: var(--primary-dark);
+    color: var(--text-on-primary);
 }
 
 .login-dropdown,
@@ -561,21 +668,22 @@ footer a:hover {
 
 .login-dropdown .dropdown-header,
 .register-dropdown .dropdown-header {
-    color: var(--primary-color);
+    color: var(--secondary-color);
     font-weight: 600;
     padding-bottom: 10px;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 2px solid var(--primary-color);
     margin-bottom: 15px;
+    background-color: var(--light-color);
 }
 
 .login-dropdown .form-control,
 .register-dropdown .form-control {
     border-radius: 4px;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--secondary-color);
 }
 
 .login-dropdown .form-control:focus,
 .register-dropdown .form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgba(0,123,191,0.25);
-    border-color: rgba(0,123,191,0.5);
+    box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
+    border-color: var(--primary-color);
 }

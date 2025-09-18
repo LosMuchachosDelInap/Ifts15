@@ -18,10 +18,13 @@ $isLoggedIn = isLoggedIn();
         </button>
         <?php endif; ?>
         
-        <!-- Logo y nombre del sitio -->
+        <!-- Logo -->
         <a class="navbar-brand" href="<?php echo SITE_URL; ?>">
-            <i class="fa fa-graduation-cap me-2"></i>
-            IFTS15
+            <img src="<?php echo SITE_URL; ?>/assets/images/logo.png" 
+                 alt="IFTS15 - Instituto de Formación Técnica Superior" 
+                 class="navbar-logo" 
+                 style="height: 55px; width: auto; object-fit: contain;"
+                 onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjU1IiB2aWV3Qm94PSIwIDAgMTIwIDU1IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjU1IiByeD0iOCIgZmlsbD0iI0ZGRDcwMCIgc3Ryb2tlPSIjNkM3NTdEIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iNjAiIHk9IjM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMkMzRTUwIiBmb250LXNpemU9IjE4IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5JRlRTMTU8L3RleHQ+Cjwvc3ZnPgo='; this.style.maxWidth='120px'; console.log('Logo principal no encontrado, usando SVG de respaldo');">
         </a>
         
         <!-- Botón toggle para móviles -->
@@ -74,7 +77,7 @@ $isLoggedIn = isLoggedIn();
             
             <!-- Menú de usuario -->
             <ul class="navbar-nav">
-                <?php if ($isLoggedIn): ?>
+                <?php if ($isLoggedIn && $currentUser): ?>
                     <!-- Usuario logueado -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -85,7 +88,7 @@ $isLoggedIn = isLoggedIn();
                             <li>
                                 <h6 class="dropdown-header">
                                     <i class="fa fa-user"></i> 
-                                    <?php echo htmlspecialchars($currentUser['nombre'] . ' ' . $currentUser['apellido']); ?>
+                                    <?php echo htmlspecialchars(($currentUser['nombre'] ?? 'Usuario') . ' ' . ($currentUser['apellido'] ?? '')); ?>
                                 </h6>
                             </li>
                             <li><hr class="dropdown-divider"></li>

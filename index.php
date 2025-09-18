@@ -157,25 +157,3 @@ try {
 
 <!-- Footer -->
 <?php include 'layouts/footer.php'; ?>
-
-</div> <!-- page-wrapper -->
-
-<!-- JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Funcionalidad básica para el sidebar y dropdowns
-    document.addEventListener('DOMContentLoaded', function() {
-        // Auto-cerrar alerts después de 5 segundos
-        const alerts = document.querySelectorAll('.alert-dismissible');
-        alerts.forEach(function(alert) {
-            setTimeout(function() {
-                const bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
-            }, 5000);
-        });
-    });
-</script>
-
-</body>
-
-</html>

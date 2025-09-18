@@ -26,7 +26,7 @@ if ($isLocalhost) {
 } else {
     // Configuración para PRODUCCIÓN (InfinityFree)
 
-    define('DB_HOST', '103sql.infinityfree.com'); 
+    define('DB_HOST', 'sql103.infinityfree.com'); 
     define('DB_NAME', 'if0_39904770_ifts15'); 
     define('DB_USER', 'if0_39904770'); 
     define('DB_PASS', 'pNPtg1sJhqrygS'); 

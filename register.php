@@ -20,11 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Procesar formulario de registro
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Debug: mostrar datos recibidos
-    if (DEBUG_MODE) {
-        error_log("DEBUG POST Data: " . json_encode($_POST));
-    }
-    
     $nombre = trim($_POST['nombre'] ?? '');
     $apellido = trim($_POST['apellido'] ?? '');
     $dni = trim($_POST['dni'] ?? '');
@@ -35,10 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $carrera_id = (int)($_POST['id_carrera'] ?? 0);
     $comision_id = (int)($_POST['id_comision'] ?? 0);
     $anio_cursada_id = (int)($_POST['id_añoCursada'] ?? 0);
-    
-    if (DEBUG_MODE) {
-        error_log("DEBUG Datos procesados - Carrera: $carrera_id, Comisión: $comision_id, Año: $anio_cursada_id");
-    }
     
     // Validaciones básicas
     if (empty($nombre) || empty($apellido) || empty($dni) || empty($telefono) || empty($email) || empty($password)) {

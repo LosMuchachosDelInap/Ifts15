@@ -29,14 +29,23 @@ body {
 }
 
 /* Navbar horizontal con amarillo primario y gris secundario */
-.navbar-dark {
+#navbarMain.navbar-dark,
+.navbar-dark#navbarMain {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
-    min-height: 80px; /* Aumentamos la altura para el logo */
-    padding: 0.8rem 0; /* Más espacio vertical */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-height: 80px !important;
+    padding: 0.8rem 0 !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
 }
 
-.navbar-dark .navbar-brand {
+/* Override Bootstrap bg-primary specifically */
+.navbar.bg-primary,
+nav.bg-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+}
+
+#navbarMain .navbar-brand,
+.navbar-dark#navbarMain .navbar-brand {
     color: var(--text-on-primary) !important;
     font-weight: bold;
     font-size: 1.4rem;
@@ -45,18 +54,21 @@ body {
     padding: 0.25rem 0;
 }
 
-.navbar-dark .navbar-brand:hover {
+#navbarMain .navbar-brand:hover,
+.navbar-dark#navbarMain .navbar-brand:hover {
     color: var(--dark-color) !important;
     transform: scale(1.02);
     text-decoration: none;
 }
 
-.navbar-dark .navbar-nav .nav-link {
+#navbarMain .navbar-nav .nav-link,
+.navbar-dark#navbarMain .navbar-nav .nav-link {
     color: var(--text-on-primary) !important;
     font-weight: 500;
 }
 
-.navbar-dark .navbar-nav .nav-link:hover {
+#navbarMain .navbar-nav .nav-link:hover,
+.navbar-dark#navbarMain .navbar-nav .nav-link:hover {
     color: var(--dark-color) !important;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
@@ -449,7 +461,7 @@ nav#barraHorizontal.navbar {
     font-weight: 600;
 }
 
-/* Botones personalizados con colores del logo */
+/* Botones personalizados con colores del logo - FORZADOS */
 .btn {
     border-radius: 8px;
     font-weight: 500;
@@ -462,26 +474,40 @@ nav#barraHorizontal.navbar {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    color: var(--text-on-primary);
+.btn-primary,
+.btn.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--text-on-primary) !important;
 }
 
-.btn-primary:hover {
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
-    color: var(--text-on-primary);
+.btn-primary:hover,
+.btn.btn-primary:hover,
+.btn-primary:focus,
+.btn.btn-primary:focus,
+.btn-primary:active,
+.btn.btn-primary:active {
+    background-color: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+    color: var(--text-on-primary) !important;
 }
 
-.btn-secondary {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
+.btn-secondary,
+.btn.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    color: var(--text-on-secondary) !important;
 }
 
-.btn-secondary:hover {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
+.btn-secondary:hover,
+.btn.btn-secondary:hover,
+.btn-secondary:focus,
+.btn.btn-secondary:focus,
+.btn-secondary:active,
+.btn.btn-secondary:active {
+    background-color: var(--secondary-dark) !important;
+    border-color: var(--secondary-dark) !important;
+    color: var(--text-on-secondary) !important;
 }
 
 /* Hero section */

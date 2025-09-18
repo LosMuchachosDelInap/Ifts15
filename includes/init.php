@@ -46,12 +46,47 @@ function getCurrentUser() {
         return null;
     }
     
+    // Si ya tenemos datos en sesión, usarlos
+    if (isset($_SESSION['user_data'])) {
+        return $_SESSION['user_data'];
+    }
+    
     try {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM usuarios WHERE id = ?");
+        $stmt = $db->prepare("
+            SELECT 
+                u.id_usuario as id,
+                u.email,
+                p.nombre,
+                p.apellido,
+                p.dni,
+                p.telefono,
+                p.edad,
+                r.rol,
+                c.carrera,
+                com.comision,
+                a.año as anio_cursada
+            FROM usuario u 
+            LEFT JOIN persona p ON u.id_persona = p.id_persona 
+            LEFT JOIN roles r ON u.id_rol = r.id_rol
+            LEFT JOIN carrera c ON u.id_carrera = c.id_carrera
+            LEFT JOIN comision com ON u.id_comision = com.id_comision
+            LEFT JOIN añocursada a ON u.id_añoCursada = a.id_añoCursada
+            WHERE u.id_usuario = ? AND u.habilitado = 1
+        ");
         $stmt->execute([$_SESSION['user_id']]);
-        return $stmt->fetch();
+        $user = $stmt->fetch();
+        
+        // Guardar en sesión para próximas consultas
+        if ($user) {
+            $_SESSION['user_data'] = $user;
+        }
+        
+        return $user;
     } catch (Exception $e) {
+        if (DEBUG_MODE) {
+            error_log("Error en getCurrentUser(): " . $e->getMessage());
+        }
         return null;
     }
 }

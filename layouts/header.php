@@ -24,7 +24,32 @@ $isLoggedIn = isLoggedIn();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link href="<?php echo SITE_URL; ?>/assets/css/custom.css" rel="stylesheet">
+    <link href="<?php echo SITE_URL; ?>/assets/css/custom.css?v=<?php echo time(); ?>" rel="stylesheet">
+    
+    <!-- Critical Styles Override -->
+    <style>
+    /* Estilos críticos para compatibilidad con hosting */
+    .navbar.navbar-dark, nav.navbar-dark, #navbarMain {
+        background: linear-gradient(135deg, #FFD700 0%, #6C757D 100%) !important;
+        min-height: 80px !important;
+    }
+    .btn-primary {
+        background-color: #FFD700 !important;
+        border-color: #FFD700 !important;
+        color: #343A40 !important;
+    }
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+        background-color: #DAA520 !important;
+        border-color: #DAA520 !important;
+        color: #343A40 !important;
+    }
+    .navbar-dark .navbar-nav .nav-link {
+        color: #343A40 !important;
+    }
+    .navbar-dark .navbar-brand {
+        color: #343A40 !important;
+    }
+    </style>
     
     <!-- Variables JavaScript -->
     <script>

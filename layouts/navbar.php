@@ -9,7 +9,7 @@ $isLoggedIn = isLoggedIn();
 ?>
 
 <!-- Header Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navbarMain">
     <div class="container-fluid">
         <!-- Botón del sidebar (solo para usuarios logueados) -->
         <?php if ($isLoggedIn): ?>
@@ -78,12 +78,12 @@ $isLoggedIn = isLoggedIn();
             
             <!-- Menú de usuario -->
             <ul class="navbar-nav">
-                <?php if ($isLoggedIn && $currentUser): ?>
+                <?php if ($isLoggedIn): ?>
                     <!-- Usuario logueado -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                             <i class="fa fa-user-circle"></i> 
-                            <?php echo htmlspecialchars($currentUser['nombre'] ?? 'Usuario'); ?>
+                            <?php echo htmlspecialchars(($currentUser['nombre'] ?? 'Usuario')); ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
@@ -104,7 +104,7 @@ $isLoggedIn = isLoggedIn();
                                 </a>
                             </li>
                             
-                            <?php if (hasRole('admin')): ?>
+                            <?php if (function_exists('hasRole') && hasRole('admin')): ?>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/">

@@ -64,27 +64,42 @@ function initializeDropdowns() {
  * Inicializar sidebar
  */
 function initializeSidebar() {
+    console.log('🎯 Inicializando sidebar...');
     const sidebar = document.getElementById('sidebar');
     const content = document.querySelector('.main-content');
     
-    if (!sidebar || !content) return;
+    if (!sidebar || !content) {
+        console.warn('⚠️ Elementos del sidebar no encontrados durante inicialización');
+        return;
+    }
+    
+    console.log('📱 Sidebar encontrado, aplicando estado guardado:', sidebarState);
     
     // Aplicar estado guardado
     if (sidebarState) {
         sidebar.classList.add('collapsed');
         content.classList.add('expanded');
+        console.log('✅ Sidebar inicializado como collapsed');
+    } else {
+        sidebar.classList.remove('collapsed');
+        content.classList.remove('expanded');
+        console.log('✅ Sidebar inicializado como expanded');
     }
     
     // Toggle button functionality
     const toggleButton = document.getElementById('sidebarToggle');
     if (toggleButton) {
         toggleButton.addEventListener('click', toggleSidebar);
+        console.log('✅ Event listener del toggle button agregado');
+    } else {
+        console.warn('⚠️ Toggle button no encontrado');
     }
     
     // Auto-collapse en móviles
     if (window.innerWidth <= 768) {
         sidebar.classList.add('collapsed');
         content.classList.add('expanded');
+        console.log('📱 Auto-collapsed en móvil');
     }
 }
 
@@ -92,13 +107,28 @@ function initializeSidebar() {
  * Toggle sidebar
  */
 function toggleSidebar() {
+    console.log('🔄 toggleSidebar llamado');
     const sidebar = document.getElementById('sidebar');
     const content = document.querySelector('.main-content');
     
-    if (!sidebar || !content) return;
+    console.log('📦 Elementos encontrados:', { 
+        sidebar: !!sidebar, 
+        content: !!content 
+    });
     
+    if (!sidebar || !content) {
+        console.error('❌ Elementos del sidebar no encontrados');
+        return;
+    }
+    
+    // Toggle clases
     sidebar.classList.toggle('collapsed');
     content.classList.toggle('expanded');
+    
+    console.log('✅ Clases toggled:', {
+        sidebarCollapsed: sidebar.classList.contains('collapsed'),
+        contentExpanded: content.classList.contains('expanded')
+    });
     
     // Guardar estado
     sidebarState = sidebar.classList.contains('collapsed');
@@ -417,6 +447,9 @@ window.IFTS15 = {
     toggleTheme,
     Utils
 };
+
+// Hacer toggleSidebar disponible globalmente también
+window.toggleSidebar = toggleSidebar;
 
 /**
  * Funciones para modales de login/registro

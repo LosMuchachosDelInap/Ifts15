@@ -13,7 +13,11 @@ $isLoggedIn = isLoggedIn();
     <div class="container-fluid">
         <!-- Botón del sidebar (solo para usuarios logueados) -->
         <?php if ($isLoggedIn): ?>
-        <button class="btn btn-outline-light me-3" id="sidebarToggle" onclick="IFTS15.toggleSidebar()">
+        <button class="btn btn-outline-light me-3" 
+                type="button" 
+                data-bs-toggle="offcanvas" 
+                data-bs-target="#sidebarOffcanvas" 
+                aria-controls="sidebarOffcanvas">
             <i class="fa fa-bars"></i>
         </button>
         <?php endif; ?>

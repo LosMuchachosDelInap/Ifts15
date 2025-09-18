@@ -1,6 +1,5 @@
-    </div><!-- /.main-content -->
-</div><!-- /.row -->
-</div><!-- /.container-fluid -->
+        </div><!-- /.container-fluid -->
+    </div><!-- /.main-wrapper -->
 
 <!-- Footer -->
 <footer class="bg-dark text-white mt-5">
@@ -64,9 +63,8 @@
 <!-- Custom JavaScript -->
 <script src="<?php echo SITE_URL; ?>/assets/js/main.js"></script>
 
-<!-- Custom Scripts -->
+<!-- Auto-hide alerts script -->
 <script>
-// Auto-hide alerts after 5 seconds
 document.addEventListener('DOMContentLoaded', function() {
     const alerts = document.querySelectorAll('.alert:not(.alert-permanent)');
     alerts.forEach(function(alert) {
@@ -84,36 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 });
-
-// Función para sidebar responsive
-function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const content = document.querySelector('.main-content');
-    
-    if (sidebar && content) {
-        sidebar.classList.toggle('collapsed');
-        content.classList.toggle('expanded');
-    }
-}
-
-// Mantener estado del sidebar en localStorage
-document.addEventListener('DOMContentLoaded', function() {
-    const sidebar = document.getElementById('sidebar');
-    const savedState = localStorage.getItem('sidebarCollapsed');
-    
-    if (savedState === 'true' && sidebar) {
-        sidebar.classList.add('collapsed');
-        document.querySelector('.main-content')?.classList.add('expanded');
-    }
-});
-
-// Guardar estado del sidebar
-function saveSidebarState() {
-    const sidebar = document.getElementById('sidebar');
-    if (sidebar) {
-        localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
-    }
-}
 </script>
 
 <?php if (DEBUG_MODE): ?>

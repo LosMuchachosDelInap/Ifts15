@@ -72,9 +72,7 @@ $isLoggedIn = isLoggedIn();
         <?php if ($isLoggedIn): ?>
             <!-- Incluir sidebar para usuarios logueados -->
             <?php include __DIR__ . '/sidebar.php'; ?>
-            <!-- Inicio del contenido principal con sidebar -->
-            <div class="main-content">
-        <?php else: ?>
-            <!-- Inicio del contenido principal sin sidebar -->
-            <div class="container-fluid">
         <?php endif; ?>
+        
+        <!-- Inicio del contenido principal -->
+        <div class="container-fluid mt-5 pt-4">

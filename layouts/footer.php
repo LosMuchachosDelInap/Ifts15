@@ -64,38 +64,6 @@
 <!-- Custom JavaScript -->
 <script src="<?php echo SITE_URL; ?>/assets/js/main.js"></script>
 
-<!-- Debug Script para dropdowns -->
-<script>
-// Verificar que Bootstrap está cargado
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔧 Debug: Bootstrap cargado?', typeof bootstrap !== 'undefined');
-    console.log('🔧 Debug: Dropdowns encontrados:', document.querySelectorAll('.dropdown-toggle').length);
-    
-    // Debug: Verificar eventos de click en dropdowns
-    document.querySelectorAll('.dropdown-toggle').forEach((dropdown, index) => {
-        console.log(`🔧 Debug: Dropdown ${index + 1}: ${dropdown.textContent.trim()}`);
-        
-        dropdown.addEventListener('click', function(e) {
-            console.log('🖱️ Dropdown clicked:', this.textContent.trim());
-            console.log('🔧 Bootstrap Dropdown instance:', bootstrap.Dropdown.getInstance(this));
-        });
-        
-        // Verificar eventos Bootstrap
-        dropdown.addEventListener('show.bs.dropdown', function () {
-            console.log('✅ Dropdown showing:', this.textContent.trim());
-        });
-        
-        dropdown.addEventListener('shown.bs.dropdown', function () {
-            console.log('✅ Dropdown shown:', this.textContent.trim());
-        });
-        
-        dropdown.addEventListener('hide.bs.dropdown', function () {
-            console.log('⏏️ Dropdown hiding:', this.textContent.trim());
-        });
-    });
-});
-</script>
-
 <!-- Custom Scripts -->
 <script>
 // Auto-hide alerts after 5 seconds
@@ -108,12 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 bsAlert.close();
             }
         }, 5000);
-    });
-    
-    // Inicializar dropdowns manualmente si es necesario
-    const dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-    const dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-        return new bootstrap.Dropdown(dropdownToggleEl);
     });
     
     // Activar tooltips

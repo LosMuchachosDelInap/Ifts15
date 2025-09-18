@@ -98,9 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $persona_id = $db->lastInsertId();
                             
                             // 2. Insertar en tabla usuario (rol Alumno por defecto)
-                            // TEMPORAL: Usar MD5 porque la columna clave es varchar(20)
-                                    // Hash de la contraseña
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                            // Hash de la contraseña
+                            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                             
                             // Preparar campos opcionales de datos académicos con valores por defecto
                             $carrera_value = $carrera_id > 0 ? $carrera_id : null;

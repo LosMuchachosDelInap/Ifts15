@@ -11,7 +11,7 @@ Archivo: src/Css/sidebarCss.css
 
 .offcanvas-start {
     width: 280px !important;
-    background: linear-gradient(180deg, #343a40 0%, #495057 100%) !important;
+    background: linear-gradient(180deg, #6c757d 0%, #ffd700 100%) !important;
     border-right: 3px solid var(--primary-color);
 }
 
@@ -78,12 +78,12 @@ Archivo: src/Css/sidebarCss.css
 }
 
 .offcanvas .user-info .text-light {
-    color: #f8f9fa !important;
-    font-weight: 500;
+    color: #ffffff !important; /* Texto blanco para mejor contraste */
+    font-weight: 600;
 }
 
 .offcanvas .user-info .text-muted {
-    color: #adb5bd !important;
+    color: #f8f9fa !important; /* Blanco suave para texto secundario */
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -108,7 +108,7 @@ Archivo: src/Css/sidebarCss.css
 }
 
 .offcanvas-body .nav-pills .nav-link {
-    color: var(--text-on-secondary) !important;
+    color: #ffffff !important; /* Texto blanco para mejor contraste */
     padding: 12px 16px;
     margin: 3px 0;
     border-radius: 8px;
@@ -192,7 +192,7 @@ Archivo: src/Css/sidebarCss.css
 .offcanvas-body .collapse .nav-link {
     padding: 8px 12px;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: #ffffff !important; /* Texto blanco para contraste */
     margin: 2px 0;
     position: relative;
 }
@@ -271,6 +271,25 @@ Archivo: src/Css/sidebarCss.css
     color: var(--primary-color);
     margin-right: 8px;
     font-size: 1rem;
+}
+
+/* Footer con logo - Texto amarillo con sombra */
+.offcanvas-body .mt-auto small[style*="color: #ffd700"] {
+    color: #ffd700 !important;
+    font-weight: 600 !important;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8), 
+                 -1px -1px 3px rgba(0,0,0,0.8), 
+                 1px -1px 3px rgba(0,0,0,0.8), 
+                 -1px 1px 3px rgba(0,0,0,0.8) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.offcanvas-body .mt-auto small img {
+    border-radius: 3px;
+    object-fit: contain;
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
 }
 
 /* ========================================

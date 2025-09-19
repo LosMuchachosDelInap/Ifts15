@@ -14,7 +14,11 @@ if (!isLoggedIn()) {
 
 // Obtener nombre para mensaje de despedida
 $currentUser = getCurrentUser();
-$nombre = $currentUser['nombre'] ?? 'Usuario';
+$nombre = 'Usuario'; // Valor por defecto
+
+if ($currentUser && is_array($currentUser)) {
+    $nombre = $currentUser['nombre'] ?? $currentUser['email'] ?? 'Usuario';
+}
 
 // Cerrar sesión completamente
 session_start();

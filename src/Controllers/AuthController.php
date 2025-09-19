@@ -70,6 +70,10 @@ class AuthController
                 foreach ($datosCompletos as $key => $value) {
                     $_SESSION[$key] = $value;
                 }
+                
+                // Variables adicionales para compatibilidad
+                $_SESSION['usuario'] = $datosCompletos['email']; // Para mantener compatibilidad
+                $_SESSION['user_id'] = $datosCompletos['id_usuario']; // Para getCurrentUser()
 
                 // Log de actividad (opcional)
                 error_log("Login exitoso: {$email}");

@@ -126,3 +126,31 @@ function getErrorMessage() {
     }
     return null;
 }
+
+/**
+ * Obtener información del usuario actual
+ */
+function getCurrentUser() {
+    if (!isLoggedIn()) {
+        return null;
+    }
+    
+    // Verificar si tenemos datos del usuario en la sesión
+    if (isset($_SESSION['user_data']) && is_array($_SESSION['user_data'])) {
+        return $_SESSION['user_data'];
+    }
+    
+    // Si no hay user_data pero sí user_id, devolver datos básicos
+    if (isset($_SESSION['user_id'])) {
+        return [
+            'id' => $_SESSION['user_id'],
+            'nombre_completo' => $_SESSION['nombre_completo'] ?? $_SESSION['nombre'] ?? 'Usuario',
+            'nombre' => $_SESSION['nombre'] ?? 'Usuario',
+            'apellido' => $_SESSION['apellido'] ?? '',
+            'email' => $_SESSION['usuario'] ?? '',
+            'rol' => $_SESSION['role'] ?? 'estudiante'
+        ];
+    }
+    
+    return null;
+}

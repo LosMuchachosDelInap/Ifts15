@@ -12,9 +12,24 @@ if (!$isLoggedIn) return;
 $currentUser = [];
 if (isset($_SESSION['usuario'])) {
     $currentUser['email'] = $_SESSION['usuario'];
+    
+    // Intentar obtener el nombre completo de diferentes fuentes
+    if (!empty($_SESSION['nombre_completo']) && $_SESSION['nombre_completo'] !== ' ') {
+        $currentUser['nombre_completo'] = $_SESSION['nombre_completo'];
+    } elseif (!empty($_SESSION['nombre']) || !empty($_SESSION['apellido'])) {
+        $nombre = $_SESSION['nombre'] ?? '';
+        $apellido = $_SESSION['apellido'] ?? '';
+        $currentUser['nombre_completo'] = trim($nombre . ' ' . $apellido);
+    } else {
+        // Si no hay nombre, usar el email (parte antes del @)
+        $emailParts = explode('@', $currentUser['email']);
+        $currentUser['nombre_completo'] = !empty($emailParts[0]) ? ucfirst($emailParts[0]) : 'Usuario';
+    }
+    
     $currentUser['role'] = $_SESSION['role'] ?? 'estudiante';
 } else {
     $currentUser['email'] = 'Usuario';
+    $currentUser['nombre_completo'] = 'Usuario';
     $currentUser['role'] = 'estudiante';
 }
 
@@ -45,7 +60,7 @@ $userRole = $currentUser['role'];
             <i class="bi bi-person-circle fs-2 text-warning mb-2"></i>
             <p class="mb-1 text-light">
                 <strong>
-                    <?php echo htmlspecialchars($currentUser['email'], ENT_QUOTES, 'UTF-8'); ?>
+                    <?php echo htmlspecialchars($currentUser['nombre_completo'], ENT_QUOTES, 'UTF-8'); ?>
                 </strong>
             </p>
             <p class="mb-0 text-muted small">
@@ -260,8 +275,11 @@ $userRole = $currentUser['role'];
         
         <!-- Footer del sidebar -->
         <div class="mt-auto p-3 border-top border-secondary">
-            <small class="text-muted">
-                <i class="bi bi-mortarboard me-2"></i> 
+            <small style="color: #ffd700 !important; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.8), -1px -1px 3px rgba(0,0,0,0.8), 1px -1px 3px rgba(0,0,0,0.8), -1px 1px 3px rgba(0,0,0,0.8);">
+                <img src="<?php echo BASE_URL; ?>/src/Public/images/logo.png" 
+                     alt="IFTS15" 
+                     height="20" 
+                     class="me-2"> 
                 IFTS15 Sistema Web
             </small>
         </div>

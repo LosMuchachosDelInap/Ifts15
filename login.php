@@ -1,9 +1,12 @@
 <?php
 /**
  * Página de Login - IFTS15 Sistema Web
+ * Migrada a phpdotenv
  */
 
-require_once 'includes/init.php';
+// Cargar configuración central con phpdotenv
+require_once __DIR__ . '/src/config.php';
+require_once __DIR__ . '/src/Database.php';
 
 // Si ya está logueado, redirigir
 if (isLoggedIn()) {
@@ -84,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-include 'layouts/header.php';
+include __DIR__ . '/src/Template/head.php';
 ?>
 
 <div class="container mt-5">
@@ -159,4 +162,4 @@ include 'layouts/header.php';
     </div>
 </div>
 
-<?php include 'layouts/footer.php'; ?>
+<?php include __DIR__ . '/src/Template/footer.php'; ?>

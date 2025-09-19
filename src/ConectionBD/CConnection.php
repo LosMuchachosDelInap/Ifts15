@@ -1,12 +1,15 @@
 <?php
 /**
  * Clase de Conexión a Base de Datos - IFTS15
- * Basada en el patrón de La Canchita de Los Pibes
+ * Basada en el patrón de La Canchita de Los Pibes con phpdotenv
  * 
  * @package IFTS15\ConectionBD
  * @author IFTS15 Team
- * @version 1.0
+ * @version 2.0
  */
+
+// Cargar configuración central
+require_once __DIR__ . '/../config.php';
 
 class ConectionDB
 {
@@ -19,8 +22,12 @@ class ConectionDB
 
     public function __construct()
     {
-        // Detectar entorno automáticamente
-        $this->detectEnvironment();
+        // Cargar configuración desde variables de entorno usando la función helper
+        $this->host     = env('DB_HOST', 'localhost');
+        $this->username = env('DB_USERNAME', 'root');
+        $this->password = env('DB_PASSWORD', '');
+        $this->dbname   = env('DB_NAME', 'ifts15');
+        $this->charset  = env('DB_CHARSET', 'utf8mb4');
 
         // Crear conexión MySQLi
         $this->conn = new mysqli(
@@ -37,35 +44,6 @@ class ConectionDB
         if ($this->conn->connect_error) {
             error_log("Error de conexión BD: " . $this->conn->connect_error);
             die("Error de conexión a la base de datos");
-        }
-    }
-
-    /**
-     * Detecta automáticamente el entorno (desarrollo/producción)
-     */
-    private function detectEnvironment()
-    {
-        // Detectar si estamos en localhost o producción
-        $isLocalhost = (
-            $_SERVER['HTTP_HOST'] === 'localhost' || 
-            $_SERVER['HTTP_HOST'] === '127.0.0.1' ||
-            strpos($_SERVER['HTTP_HOST'], 'localhost:') === 0
-        );
-
-        if ($isLocalhost) {
-            // Configuración de desarrollo (localhost)
-            $this->host     = 'localhost';
-            $this->username = 'root';
-            $this->password = '';
-            $this->dbname   = 'ifts15';
-            $this->charset  = 'utf8mb4';
-        } else {
-            // Configuración de producción (InfinityFree)
-            $this->host     = 'sql103.infinityfree.com';
-            $this->username = 'if0_37852182';
-            $this->password = 'lXRO8EWQ9t1';
-            $this->dbname   = 'if0_37852182_ifts15_sistema';
-            $this->charset  = 'utf8mb4';
         }
     }
 

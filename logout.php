@@ -1,9 +1,11 @@
 <?php
 /**
  * Logout - Cerrar Sesión
+ * Migrado a phpdotenv
  */
 
-require_once 'includes/init.php';
+// Cargar configuración central con phpdotenv
+require_once __DIR__ . '/src/config.php';
 
 // Verificar que el usuario esté logueado
 if (!isLoggedIn()) {

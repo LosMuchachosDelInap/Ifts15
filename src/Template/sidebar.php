@@ -61,7 +61,7 @@ $userRole = $currentUser['role'];
             
             <!-- Dashboard / Inicio -->
             <li class="nav-item mb-2">
-                <a class="nav-link text-light d-flex align-items-center" href="<?php echo BASE_URL; ?>/index_fixed.php">
+                <a class="nav-link text-light d-flex align-items-center" href="<?php echo BASE_URL; ?>/index.php">
                     <i class="bi bi-speedometer2 me-3"></i>
                     Dashboard
                 </a>

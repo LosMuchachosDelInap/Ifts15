@@ -19,7 +19,7 @@
             
             <!-- Columna central: logo -->
             <div class="col-6 col-sm-4 d-flex justify-content-center">
-                <a class="navbar-brand mx-auto d-flex align-items-center" href="<?php echo BASE_URL; ?>/index_fixed.php">
+                <a class="navbar-brand mx-auto d-flex align-items-center" href="<?php echo BASE_URL; ?>/index.php">
                     <img src="<?php echo BASE_URL; ?>/src/Public/images/logo.png" 
                          alt="IFTS N° 15" 
                          height="40" 

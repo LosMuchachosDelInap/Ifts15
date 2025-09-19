@@ -2,19 +2,22 @@
 /**
  * Procesamiento de Registro - IFTS15
  * Archivo: register.php (solo procesamiento, sin vista)
+ * Migrado a phpdotenv
  */
 
-require_once 'includes/init.php';
+// Cargar configuración central con phpdotenv
+require_once __DIR__ . '/src/config.php';
+require_once __DIR__ . '/src/Database.php';
 
 // Si el usuario ya está logueado, redirigir
 if (isLoggedIn()) {
-    header('Location: ' . SITE_URL);
+    header('Location: ' . BASE_URL);
     exit;
 }
 
 // Si alguien accede directamente sin POST, redirigir al inicio
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ' . SITE_URL);
+    header('Location: ' . BASE_URL);
     exit;
 }
 
@@ -34,19 +37,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validaciones básicas
     if (empty($nombre) || empty($apellido) || empty($dni) || empty($telefono) || empty($email) || empty($password)) {
         showError('Todos los campos básicos son obligatorios');
-        header('Location: ' . SITE_URL . '/#register');
+        header('Location: ' . BASE_URL . '/#register');
         exit;
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         showError('El email no es válido');
-        header('Location: ' . SITE_URL . '/#register');
+        header('Location: ' . BASE_URL . '/#register');
         exit;
     } elseif (strlen($password) < 6) {
         showError('La contraseña debe tener al menos 6 caracteres');
-        header('Location: ' . SITE_URL . '/#register');
+        header('Location: ' . BASE_URL . '/#register');
         exit;
     } elseif ($edad < 16 || $edad > 100) {
         showError('La edad debe estar entre 16 y 100 años');
-        header('Location: ' . SITE_URL . '/#register');
+        header('Location: ' . BASE_URL . '/#register');
         exit;
     } else {
         // NOTA: Los datos académicos son opcionales por ahora
@@ -58,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if ($existing_user) {
                 showError('Ya existe un usuario con ese email');
-                header('Location: ' . SITE_URL . '/#register');
+                header('Location: ' . BASE_URL . '/#register');
                 exit;
             } else {
                 // Verificar si el DNI ya existe
@@ -66,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 if ($existing_person) {
                     showError('Ya existe una persona con ese DNI');
-                    header('Location: ' . SITE_URL . '/#register');
+                    header('Location: ' . BASE_URL . '/#register');
                     exit;
                 } else {
                     // Obtener el ID del rol "Alumno" (por defecto)
@@ -74,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     if (!$rol_alumno) {
                         showError('Error: No se encontró el rol de Alumno en el sistema');
-                        header('Location: ' . SITE_URL . '/#register');
+                        header('Location: ' . BASE_URL . '/#register');
                         exit;
                     } else {
                         // Iniciar transacción
@@ -121,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $db->commit();
                             
                             showSuccess('Usuario registrado exitosamente. Ya puedes iniciar sesión.');
-                            header('Location: ' . SITE_URL . '/#login');
+                            header('Location: ' . BASE_URL . '/#login');
                             exit;
                             
                         } catch (Exception $e) {
@@ -138,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 showError('Error interno del sistema');
             }
-            header('Location: ' . SITE_URL . '/#register');
+            header('Location: ' . BASE_URL . '/#register');
             exit;
         }
     }

@@ -1,37 +1,13 @@
 <?php
 /**
  * AuthController - IFTS15
- * Controlador de autenticación basado en el patrón de La Canchita
+ * Controlador de autenticación con phpdotenv
  * 
  * @package IFTS15\Controllers
  */
 
-// Configuración de errores
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Iniciar sesión si no está iniciada
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Definir BASE_URL si no está definida
-if (!defined('BASE_URL')) {
-    $protocolo = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-    $host = $_SERVER['HTTP_HOST'];
-    
-    // Para servidor PHP built-in (localhost:8000), no agregar carpeta adicional
-    if (strpos($host, ':8000') !== false) {
-        $carpeta = '';
-    } elseif ($host === 'localhost' || $host === '127.0.0.1' || strpos($host, 'localhost:') === 0) {
-        $carpeta = '/Mis_Proyectos/Ifts15';
-    } else {
-        $carpeta = '';
-    }
-    
-    define('BASE_URL', $protocolo . $host . $carpeta);
-}
+// Cargar configuración central
+require_once __DIR__ . '/../config.php';
 
 // Incluir modelos necesarios
 require_once __DIR__ . '/../Model/User.php';
@@ -345,12 +321,12 @@ class AuthController
      */
     private function redirect($url)
     {
-        // Si el redirect es solo "/", cambiar a "/index_fixed.php"
+        // Si el redirect es solo "/", cambiar a "/index.php"
         if ($url === '/' || $url === '') {
-            $url = '/index_fixed.php';
+            $url = '/index.php';
         } elseif (strpos($url, '/?') === 0) {
-            // Si es algo como "/?login=success", cambiar a "/index_fixed.php?login=success"
-            $url = str_replace('/?', '/index_fixed.php?', $url);
+            // Si es algo como "/?login=success", cambiar a "/index.php?login=success"
+            $url = str_replace('/?', '/index.php?', $url);
         }
         
         $full_url = BASE_URL . $url;

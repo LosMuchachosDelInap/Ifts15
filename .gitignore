@@ -3,6 +3,14 @@ config/config-local.php
 .env
 .env.local
 
+# Composer - Dependencias PHP
+vendor/
+composer.lock
+
+# Archivos de prueba y verificación
+test_*.php
+verificacion_*.php
+
 # Logs
 logs/
 *.log

@@ -1,0 +1,315 @@
+/*
+===============================================
+IFTS15 - Sistema Web - Estilos CSS
+Basado en Bootstrap 5.3.2 con personalización mínima
+===============================================
+*/
+
+/* ========================================
+   VARIABLES CSS Y COLORES INSTITUCIONALES
+   ======================================== */
+:root {
+    /* Paleta amarillo primario y gris secundario */
+    --primary-color: #FFD700;        /* Amarillo dorado - color principal */
+    --primary-dark: #DAA520;         /* Amarillo más oscuro para hover */
+    --secondary-color: #6C757D;      /* Gris como color secundario */
+    --secondary-dark: #5A6268;       /* Gris más oscuro */
+    --accent-color: #ADB5BD;         /* Gris claro como acento */
+    --success-color: #28a745;        /* Verde para éxito */
+    --info-color: #17a2b8;           /* Azul para información */
+    --warning-color: #FF8C00;        /* Naranja que combina con el amarillo */
+    --danger-color: #dc3545;         /* Rojo para errores */
+    --light-color: #F8F9FA;          /* Gris muy claro */
+    --dark-color: #343A40;           /* Gris oscuro */
+    
+    /* Colores de texto */
+    --text-on-primary: #343A40;      /* Texto gris oscuro sobre amarillo */
+    --text-on-secondary: #FFFFFF;    /* Texto blanco sobre gris */
+    
+    /* Dimensiones de layout */
+    --sidebar-width: 280px;
+    --navbar-height: 80px;           /* Altura del navbar aumentada */
+    --content-padding: 20px;
+}
+
+/* ========================================
+   RESET Y BASE
+   ======================================== */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* ========================================
+   LAYOUT PRINCIPAL
+   ======================================== */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: var(--navbar-height);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-color);
+}
+
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-area {
+    flex: 1;
+    padding: var(--content-padding);
+    min-height: calc(100vh - var(--navbar-height) - 200px);
+}
+
+/* Contenedor principal sin márgenes laterales */
+#page.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Ajuste para el contenido principal */
+#region-main {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* ========================================
+   NOTA: Los estilos del navbar, sidebar y footer 
+   han sido movidos a archivos separados:
+   - navbarCss.css
+   - sidebarCss.css  
+   - footerCss.css
+   ======================================== */
+
+/* ========================================
+   CARDS Y COMPONENTES
+   ======================================== */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-on-primary);
+    font-weight: 600;
+    border-bottom: none;
+    padding: 15px 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Cards especiales */
+.card-welcome {
+    background: linear-gradient(135deg, #343a40 0%, #495057 100%);
+    color: white;
+    border: 2px solid var(--primary-color);
+}
+
+.card-info {
+    border-left: 4px solid var(--info-color);
+}
+
+.card-warning {
+    border-left: 4px solid var(--warning-color);
+}
+
+.card-success {
+    border-left: 4px solid var(--success-color);
+}
+
+/* ========================================
+   BOTONES PERSONALIZADOS
+   ======================================== */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-primary,
+.btn.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--text-on-primary) !important;
+}
+
+.btn-primary:hover,
+.btn.btn-primary:hover,
+.btn-primary:focus,
+.btn.btn-primary:focus,
+.btn-primary:active,
+.btn.btn-primary:active {
+    background-color: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+    color: var(--text-on-primary) !important;
+}
+
+.btn-secondary,
+.btn.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    color: var(--text-on-secondary) !important;
+}
+
+.btn-secondary:hover,
+.btn.btn-secondary:hover,
+.btn-secondary:focus,
+.btn.btn-secondary:focus,
+.btn-secondary:active,
+.btn.btn-secondary:active {
+    background-color: var(--secondary-dark) !important;
+    border-color: var(--secondary-dark) !important;
+    color: var(--text-on-secondary) !important;
+}
+
+.btn-outline-warning {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-warning:hover {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+}
+
+/* ========================================
+   UTILIDADES Y HELPERS
+   ======================================== */
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.border-primary {
+    border-color: var(--primary-color) !important;
+}
+
+/* Espaciado personalizado */
+.py-navbar {
+    padding-top: calc(var(--navbar-height) + 20px);
+    padding-bottom: 20px;
+}
+
+.mt-navbar {
+    margin-top: calc(var(--navbar-height) + 20px);
+}
+
+/* ========================================
+   NOTA: Los estilos del footer han sido movidos
+   a footerCss.css
+   ======================================== */
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+    :root {
+        --content-padding: 15px;
+    }
+    
+    .card-body {
+        padding: 15px;
+    }
+    
+    .offcanvas-start {
+        width: 260px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --content-padding: 10px;
+    }
+    
+    .card {
+        margin-bottom: 15px;
+    }
+    
+    .card-header {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .card-body {
+        padding: 12px;
+    }
+}
+
+/* ========================================
+   ANIMACIONES
+   ======================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+/* ========================================
+   ESTADOS Y FEEDBACK
+   ======================================== */
+.loading {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.loading::after {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 8px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

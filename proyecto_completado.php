@@ -71,6 +71,7 @@ echo "<li class='info'>🗄️ Base de datos: MySQL con conexión exitosa</li>";
 echo "<li class='info'>📧 PHPMailer configurado y listo</li>";
 echo "<li class='info'>🔐 Sistema de autenticación funcional</li>";
 echo "<li class='info'>📱 Interfaz responsive con Bootstrap 5</li>";
+echo "<li class='success'>🎯 <strong>NUEVO: Namespaces PSR-4 implementados</strong></li>";
 echo "</ul>";
 echo "</div>";
 

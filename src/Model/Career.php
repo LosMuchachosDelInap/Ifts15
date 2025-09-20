@@ -1,8 +1,14 @@
 <?php
+
+namespace App\Model;
+
+use App\ConectionBD\ConectionDB;
+use Exception;
+
 /**
  * Modelo Career - IFTS15
  * 
- * @package IFTS15\Model
+ * @package App\Model
  */
 class Career
 {

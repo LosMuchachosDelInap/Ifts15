@@ -3,10 +3,14 @@
  * Configuración Central - IFTS15 con phpdotenv
  * Archivo de configuración centralizada que carga variables de entorno
  * 
- * @package IFTS15\Config
+ * @package App\Config
  * @author IFTS15 Team
  * @version 2.0
  */
+
+// Importar las clases necesarias
+use App\ConectionBD\ConectionDB;
+use App\Database;
 
 // Cargar phpdotenv solo una vez
 if (!isset($_ENV['BASE_URL']) && !defined('DOTENV_LOADED')) {

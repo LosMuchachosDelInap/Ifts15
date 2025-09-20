@@ -1,36 +1,18 @@
 <?php
+
+namespace App\Controllers;
+
+use App\ConectionBD\ConectionDB;
+use App\Model\User;
+use App\Model\Person;
+use Exception;
+
 /**
  * AuthController - IFTS15
  * Controlador de autenticación con phpdotenv
  * 
- * @package IFTS15\Controllers
+ * @package App\Controllers
  */
-
-// Configuración de errores para debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-try {
-    // Cargar configuración central
-    require_once dirname(__DIR__) . '/config.php';
-
-    // Incluir modelos necesarios
-    require_once dirname(__DIR__) . '/Model/User.php';
-    require_once dirname(__DIR__) . '/Model/Person.php';
-    require_once dirname(__DIR__) . '/ConectionBD/CConnection.php';
-} catch (Exception $e) {
-    // Si hay problemas cargando archivos, mostrar error detallado
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'error' => 'Error cargando dependencias: ' . $e->getMessage(),
-        'file' => __FILE__,
-        'line' => __LINE__
-    ]);
-    exit;
-}
-
 class AuthController
 {
     private $conn;
@@ -38,6 +20,11 @@ class AuthController
     
     public function __construct()
     {
+        // Cargar configuración si no está cargada
+        if (!function_exists('env')) {
+            require_once __DIR__ . '/../config.php';
+        }
+        
         try {
             $this->dbConnection = new ConectionDB();
             $this->conn = $this->dbConnection->getConnection();

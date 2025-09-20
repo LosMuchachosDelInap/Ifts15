@@ -1,9 +1,15 @@
 <?php
+
+namespace App\Model;
+
+use App\ConectionBD\ConectionDB;
+use Exception;
+
 /**
  * Modelo User - IFTS15
  * Basado en el patrón de La Canchita de Los Pibes
  * 
- * @package IFTS15\Model
+ * @package App\Model
  */
 class User
 {

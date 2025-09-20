@@ -1,15 +1,18 @@
 <?php
+
+namespace App\ConectionBD;
+
+use mysqli;
+use Exception;
+
 /**
  * Clase de Conexión a Base de Datos - IFTS15
  * Basada en el patrón de La Canchita de Los Pibes con phpdotenv
  * 
- * @package IFTS15\ConectionBD
+ * @package App\ConectionBD
  * @author IFTS15 Team
  * @version 2.0
  */
-
-// Cargar configuración central
-require_once __DIR__ . '/../config.php';
 
 class ConectionDB
 {
@@ -22,6 +25,11 @@ class ConectionDB
 
     public function __construct()
     {
+        // Cargar configuración si no está cargada
+        if (!function_exists('env')) {
+            require_once __DIR__ . '/../config.php';
+        }
+        
         // Cargar configuración desde variables de entorno usando la función helper
         $this->host     = env('DB_HOST', 'localhost');
         $this->username = env('DB_USERNAME', 'root');

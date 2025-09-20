@@ -1,4 +1,10 @@
 <?php
+
+namespace App;
+
+use App\ConectionBD\ConectionDB;
+use Exception;
+
 /**
  * Clase Database - Wrapper para ConectionDB
  * Compatibilidad con el código existente del login
@@ -16,7 +22,6 @@ class Database {
         }
         
         // Usar nuestra clase de conexión existente
-        require_once __DIR__ . '/ConectionBD/CConnection.php';
         $this->dbConnection = new ConectionDB();
         $this->conn = $this->dbConnection->getConnection();
     }

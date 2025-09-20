@@ -1,9 +1,16 @@
 <?php
+
+namespace App\Model;
+
+use App\ConectionBD\ConectionDB;
+use Exception;
+use DateTime;
+
 /**
  * Modelo Person - IFTS15
  * Basado en el patrón de La Canchita de Los Pibes
  * 
- * @package IFTS15\Model
+ * @package App\Model
  */
 class Person
 {

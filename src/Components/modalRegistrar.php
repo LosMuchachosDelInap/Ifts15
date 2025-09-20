@@ -3,6 +3,14 @@
  * Modal Registrar - IFTS15
  * Componente de modal de registro
  */
+
+// Obtener datos académicos desde la base de datos
+use App\ConectionBD\ConectionDB;
+
+$conectarDB = new ConectionDB();
+$carreras = $conectarDB->getCarreras();
+$comisiones = $conectarDB->getComisiones();
+$añosCursada = $conectarDB->getAñosCursada();
 ?>
 
 <!-- Modal Registrar -->
@@ -58,12 +66,14 @@
                             </div>
                             
                             <div class="mb-3">
-                                <label for="registerFechaNacimiento" class="form-label">Fecha de Nacimiento (opcional)</label>
+                                <label for="registerFechaNacimiento" class="form-label">Fecha de Nacimiento *</label>
                                 <input type="date" 
                                        class="form-control" 
                                        id="registerFechaNacimiento" 
-                                       name="fecha_nacimiento">
-                                <small class="form-text text-muted">Deja vacío si prefieres no proporcionar esta información</small>
+                                       name="fecha_nacimiento"
+                                       required
+                                       onchange="calcularEdad()">
+                                <small class="form-text text-muted">La edad se calculará automáticamente</small>
                             </div>
                         </div>
                         
@@ -114,7 +124,7 @@
                             </div>
                             
                             <div class="mb-3">
-                                <label for="registerEdad" class="form-label">Edad *</label>
+                                <label for="registerEdad" class="form-label">Edad (calculada automáticamente)</label>
                                 <input type="number" 
                                        class="form-control" 
                                        id="registerEdad" 
@@ -122,7 +132,57 @@
                                        required
                                        min="16" 
                                        max="99" 
-                                       placeholder="18">
+                                       readonly
+                                       style="background-color: #f8f9fa;"
+                                       placeholder="Se calculará desde la fecha de nacimiento">
+                                <small class="form-text text-success" id="edadInfo" style="display: none;">
+                                    <i class="bi bi-check-circle me-1"></i>Edad calculada correctamente
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Datos Académicos -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="text-muted mb-3 mt-3">
+                                <i class="bi bi-mortarboard me-1"></i>Datos Académicos
+                            </h6>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="registerCarrera" class="form-label">Carrera *</label>
+                                <select class="form-select" id="registerCarrera" name="id_carrera" required>
+                                    <option value="">Seleccionar carrera...</option>
+                                    <?php foreach ($carreras as $carrera): ?>
+                                        <option value="<?= $carrera['id_carrera'] ?>"><?= htmlspecialchars($carrera['carrera']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="registerComision" class="form-label">Comisión *</label>
+                                <select class="form-select" id="registerComision" name="id_comision" required>
+                                    <option value="">Seleccionar comisión...</option>
+                                    <?php foreach ($comisiones as $comision): ?>
+                                        <option value="<?= $comision['id_comision'] ?>">Comisión <?= htmlspecialchars($comision['comision']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="registerAñoCursada" class="form-label">Año a Cursar *</label>
+                                <select class="form-select" id="registerAñoCursada" name="id_añoCursada" required>
+                                    <option value="">Seleccionar año...</option>
+                                    <?php foreach ($añosCursada as $año): ?>
+                                        <option value="<?= $año['id_añoCursada'] ?>"><?= $año['año'] ?>° Año</option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -170,6 +230,55 @@
 </div>
 
 <script>
+// Función para calcular la edad automáticamente
+function calcularEdad() {
+    const fechaNacimiento = document.getElementById('registerFechaNacimiento').value;
+    const edadInput = document.getElementById('registerEdad');
+    const edadInfo = document.getElementById('edadInfo');
+    
+    if (fechaNacimiento) {
+        const fechaNac = new Date(fechaNacimiento);
+        const hoy = new Date();
+        
+        // Validar que la fecha no sea futura
+        if (fechaNac > hoy) {
+            edadInput.value = '';
+            edadInput.setCustomValidity('La fecha de nacimiento no puede ser futura');
+            edadInfo.style.display = 'none';
+            return;
+        }
+        
+        // Calcular edad
+        let edad = hoy.getFullYear() - fechaNac.getFullYear();
+        const mesActual = hoy.getMonth();
+        const mesNacimiento = fechaNac.getMonth();
+        
+        // Ajustar si aún no ha cumplido años este año
+        if (mesActual < mesNacimiento || (mesActual === mesNacimiento && hoy.getDate() < fechaNac.getDate())) {
+            edad--;
+        }
+        
+        // Validar edad mínima y máxima
+        if (edad < 16) {
+            edadInput.value = edad;
+            edadInput.setCustomValidity('Debes tener al menos 16 años para registrarte');
+            edadInfo.style.display = 'none';
+        } else if (edad > 99) {
+            edadInput.value = edad;
+            edadInput.setCustomValidity('Edad máxima permitida: 99 años');
+            edadInfo.style.display = 'none';
+        } else {
+            edadInput.value = edad;
+            edadInput.setCustomValidity('');
+            edadInfo.style.display = 'block';
+        }
+    } else {
+        edadInput.value = '';
+        edadInput.setCustomValidity('La fecha de nacimiento es requerida');
+        edadInfo.style.display = 'none';
+    }
+}
+
 // Validar que las contraseñas coincidan
 document.addEventListener('DOMContentLoaded', function() {
     const password = document.getElementById('registerPassword');
@@ -183,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    password.addEventListener('change', validarPasswords);
-    confirmPassword.addEventListener('keyup', validarPasswords);
+    password.addEventListener('input', validarPasswords);
+    confirmPassword.addEventListener('input', validarPasswords);
 });
 </script>

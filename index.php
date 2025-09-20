@@ -1,20 +1,20 @@
 <?php
 /**
  * Página Principal - IFTS15 (Versión Corregida)
- * Basada en el patrón MVC con phpdotenv
+ * Basada en el patrón MVC con phpdotenv y PSR-4
  */
 
-// Cargar configuración central
+// Cargar configuración central (incluye autoloader)
 require_once __DIR__ . '/src/config.php';
 
-// Incluir archivos MVC (con manejo de errores)
+// Usar las clases con namespaces
+use App\ConectionBD\ConectionDB;
+use App\Model\Person;
+use App\Model\User;
+use App\Controllers\AuthController;
+
+// Instanciar conexión a la base de datos
 try {
-    require_once __DIR__ . '/src/ConectionBD/CConnection.php';
-    require_once __DIR__ . '/src/Model/Person.php';
-    require_once __DIR__ . '/src/Model/User.php';
-    require_once __DIR__ . '/src/Controllers/AuthController.php';
-    
-    // Instanciar conexión a la base de datos
     $conectarDB = new ConectionDB();
     $conn = $conectarDB->getConnection();
     

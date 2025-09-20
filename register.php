@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $apellido = trim($_POST['apellido'] ?? '');
     $dni = trim($_POST['dni'] ?? '');
     $telefono = trim($_POST['telefono'] ?? '');
+    $fecha_nacimiento = trim($_POST['fecha_nacimiento'] ?? '');
     $edad = (int)($_POST['edad'] ?? 0);
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['clave'] ?? '';
@@ -35,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $anio_cursada_id = (int)($_POST['id_añoCursada'] ?? 0);
     
     // Validaciones básicas
-    if (empty($nombre) || empty($apellido) || empty($dni) || empty($telefono) || empty($email) || empty($password)) {
+    if (empty($nombre) || empty($apellido) || empty($dni) || empty($fecha_nacimiento) || empty($email) || empty($password)) {
         showError('Todos los campos básicos son obligatorios');
         header('Location: ' . BASE_URL . '/#register');
         exit;
@@ -47,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         showError('La contraseña debe tener al menos 6 caracteres');
         header('Location: ' . BASE_URL . '/#register');
         exit;
-    } elseif ($edad < 16 || $edad > 100) {
+    } elseif ($edad < 16 || $edad > 99) {
         showError('La edad debe estar entre 16 y 100 años');
         header('Location: ' . BASE_URL . '/#register');
         exit;
@@ -85,11 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         
                         try {
                             // 1. Insertar en tabla persona
-                            $db->query("
-                                INSERT INTO persona (apellido, nombre, dni, telefono, edad) 
-                                VALUES (?, ?, ?, ?, ?)
-                            ", [$apellido, $nombre, $dni, $telefono, $edad]);
-                            $persona_id = $db->lastInsertId();
+                            $db->execute("
+                                INSERT INTO persona (apellido, nombre, dni, telefono, fecha_nacimiento, edad) 
+                                VALUES (?, ?, ?, ?, ?, ?)
+                            ", [$apellido, $nombre, $dni, $telefono, $fecha_nacimiento, $edad]);
+                            $persona_id = $db->getLastInsertId();
                             
                             // 2. Insertar en tabla usuario (rol Alumno por defecto)
                             // Hash de la contraseña

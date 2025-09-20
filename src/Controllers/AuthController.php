@@ -135,13 +135,19 @@ class AuthController
         $telefono = trim($_POST['telefono'] ?? '');
         $edad = intval($_POST['edad'] ?? 0);
         
+        // Obtener datos académicos
+        $id_carrera = intval($_POST['id_carrera'] ?? 0);
+        $id_comision = intval($_POST['id_comision'] ?? 0);
+        $id_añoCursada = intval($_POST['id_añoCursada'] ?? 0);
+        
         error_log("DATOS recibidos - email: {$email}, nombre: {$nombre}, apellido: {$apellido}, dni: {$dni}, edad: {$edad}");
+        error_log("DATOS ACADEMICOS - carrera: {$id_carrera}, comision: {$id_comision}, año: {$id_añoCursada}");
         
         // Convertir fecha vacía a NULL para la base de datos
         $fecha_nacimiento = empty($fecha_nacimiento) ? null : $fecha_nacimiento;
 
         // Validaciones
-        $errores = $this->validarDatosRegistro($email, $password, $confirm_password, $nombre, $apellido, $dni);
+        $errores = $this->validarDatosRegistro($email, $password, $confirm_password, $nombre, $apellido, $dni, $id_carrera, $id_comision, $id_añoCursada);
         
         if (!empty($errores)) {
             $this->redirect('/?error=' . urlencode(implode(', ', $errores)));
@@ -177,8 +183,8 @@ class AuthController
             error_log("PERSONA guardada con ID: " . $persona->getId());
 
             error_log("CREANDO usuario");
-            // 2. Crear usuario
-            $user = new User($email, $password, $persona->getId(), 1); // 1 = Alumno por defecto
+            // 2. Crear usuario con datos académicos
+            $user = new User($email, $password, $persona->getId(), 1, $id_carrera, $id_comision, $id_añoCursada); // 1 = Alumno por defecto
             
             error_log("VALIDANDO usuario");
             // Validar usuario
@@ -320,7 +326,7 @@ class AuthController
     /**
      * Validar datos de registro
      */
-    private function validarDatosRegistro($email, $password, $confirm_password, $nombre, $apellido, $dni)
+    private function validarDatosRegistro($email, $password, $confirm_password, $nombre, $apellido, $dni, $id_carrera, $id_comision, $id_añoCursada)
     {
         $errores = [];
 
@@ -358,6 +364,19 @@ class AuthController
             $errores[] = "El DNI es obligatorio";
         } elseif (!preg_match('/^\d{7,8}$/', $dni)) {
             $errores[] = "El DNI debe tener 7 u 8 dígitos";
+        }
+
+        // Validar datos académicos
+        if (empty($id_carrera) || $id_carrera <= 0) {
+            $errores[] = "Debe seleccionar una carrera";
+        }
+
+        if (empty($id_comision) || $id_comision <= 0) {
+            $errores[] = "Debe seleccionar una comisión";
+        }
+
+        if (empty($id_añoCursada) || $id_añoCursada <= 0) {
+            $errores[] = "Debe seleccionar el año a cursar";
         }
 
         return $errores;

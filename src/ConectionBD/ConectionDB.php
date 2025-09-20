@@ -76,6 +76,66 @@ class ConectionDB
     }
 
     /**
+     * Obtener todas las carreras habilitadas
+     * 
+     * @return array Array de carreras con id_carrera y carrera
+     */
+    public function getCarreras()
+    {
+        $carreras = [];
+        $query = "SELECT id_carrera, carrera FROM carrera WHERE habilitado = 1 AND cancelado = 0 ORDER BY carrera";
+        
+        $result = $this->conn->query($query);
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $carreras[] = $row;
+            }
+        }
+        
+        return $carreras;
+    }
+
+    /**
+     * Obtener todas las comisiones habilitadas
+     * 
+     * @return array Array de comisiones con id_comision y comision
+     */
+    public function getComisiones()
+    {
+        $comisiones = [];
+        $query = "SELECT id_comision, comision FROM comision WHERE habilitado = 1 AND cancelado = 0 ORDER BY comision";
+        
+        $result = $this->conn->query($query);
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $comisiones[] = $row;
+            }
+        }
+        
+        return $comisiones;
+    }
+
+    /**
+     * Obtener todos los años cursada habilitados
+     * 
+     * @return array Array de años con id_añoCursada y año
+     */
+    public function getAñosCursada()
+    {
+        $años = [];
+        $query = "SELECT id_añoCursada, año FROM añocursada WHERE habilitado = 1 AND cancelado = 0 ORDER BY año";
+        
+        $result = $this->conn->query($query);
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $años[] = $row;
+            }
+        }
+        
+        return $años;
+    }
+
+    /**
      * Destructor - cierra automáticamente la conexión
      */
     public function __destruct()

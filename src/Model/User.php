@@ -18,12 +18,15 @@ class User
     private $password_hash;
     private $id_persona;
     private $role_id;
+    private $id_carrera;
+    private $id_comision;
+    private $id_anoCursada;
     private $is_active;
     private $created_at;
     private $updated_at;
     private $last_login;
 
-    public function __construct($email, $password, $id_persona, $role_id = 2, $id_usuario = null, $hash_password = true)
+    public function __construct($email, $password, $id_persona, $role_id = 2, $id_carrera = null, $id_comision = null, $id_anoCursada = null, $id_usuario = null, $hash_password = true)
     {
         $this->id_usuario = $id_usuario;
         $this->email = $email;
@@ -31,6 +34,9 @@ class User
         $this->password_hash = $hash_password ? password_hash($password, PASSWORD_DEFAULT) : $password;
         $this->id_persona = $id_persona;
         $this->role_id = $role_id; // 1=admin, 2=estudiante, 3=profesor
+        $this->id_carrera = $id_carrera;
+        $this->id_comision = $id_comision;
+        $this->id_anoCursada = $id_anoCursada;
         $this->is_active = true;
         $this->created_at = date('Y-m-d H:i:s');
         $this->updated_at = date('Y-m-d H:i:s');
@@ -86,9 +92,17 @@ class User
     public function guardar($conn)
     {
         try {
-            // Adaptar a la estructura de BD existente
-            $stmt = $conn->prepare("INSERT INTO usuario (email, clave, id_persona, id_rol, habilitado) VALUES (?, ?, ?, ?, 1)");
-            $stmt->bind_param("ssii", $this->email, $this->password_hash, $this->id_persona, $this->role_id);
+            // Adaptar a la estructura de BD existente con campos académicos
+            $stmt = $conn->prepare("INSERT INTO usuario (email, clave, id_persona, id_rol, id_carrera, id_comision, id_añoCursada, habilitado) VALUES (?, ?, ?, ?, ?, ?, ?, 1)");
+            $stmt->bind_param("ssiiiii", 
+                $this->email, 
+                $this->password_hash, 
+                $this->id_persona, 
+                $this->role_id,
+                $this->id_carrera,
+                $this->id_comision, 
+                $this->id_anoCursada
+            );
             
             if ($stmt->execute()) {
                 $this->id_usuario = $conn->insert_id;
@@ -206,7 +220,10 @@ class User
                 $fila['clave'], // Usar directamente 'clave' que es el nombre real de la columna
                 $fila['id_persona'], 
                 $fila['id_rol'], // Usar 'id_rol' que es el nombre real de la columna
-                $fila['id_usuario'], 
+                $fila['id_carrera'] ?? null,    // id_carrera
+                $fila['id_comision'] ?? null,   // id_comision
+                $fila['id_añoCursada'] ?? null, // id_anoCursada
+                $fila['id_usuario'],            // id_usuario
                 false // No volver a hashear, ya viene de BD
             );
             

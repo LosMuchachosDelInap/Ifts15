@@ -1,13 +1,48 @@
 <?php
 /**
- * Debug AuthController - IFTS15
- * Archivo para diagnosticar problemas con el controlador de autenticación
+ * Debug de Autenticación - IFTS15
+ * Script temporal para diagnosticar problemas de login
  */
 
 // Mostrar errores
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+require_once __DIR__ . '/src/config.php';
+
+use App\ConectionBD\ConectionDB;
+use App\Model\User;
+
+try {
+    $conectarDB = new ConectionDB();
+    $conn = $conectarDB->getConnection();
+    
+    echo "<h2>🔍 Debug de Autenticación</h2>\n";
+    
+    // Mostrar usuarios existentes
+    echo "<h3>👥 Usuarios en Base de Datos:</h3>\n";
+    $query = "SELECT id_usuario, email, clave, habilitado, cancelado, id_rol FROM usuario";
+    $result = $conn->query($query);
+    
+    if ($result && $result->num_rows > 0) {
+        echo "<table border='1' cellpadding='5'>\n";
+        echo "<tr><th>ID</th><th>Email</th><th>Clave (Hash)</th><th>Habilitado</th><th>Cancelado</th><th>Rol</th></tr>\n";
+        
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>\n";
+            echo "<td>{$row['id_usuario']}</td>\n";
+            echo "<td>{$row['email']}</td>\n";
+            echo "<td>" . substr($row['clave'], 0, 30) . "...</td>\n";
+            echo "<td>" . ($row['habilitado'] ? '✅' : '❌') . "</td>\n";
+            echo "<td>" . ($row['cancelado'] ? '❌' : '✅') . "</td>\n";
+            echo "<td>{$row['id_rol']}</td>\n";
+            echo "</tr>\n";
+        }
+        echo "</table>\n";
+    } else {
+        echo "<p style='color: red;'>❌ No hay usuarios en la base de datos</p>\n";
+    }
 
 echo "<h1>🔧 Debug AuthController - IFTS15</h1>";
 

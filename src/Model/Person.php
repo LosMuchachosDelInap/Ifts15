@@ -13,19 +13,22 @@ class Person
     private $fecha_nacimiento;
     private $dni;
     private $telefono;
-    private $direccion;
-    private $email_contacto;
+    private $edad;
 
-    public function __construct($nombre, $apellido, $fecha_nacimiento, $dni, $telefono = null, $direccion = null, $email_contacto = null, $id_persona = null)
+    public function __construct($nombre, $apellido, $fecha_nacimiento, $dni, $telefono = null, $direccion = null, $email_contacto = null, $id_persona = null, $edad = null)
     {
+        error_log("CONSTRUCTOR Person - nombre: {$nombre}, apellido: {$apellido}, dni: {$dni}, edad: " . ($edad ?? 'NULL'));
+        
         $this->id_persona = $id_persona;
         $this->nombre = $nombre;
         $this->apellido = $apellido;
         $this->fecha_nacimiento = $fecha_nacimiento;
         $this->dni = $dni;
         $this->telefono = $telefono;
-        $this->direccion = $direccion;
-        $this->email_contacto = $email_contacto;
+        $this->edad = $edad;
+        // direccion y email_contacto se ignoran, solo están para compatibilidad
+        
+        error_log("CONSTRUCTOR Person - completado exitosamente");
     }
 
     // ========================================
@@ -37,8 +40,7 @@ class Person
     public function getFechaNacimiento() { return $this->fecha_nacimiento; }
     public function getDni() { return $this->dni; }
     public function getTelefono() { return $this->telefono; }
-    public function getDireccion() { return $this->direccion; }
-    public function getEmailContacto() { return $this->email_contacto; }
+    public function getEdadBD() { return $this->edad; } // Edad guardada en BD
     
     public function getNombreCompleto() { 
         return $this->nombre . ' ' . $this->apellido; 
@@ -59,8 +61,7 @@ class Person
     public function setFechaNacimiento($fecha_nacimiento) { $this->fecha_nacimiento = $fecha_nacimiento; }
     public function setDni($dni) { $this->dni = $dni; }
     public function setTelefono($telefono) { $this->telefono = $telefono; }
-    public function setDireccion($direccion) { $this->direccion = $direccion; }
-    public function setEmailContacto($email_contacto) { $this->email_contacto = $email_contacto; }
+    public function setEdad($edad) { $this->edad = $edad; }
 
     // ========================================
     // MÉTODOS DE BASE DE DATOS
@@ -71,22 +72,31 @@ class Person
      */
     public function guardar($conn)
     {
-        $stmt = $conn->prepare("INSERT INTO persona (nombre, apellido, fecha_nacimiento, dni, telefono, direccion, email_contacto) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssss", 
+        $stmt = $conn->prepare("INSERT INTO persona (nombre, apellido, fecha_nacimiento, dni, telefono, edad) VALUES (?, ?, ?, ?, ?, ?)");
+        
+        // Manejar fecha_nacimiento NULL explícitamente
+        $fecha_param = $this->fecha_nacimiento;
+        if (empty($fecha_param)) {
+            $fecha_param = null;
+        }
+        
+        $stmt->bind_param("sssssi", 
             $this->nombre, 
             $this->apellido, 
-            $this->fecha_nacimiento, 
+            $fecha_param, 
             $this->dni, 
-            $this->telefono, 
-            $this->direccion, 
-            $this->email_contacto
+            $this->telefono,
+            $this->edad
         );
         
         if ($stmt->execute()) {
             $this->id_persona = $conn->insert_id;
             return true;
+        } else {
+            // Log del error específico
+            error_log("Error al guardar persona: " . $stmt->error . " | SQL: " . $stmt->sqlstate);
+            return false;
         }
-        return false;
     }
 
     /**
@@ -94,15 +104,20 @@ class Person
      */
     public function actualizar($conn)
     {
-        $stmt = $conn->prepare("UPDATE persona SET nombre = ?, apellido = ?, fecha_nacimiento = ?, dni = ?, telefono = ?, direccion = ?, email_contacto = ? WHERE id_persona = ?");
-        $stmt->bind_param("sssssssi", 
+        // Manejar fecha_nacimiento NULL explícitamente
+        $fecha_param = $this->fecha_nacimiento;
+        if (empty($fecha_param)) {
+            $fecha_param = null;
+        }
+        
+        $stmt = $conn->prepare("UPDATE persona SET nombre = ?, apellido = ?, fecha_nacimiento = ?, dni = ?, telefono = ?, edad = ? WHERE id_persona = ?");
+        $stmt->bind_param("sssssii", 
             $this->nombre, 
             $this->apellido, 
-            $this->fecha_nacimiento, 
+            $fecha_param, 
             $this->dni, 
-            $this->telefono, 
-            $this->direccion, 
-            $this->email_contacto,
+            $this->telefono,
+            $this->edad,
             $this->id_persona
         );
         return $stmt->execute();
@@ -139,9 +154,10 @@ class Person
                 $fila['fecha_nacimiento'], 
                 $fila['dni'], 
                 $fila['telefono'], 
-                $fila['direccion'], 
-                $fila['email_contacto'], 
-                $fila['id_persona']
+                null, // direccion no se usa
+                null, // email_contacto ya no se almacena en persona
+                $fila['id_persona'],
+                $fila['edad']
             );
         }
         return null;
@@ -164,8 +180,8 @@ class Person
                 $fila['fecha_nacimiento'], 
                 $fila['dni'], 
                 $fila['telefono'], 
-                $fila['direccion'], 
-                $fila['email_contacto'], 
+                null, // direccion no se usa
+                null, // email_contacto ya no se almacena en persona
                 $fila['id_persona']
             );
         }
@@ -198,8 +214,8 @@ class Person
                 $fila['fecha_nacimiento'], 
                 $fila['dni'], 
                 $fila['telefono'], 
-                $fila['direccion'], 
-                $fila['email_contacto'], 
+                null, // direccion no se usa
+                null, // email_contacto ya no se almacena en persona
                 $fila['id_persona']
             );
         }
@@ -226,8 +242,8 @@ class Person
                 $fila['fecha_nacimiento'], 
                 $fila['dni'], 
                 $fila['telefono'], 
-                $fila['direccion'], 
-                $fila['email_contacto'], 
+                null, // direccion no se usa
+                null, // email_contacto ya no se almacena en persona
                 $fila['id_persona']
             );
         }
@@ -275,10 +291,6 @@ class Person
         
         if ($this->telefono && !preg_match('/^[\d\-\+\(\)\s]+$/', $this->telefono)) {
             $errores[] = "Formato de teléfono inválido";
-        }
-        
-        if ($this->email_contacto && !filter_var($this->email_contacto, FILTER_VALIDATE_EMAIL)) {
-            $errores[] = "Formato de email de contacto inválido";
         }
         
         return $errores;

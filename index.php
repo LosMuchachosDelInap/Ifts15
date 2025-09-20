@@ -38,32 +38,114 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
         <?php include __DIR__ . '/src/Template/sidebar.php'; ?>
     <?php else: ?>
         <!-- Sidebar para usuarios no logueados -->
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
-            <div class="offcanvas-header offcanvas-custom-header">
-                <h5 class="offcanvas-title fw-bold" id="sidebarOffcanvasLabel" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.8);">
+        <div class="offcanvas offcanvas-end text-bg-dark" 
+             tabindex="-1" 
+             id="sidebarOffcanvas" 
+             aria-labelledby="sidebarOffcanvasLabel">
+            
+            <!-- Header del offcanvas -->
+            <div class="offcanvas-header bg-secondary text-white">
+                <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">
+                    <i class="bi bi-house-door me-2"></i>
                     Menú Principal
                 </h5>
-                <button type="button" class="btn-close btn-close-custom" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" 
+                        class="btn-close btn-close-white" 
+                        data-bs-dismiss="offcanvas" 
+                        aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body offcanvas-custom-body">
-                <div class="list-group list-group-flush">
-                    <a href="<?php echo BASE_URL; ?>/index.php" class="list-group-item list-group-item-action list-group-item-custom">
-                        <i class="bi bi-house-door me-2 text-primary"></i>Inicio
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-custom" data-bs-toggle="modal" data-bs-target="#modalLogin">
-                        <i class="bi bi-box-arrow-in-right me-2 text-success"></i>Iniciar Sesión
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-custom" data-bs-toggle="modal" data-bs-target="#modalRegistrar">
-                        <i class="bi bi-person-plus me-2 text-warning"></i>Registrarse
-                    </a>
-                    <hr class="border-warning">
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-custom" data-bs-toggle="modal" data-bs-target="#consultasModal">
-                        <i class="bi bi-question-circle me-2 text-warning"></i>Consultas
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-custom">
-                        <i class="bi bi-info-circle me-2 text-info"></i>Acerca de
-                    </a>
+            
+            <!-- Información para usuarios no logueados -->
+            <div class="p-3 border-bottom border-secondary">
+                <div class="text-center">
+                    <i class="bi bi-person-plus fs-2 text-warning mb-2"></i>
+                    <p class="mb-1 text-light">
+                        <strong>Bienvenido</strong>
+                    </p>
+                    <p class="mb-0 text-muted small">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Usuario Invitado
+                    </p>
                 </div>
+            </div>
+            
+            <!-- Menú de navegación -->
+            <div class="offcanvas-body p-0">
+                <nav class="nav nav-pills flex-column gap-2 p-3">
+                    
+                    <!-- Sección: Navegación Principal -->
+                    <div class="sidebar-heading text-muted mb-2">
+                        <i class="bi bi-compass me-1"></i>
+                        NAVEGACIÓN
+                    </div>
+                    
+                    <a class="nav-link text-light d-flex align-items-center gap-2" 
+                       href="<?php echo BASE_URL; ?>/index.php">
+                        <i class="bi bi-house-door"></i>
+                        <span>Inicio</span>
+                    </a>
+                    
+                    <a class="nav-link text-light d-flex align-items-center gap-2" 
+                       href="<?php echo BASE_URL; ?>/src/Views/realizador-productor-tv.php">
+                        <i class="bi bi-camera-video"></i>
+                        <span>Información de Carrera</span>
+                    </a>
+                    
+                    <!-- Separador -->
+                    <hr class="border-secondary my-3">
+                    
+                    <!-- Sección: Acceso al Sistema -->
+                    <div class="sidebar-heading text-muted mb-2">
+                        <i class="bi bi-key me-1"></i>
+                        ACCESO AL SISTEMA
+                    </div>
+                    
+                    <a class="nav-link text-light d-flex align-items-center gap-2" 
+                       href="#modalLogin" 
+                       data-bs-toggle="modal" 
+                       data-bs-target="#modalLogin">
+                        <i class="bi bi-box-arrow-in-right text-success"></i>
+                        <span>Iniciar Sesión</span>
+                    </a>
+                    
+                    <a class="nav-link text-light d-flex align-items-center gap-2" 
+                       href="#modalRegistrar" 
+                       data-bs-toggle="modal" 
+                       data-bs-target="#modalRegistrar">
+                        <i class="bi bi-person-plus text-warning"></i>
+                        <span>Registrarse</span>
+                    </a>
+                    
+                    <!-- Separador -->
+                    <hr class="border-secondary my-3">
+                    
+                    <!-- Sección: Ayuda y Soporte -->
+                    <div class="sidebar-heading text-muted mb-2">
+                        <i class="bi bi-question-circle me-1"></i>
+                        AYUDA Y SOPORTE
+                    </div>
+                    
+                    <a class="nav-link text-light d-flex align-items-center gap-2" 
+                       href="#consultasModal" 
+                       data-bs-toggle="modal" 
+                       data-bs-target="#consultasModal">
+                        <i class="bi bi-chat-dots text-info"></i>
+                        <span>Consultas</span>
+                    </a>
+                    
+                    <a class="nav-link text-light d-flex align-items-center gap-2" 
+                       href="javascript:void(0)">
+                        <i class="bi bi-info-circle text-primary"></i>
+                        <span>Acerca de IFTS15</span>
+                    </a>
+                    
+                    <a class="nav-link text-light d-flex align-items-center gap-2" 
+                       href="javascript:void(0)">
+                        <i class="bi bi-telephone text-success"></i>
+                        <span>Contacto</span>
+                    </a>
+                    
+                </nav>
             </div>
         </div>
     <?php endif; ?>
@@ -459,18 +541,12 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
 
     <?php include __DIR__ . '/src/Template/footer.php'; ?>
 
-    <?php if (!$isLoggedIn && $conn): ?>
+    <?php if (!$isLoggedIn): ?>
         <!-- Modales de Login y Registro -->
-        <?php 
-        // Solo incluir modales si la conexión a BD está funcionando
-        try {
-            include_once(__DIR__ . "/src/Components/modalLogin.php");
-            include_once(__DIR__ . "/src/Components/modalRegistrar.php");
-        } catch (Exception $e) {
-            // Si hay error con los modales, mostrar botones simples
-            echo "<!-- Error cargando modales: " . htmlspecialchars($e->getMessage()) . " -->";
-        }
-        ?>
+        <?php include_once(__DIR__ . "/src/Components/modalLogin.php"); ?>
+        <?php include_once(__DIR__ . "/src/Components/modalRegistrar.php"); ?>
+        
+        <!-- Modal de Consultas se incluye desde footer/sidebar -->
     <?php endif; ?>
 
     <!-- Bootstrap JS Bundle -->
@@ -505,11 +581,15 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth'
-                        });
+                    const href = this.getAttribute('href');
+                    // Solo si el href no es solo "#"
+                    if (href && href !== '#') {
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
                     }
                 });
             });

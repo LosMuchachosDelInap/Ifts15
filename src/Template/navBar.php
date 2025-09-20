@@ -43,7 +43,7 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><span class="dropdown-item-text text-muted"><?php echo ucfirst($userRole); ?></span></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/src/Controllers/AuthController.php?action=logout">Cerrar Sesión</a></li>
+                            <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/src/Controllers/cerrarSesion.php">Cerrar Sesión</a></li>
                         </ul>
                     </div>
                 <?php else: ?>

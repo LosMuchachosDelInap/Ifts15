@@ -60,7 +60,7 @@
             <div class="modal-footer border-top-0 pt-0">
                 <small class="text-muted w-100 text-center">
                     ¿No tienes cuenta? 
-                    <a href="#" 
+                    <a href="#modalRegistrar" 
                        data-bs-dismiss="modal" 
                        data-bs-toggle="modal" 
                        data-bs-target="#modalRegistrar"

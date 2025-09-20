@@ -58,11 +58,12 @@
                             </div>
                             
                             <div class="mb-3">
-                                <label for="registerFechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                                <label for="registerFechaNacimiento" class="form-label">Fecha de Nacimiento (opcional)</label>
                                 <input type="date" 
                                        class="form-control" 
                                        id="registerFechaNacimiento" 
                                        name="fecha_nacimiento">
+                                <small class="form-text text-muted">Deja vacío si prefieres no proporcionar esta información</small>
                             </div>
                         </div>
                         
@@ -111,19 +112,17 @@
                                        name="telefono" 
                                        placeholder="11-1234-5678">
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Dirección -->
-                    <div class="row">
-                        <div class="col-12">
+                            
                             <div class="mb-3">
-                                <label for="registerDireccion" class="form-label">Dirección</label>
-                                <input type="text" 
+                                <label for="registerEdad" class="form-label">Edad *</label>
+                                <input type="number" 
                                        class="form-control" 
-                                       id="registerDireccion" 
-                                       name="direccion" 
-                                       placeholder="Tu dirección completa">
+                                       id="registerEdad" 
+                                       name="edad" 
+                                       required
+                                       min="16" 
+                                       max="99" 
+                                       placeholder="18">
                             </div>
                         </div>
                     </div>
@@ -138,9 +137,9 @@
                                        required>
                                 <label class="form-check-label small" for="aceptarTerminos">
                                     Acepto los 
-                                    <a href="#" class="text-decoration-none">términos y condiciones</a> 
+                                    <a href="javascript:void(0)" class="text-decoration-none">términos y condiciones</a> 
                                     y la 
-                                    <a href="#" class="text-decoration-none">política de privacidad</a> 
+                                    <a href="javascript:void(0)" class="text-decoration-none">política de privacidad</a> 
                                     del IFTS15.
                                 </label>
                             </div>
@@ -159,7 +158,7 @@
             <div class="modal-footer border-top-0 pt-0">
                 <small class="text-muted w-100 text-center">
                     ¿Ya tienes cuenta? 
-                    <a href="#" 
+                    <a href="#modalLogin" 
                        data-bs-dismiss="modal" 
                        data-bs-toggle="modal" 
                        data-bs-target="#modalLogin"

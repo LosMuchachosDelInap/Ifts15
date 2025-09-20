@@ -265,7 +265,7 @@ $userRole = $currentUser['role'];
             <!-- Cerrar Sesión -->
             <li class="nav-item mt-3">
                 <a class="nav-link text-light d-flex align-items-center text-danger" 
-                   href="<?php echo BASE_URL; ?>/src/Controllers/AuthController.php?action=logout">
+                   href="<?php echo BASE_URL; ?>/src/Controllers/cerrarSesion.php">
                     <i class="bi bi-box-arrow-right me-3"></i>
                     Cerrar Sesión
                 </a>

@@ -81,8 +81,8 @@ class User
     {
         try {
             // Adaptar a la estructura de BD existente
-            $stmt = $conn->prepare("INSERT INTO usuario (email, clave, id_persona, habilitado) VALUES (?, ?, ?, 1)");
-            $stmt->bind_param("ssi", $this->email, $this->password_hash, $this->id_persona);
+            $stmt = $conn->prepare("INSERT INTO usuario (email, clave, id_persona, id_rol, habilitado) VALUES (?, ?, ?, ?, 1)");
+            $stmt->bind_param("ssii", $this->email, $this->password_hash, $this->id_persona, $this->role_id);
             
             if ($stmt->execute()) {
                 $this->id_usuario = $conn->insert_id;
@@ -167,16 +167,17 @@ class User
         if ($fila = $resultado->fetch_assoc()) {
             $user = new User(
                 $fila['email'], 
-                $fila['password_hash'], 
+                $fila['clave'], // Usar 'clave' que es el nombre real
                 $fila['id_persona'], 
-                $fila['role_id'],
+                $fila['id_rol'], // Usar 'id_rol' que es el nombre real
                 $fila['id_usuario'], 
                 false // No hashear, ya viene hasheado
             );
-            $user->is_active = $fila['is_active'];
-            $user->created_at = $fila['created_at'];
-            $user->updated_at = $fila['updated_at'];
-            $user->last_login = $fila['last_login'];
+            // Usar solo campos que existen en la BD
+            $user->is_active = $fila['habilitado'] ?? 1;
+            $user->created_at = $fila['idCreate'] ?? null;
+            $user->updated_at = $fila['idUpdate'] ?? null;
+            // last_login no existe en tu esquema
             return $user;
         }
         return null;
@@ -196,9 +197,9 @@ class User
         if ($fila = $resultado->fetch_assoc()) {
             $user = new User(
                 $fila['email'], 
-                $fila['password_hash'] ?? $fila['clave'], // Usar 'clave' si 'password_hash' no existe
+                $fila['clave'], // Usar directamente 'clave' que es el nombre real de la columna
                 $fila['id_persona'], 
-                $fila['role_id'] ?? 2, // Default role si no existe
+                $fila['id_rol'], // Usar 'id_rol' que es el nombre real de la columna
                 $fila['id_usuario'], 
                 false // No volver a hashear, ya viene de BD
             );
@@ -284,7 +285,7 @@ class User
         $sql = "SELECT u.*, p.nombre, p.apellido
                 FROM usuario u 
                 LEFT JOIN persona p ON u.id_persona = p.id_persona 
-                WHERE u.role_id = ? AND u.is_active = 1 
+                WHERE u.id_rol = ? AND u.habilitado = 1 
                 ORDER BY p.apellido, p.nombre";
         
         $stmt = $conn->prepare($sql);
@@ -375,7 +376,7 @@ class User
      */
     public function emailExiste($conn)
     {
-        $stmt = $conn->prepare("SELECT id_usuario FROM usuario WHERE email = ? AND id_usuario != ? AND is_active = 1");
+        $stmt = $conn->prepare("SELECT id_usuario FROM usuario WHERE email = ? AND id_usuario != ? AND habilitado = 1");
         $id_actual = $this->id_usuario ?? 0;
         $stmt->bind_param("si", $this->email, $id_actual);
         $stmt->execute();

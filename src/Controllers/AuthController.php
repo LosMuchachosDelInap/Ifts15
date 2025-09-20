@@ -6,13 +6,30 @@
  * @package IFTS15\Controllers
  */
 
-// Cargar configuración central
-require_once __DIR__ . '/../config.php';
+// Configuración de errores para debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// Incluir modelos necesarios
-require_once __DIR__ . '/../Model/User.php';
-require_once __DIR__ . '/../Model/Person.php';
-require_once __DIR__ . '/../ConectionBD/CConnection.php';
+try {
+    // Cargar configuración central
+    require_once dirname(__DIR__) . '/config.php';
+
+    // Incluir modelos necesarios
+    require_once dirname(__DIR__) . '/Model/User.php';
+    require_once dirname(__DIR__) . '/Model/Person.php';
+    require_once dirname(__DIR__) . '/ConectionBD/CConnection.php';
+} catch (Exception $e) {
+    // Si hay problemas cargando archivos, mostrar error detallado
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'error' => 'Error cargando dependencias: ' . $e->getMessage(),
+        'file' => __FILE__,
+        'line' => __LINE__
+    ]);
+    exit;
+}
 
 class AuthController
 {
@@ -21,8 +38,22 @@ class AuthController
     
     public function __construct()
     {
-        $this->dbConnection = new ConectionDB();
-        $this->conn = $this->dbConnection->getConnection();
+        try {
+            $this->dbConnection = new ConectionDB();
+            $this->conn = $this->dbConnection->getConnection();
+            
+            if (!$this->conn) {
+                throw new Exception('No se pudo establecer conexión con la base de datos');
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'error' => 'Error de conexión: ' . $e->getMessage(),
+                'controller' => 'AuthController'
+            ]);
+            exit;
+        }
     }
 
     /**
@@ -99,6 +130,8 @@ class AuthController
      */
     public function register()
     {
+        error_log("INICIO registro - REQUEST_METHOD: " . $_SERVER['REQUEST_METHOD']);
+        
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->redirect('/?error=metodo_invalido');
             return;
@@ -113,7 +146,12 @@ class AuthController
         $dni = trim($_POST['dni'] ?? '');
         $fecha_nacimiento = trim($_POST['fecha_nacimiento'] ?? '');
         $telefono = trim($_POST['telefono'] ?? '');
-        $direccion = trim($_POST['direccion'] ?? '');
+        $edad = intval($_POST['edad'] ?? 0);
+        
+        error_log("DATOS recibidos - email: {$email}, nombre: {$nombre}, apellido: {$apellido}, dni: {$dni}, edad: {$edad}");
+        
+        // Convertir fecha vacía a NULL para la base de datos
+        $fecha_nacimiento = empty($fecha_nacimiento) ? null : $fecha_nacimiento;
 
         // Validaciones
         $errores = $this->validarDatosRegistro($email, $password, $confirm_password, $nombre, $apellido, $dni);
@@ -124,53 +162,71 @@ class AuthController
         }
 
         try {
+            error_log("INICIANDO transacción");
             // Iniciar transacción
             $this->conn->begin_transaction();
 
+            error_log("CREANDO objeto Person");
             // 1. Crear persona
-            $persona = new Person($nombre, $apellido, $fecha_nacimiento, $dni, $telefono, $direccion, $email);
+            $persona = new Person($nombre, $apellido, $fecha_nacimiento, $dni, $telefono, null, null, null, $edad);
             
+            error_log("VALIDANDO persona");
             // Validar persona
             $erroresPersona = $persona->validar();
             if (!empty($erroresPersona)) {
-                throw new Exception(implode(', ', $erroresPersona));
+                throw new Exception("Errores persona: " . implode(', ', $erroresPersona));
             }
 
+            error_log("VERIFICANDO DNI existente");
             // Verificar si DNI ya existe
             if ($persona->dniExiste($this->conn)) {
                 throw new Exception("El DNI ya está registrado");
             }
 
+            error_log("GUARDANDO persona");
             if (!$persona->guardar($this->conn)) {
                 throw new Exception("Error al guardar datos personales");
             }
+            error_log("PERSONA guardada con ID: " . $persona->getId());
 
+            error_log("CREANDO usuario");
             // 2. Crear usuario
-            $user = new User($email, $password, $persona->getId(), 2); // 2 = estudiante por defecto
+            $user = new User($email, $password, $persona->getId(), 1); // 1 = Alumno por defecto
             
+            error_log("VALIDANDO usuario");
             // Validar usuario
             $erroresUsuario = $user->validar($this->conn);
             if (!empty($erroresUsuario)) {
-                throw new Exception(implode(', ', $erroresUsuario));
+                throw new Exception("Errores usuario: " . implode(', ', $erroresUsuario));
             }
 
+            error_log("GUARDANDO usuario");
             if (!$user->guardar($this->conn)) {
                 throw new Exception("Error al crear usuario");
             }
 
+            error_log("CONFIRMANDO transacción");
             // Confirmar transacción
             $this->conn->commit();
 
             // Log de actividad
-            error_log("Registro exitoso: {$email}");
+            error_log("REGISTRO EXITOSO: {$email}");
 
             $this->redirect('/?registro=exitoso');
 
         } catch (Exception $e) {
             // Rollback en caso de error
             $this->conn->rollback();
-            error_log("Error en registro: " . $e->getMessage());
-            $this->redirect('/?error=' . urlencode($e->getMessage()));
+            $error_msg = $e->getMessage();
+            $debug_info = "Error: {$error_msg} | Datos: nombre={$nombre}, apellido={$apellido}, dni={$dni}, email={$email}, fecha=" . ($fecha_nacimiento ?: 'NULL') . ", telefono={$telefono}, edad={$edad}";
+            error_log("ERROR en registro: " . $debug_info);
+            $this->redirect('/?error=' . urlencode($error_msg));
+        } catch (Throwable $e) {
+            // Capturar errores fatales también
+            $this->conn->rollback();
+            $error_msg = "Error fatal: " . $e->getMessage() . " en " . $e->getFile() . ":" . $e->getLine();
+            error_log("ERROR FATAL en registro: " . $error_msg);
+            $this->redirect('/?error=' . urlencode("Error fatal en el registro"));
         }
     }
 
@@ -346,27 +402,55 @@ class AuthController
 
 // Solo procesar si se llama directamente este archivo
 if (basename($_SERVER['PHP_SELF']) === 'AuthController.php') {
-    // Determinar qué acción realizar
-    $action = $_GET['action'] ?? $_POST['action'] ?? 'login';
-
-    $authController = new AuthController();
-
-    switch ($action) {
-        case 'login':
-            $authController->login();
-            break;
+    try {
+        // Determinar qué acción realizar
+        $action = $_GET['action'] ?? $_POST['action'] ?? '';
         
-        case 'register':
-            $authController->register();
-            break;
-        
-        case 'logout':
-            $authController->logout();
-            break;
+        if (empty($action)) {
+            throw new Exception('Acción no especificada');
+        }
+
+        // Verificar método de solicitud según la acción
+        if ($action === 'logout') {
+            // Logout permite GET y POST
+            if ($_SERVER['REQUEST_METHOD'] !== 'GET' && $_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new Exception('Método de solicitud no permitido para logout');
+            }
+        } else {
+            // Login y Register solo permiten POST
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new Exception('Método de solicitud no permitido');
+            }
+        }
+
+        $authController = new AuthController();
+
+        switch ($action) {
+            case 'login':
+                $authController->login();
+                break;
             
-        default:
-            header('Location: ' . BASE_URL . '/?error=accion_invalida');
-            exit;
+            case 'register':
+                $authController->register();
+                break;
+            
+            case 'logout':
+                $authController->logout();
+                break;
+                
+            default:
+                throw new Exception('Acción no válida: ' . $action);
+        }
+        
+    } catch (Exception $e) {
+        // Manejo de errores general
+        http_response_code(500);
+        echo json_encode([
+            'success' => false,
+            'error' => $e->getMessage(),
+            'trace' => DEBUG_MODE ? $e->getTraceAsString() : 'Error interno del servidor'
+        ]);
+        exit;
     }
 }
 ?>

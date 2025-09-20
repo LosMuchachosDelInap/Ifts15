@@ -4,6 +4,9 @@
  * Carrera específica del instituto
  */
 
+// Iniciar sesión para compatibilidad con templates
+session_start();
+
 // Configuración directa para esta página
 $pageTitle = 'Realizador y Productor Televisivo - IFTS15';
 
@@ -31,7 +34,7 @@ $userRole = $isLoggedIn ? ($_SESSION['role'] ?? 'estudiante') : '';
 <?php include __DIR__ . '/../Template/sidebar.php'; ?>
 
 <!-- CSS específico para esta página -->
-<link rel="stylesheet" href="<?php echo BASE_URL; ?>/src/css/informacionCarreraCss.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>/src/Css/informacionCarreraCss.css">
 
 <!-- Contenido principal con margen para navbar fixed -->
 
@@ -751,11 +754,15 @@ $userRole = $isLoggedIn ? ($_SESSION['role'] ?? 'estudiante') : '';
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                const href = this.getAttribute('href');
+                // Solo si el href no es solo "#"
+                if (href && href !== '#') {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
                 }
             });
         });

@@ -313,3 +313,177 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* ========================================
+   ESTILOS PARA MODALES - INFINITYFREE FIX
+   ======================================== */
+
+/* Modal backdrop personalizado */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    z-index: 1040 !important;
+}
+
+/* Modal dialog personalizado */
+.modal-dialog {
+    z-index: 1050 !important;
+    margin: 1.75rem auto !important;
+}
+
+/* Modal content personalizado */
+.modal-content {
+    border-radius: 10px !important;
+    border: 2px solid var(--primary-color) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+/* Modal header personalizado */
+.modal-header {
+    background: linear-gradient(135deg, var(--dark-color) 0%, var(--secondary-color) 100%) !important;
+    color: white !important;
+    border-bottom: 3px solid var(--primary-color) !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+
+.modal-title {
+    font-weight: bold !important;
+    color: white !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Modal body personalizado */
+.modal-body {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+    padding: 2rem !important;
+}
+
+/* Modal footer personalizado */
+.modal-footer {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+    border-top: 1px solid var(--primary-color) !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+}
+
+/* Botón cerrar modal personalizado */
+.btn-close {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-radius: 50% !important;
+    opacity: 1 !important;
+    font-size: 1.2rem !important;
+    padding: 0.5rem !important;
+    margin: 0 !important;
+}
+
+.btn-close:hover {
+    background: rgba(255, 215, 0, 0.9) !important;
+    transform: scale(1.1) !important;
+}
+
+/* ========================================
+   ESTADÍSTICAS CARDS - FONDO GRIS FIX
+   ======================================== */
+
+/* Card de estadísticas con fondo gris */
+.card.bg-info,
+.card.bg-success,
+.card.bg-warning,
+.card.bg-secondary {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--dark-color) 100%) !important;
+    border: 2px solid rgba(255, 215, 0, 0.3) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Colores específicos para cada tipo de estadística */
+.card.bg-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+}
+
+.card.bg-success {
+    background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%) !important;
+}
+
+.card.bg-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%) !important;
+    color: var(--dark-color) !important;
+}
+
+.card.bg-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%) !important;
+}
+
+/* Efecto hover para cards de estadísticas */
+.card.bg-info:hover,
+.card.bg-success:hover,
+.card.bg-warning:hover,
+.card.bg-secondary:hover {
+    transform: translateY(-5px) scale(1.05) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Texto en cards de estadísticas */
+.card.bg-info .card-body,
+.card.bg-success .card-body,
+.card.bg-secondary .card-body {
+    color: white !important;
+}
+
+.card.bg-warning .card-body {
+    color: var(--dark-color) !important;
+}
+
+/* Iconos en cards de estadísticas */
+.card .fs-2,
+.card .bi {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ========================================
+   FORMULARIOS EN MODALES
+   ======================================== */
+
+.modal .form-control {
+    border: 2px solid #e9ecef !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    transition: all 0.3s ease !important;
+}
+
+.modal .form-control:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25) !important;
+}
+
+.modal .form-label {
+    font-weight: 600 !important;
+    color: var(--dark-color) !important;
+    margin-bottom: 8px !important;
+}
+
+/* ========================================
+   RESPONSIVE FIXES PARA INFINITYFREE
+   ======================================== */
+
+/* Asegurar que los modales funcionen en móviles */
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 1rem !important;
+        max-width: calc(100% - 2rem) !important;
+    }
+    
+    .modal-body {
+        padding: 1rem !important;
+    }
+    
+    .card.bg-info,
+    .card.bg-success, 
+    .card.bg-warning,
+    .card.bg-secondary {
+        margin-bottom: 1rem !important;
+    }
+}

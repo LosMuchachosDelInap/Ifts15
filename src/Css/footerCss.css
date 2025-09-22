@@ -24,6 +24,34 @@ footer,
     overflow: visible !important;
 }
 
+/* Estilos adicionales del footer (de head.php) */
+footer h5, footer h6 {
+    color: #ffd700 !important;
+    font-weight: 600;
+}
+
+footer .list-unstyled li {
+    margin-bottom: 8px;
+}
+
+footer .list-unstyled a:hover {
+    color: #ffd700 !important;
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+
+footer hr {
+    border-color: #495057;
+}
+
+footer .bi {
+    color: #ffd700;
+}
+
+footer p.small {
+    line-height: 1.6;
+}
+
 /* Asegurar que el fondo cubra todo el contenido */
 footer .container {
     position: relative !important;

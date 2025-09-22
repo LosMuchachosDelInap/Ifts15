@@ -153,7 +153,7 @@ if ($isLoggedIn && !empty($userEmail)) {
     <div class="row">
         <div class="col-12">
             <!-- Header específico IFTS15 -->
-            <div class="card border-0 shadow-lg mb-4" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);">
+            <div class="card border-0 shadow-lg mb-4 career-header">
                 <div class="card-body text-white">
                     <div class="row align-items-center">
                         <div class="col-md-8">
@@ -212,8 +212,8 @@ if ($isLoggedIn && !empty($userEmail)) {
             <!-- Información del IFTS15 -->
             <div class="row mb-4">
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header bg-gradient bg-danger text-white">
+                    <div class="card info-card">
+                        <div class="card-header card-header-gray">
                             <h4 class="mb-0">
                                 <i class="fa fa-info-circle"></i>
                                 Información de la Carrera
@@ -477,7 +477,7 @@ if ($isLoggedIn && !empty($userEmail)) {
 
             <!-- Instalaciones -->
             <div class="card mb-4">
-                <div class="card-header bg-dark text-white">
+                <div class="card-header bg-gray-dark">
                     <h4 class="mb-0">
                         <i class="fa fa-building"></i>
                         Instalaciones y Estudios - IFTS15
@@ -509,7 +509,7 @@ if ($isLoggedIn && !empty($userEmail)) {
 
             <!-- Campo laboral -->
             <div class="card mb-4">
-                <div class="card-header bg-info text-white">
+                <div class="card-header bg-gray-info">
                     <h4 class="mb-0">
                         <i class="fa fa-briefcase"></i>
                         Oportunidades Profesionales
@@ -542,23 +542,23 @@ if ($isLoggedIn && !empty($userEmail)) {
             <!-- Call to Action específico IFTS15 -->
             <div class="row mb-4">
                 <div class="col-12">
-                    <div class="card bg-gradient text-white" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);">
+                    <div class="card cta-card text-white">
                         <div class="card-body text-center">
                             <h3 class="mb-3">🎬 ¡Comienza tu carrera en TV!</h3>
                             <p class="lead mb-4">
                                 Únete al IFTS15 y forma parte de la nueva generación de realizadores y productores televisivos
                             </p>
-                            <div class="btn-group" role="group">
-                                <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#modalRegistrar">
-                                    <i class="fa fa-user-plus text-danger"></i>
+                            <div class="btn-group btn-group-rounded" role="group">
+                                <button class="btn btn-warning btn-lg" data-bs-toggle="modal" data-bs-target="#modalRegistrar">
+                                    <i class="fa fa-user-plus text-dark"></i>
                                     Inscribirse Ahora
                                 </button>
-                                <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalConsultas">
-                                    <i class="fa fa-phone"></i>
+                                <button class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#modalConsultas">
+                                    <i class="fa fa-phone text-warning"></i>
                                     Contactar
                                 </button>
-                                <a href="<?php echo BASE_URL; ?>/" class="btn btn-outline-light">
-                                    <i class="fa fa-home"></i>
+                                <a href="<?php echo BASE_URL; ?>/" class="btn btn-warning btn-lg">
+                                    <i class="fa fa-home text-dark"></i>
                                     Volver al Inicio
                                 </a>
                             </div>

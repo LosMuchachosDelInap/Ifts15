@@ -29,7 +29,7 @@ body {
 
 /* Header de carrera con gradiente personalizado */
 .career-header {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    background: linear-gradient(135deg, #343a40 0%, #6c757d 100%);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     overflow: hidden;
@@ -86,7 +86,7 @@ body {
 }
 
 .info-card .card-header {
-    background: linear-gradient(135deg, var(--danger-color) 0%, #c82333 100%);
+    background: linear-gradient(135deg, #343a40 0%, #6c757d 100%);
     padding: 1.5rem;
     border: none;
 }
@@ -346,7 +346,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    background: linear-gradient(135deg, #343a40 0%, #6c757d 100%);
     position: relative;
 }
 
@@ -517,6 +517,28 @@ body {
     }
 }
 
+/* Clases para elementos con gradiente gris personalizado */
+.bg-gradient-gray {
+    background: linear-gradient(135deg, #343a40 0%, #6c757d 100%) !important;
+    color: white !important;
+}
+
+.card-header-gray {
+    background: linear-gradient(135deg, #343a40 0%, #6c757d 100%) !important;
+    color: white !important;
+    border: none;
+}
+
+.bg-gray-info {
+    background: linear-gradient(135deg, #495057 0%, #868e96 100%) !important;
+    color: white !important;
+}
+
+.bg-gray-dark {
+    background: linear-gradient(135deg, #212529 0%, #495057 100%) !important;
+    color: white !important;
+}
+
 /* Efectos especiales para interactividad */
 .hover-glow:hover {
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
@@ -559,4 +581,23 @@ p {
 .icon-hover:hover .fab,
 .icon-hover:hover .far {
     transform: rotate(5deg) scale(1.1);
+}
+
+/* Botones con esquinas completamente redondeadas */
+.btn-group-rounded .btn {
+    border-radius: 25px !important;
+    margin: 0.25rem !important;
+    border: none !important;
+}
+
+.btn-group-rounded .btn:first-child {
+    border-radius: 25px !important;
+}
+
+.btn-group-rounded .btn:last-child {
+    border-radius: 25px !important;
+}
+
+.btn-group-rounded .btn:not(:first-child):not(:last-child) {
+    border-radius: 25px !important;
 }

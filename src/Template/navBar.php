@@ -22,7 +22,6 @@
                 <a class="navbar-brand mx-auto d-flex align-items-center" href="<?php echo BASE_URL; ?>/index.php">
                     <img src="<?php echo BASE_URL; ?>/src/Public/images/logo.png" 
                          alt="IFTS N° 15" 
-                         height="40" 
                          class="me-2">
                     <!--<span class="fw-bold text-white d-none d-sm-inline" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.8);">
                         IFTS N° 15

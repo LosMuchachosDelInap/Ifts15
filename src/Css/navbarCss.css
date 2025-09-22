@@ -19,17 +19,31 @@ Archivo: src/Css/navbarCss.css
 }
 
 /* Logo en navbar */
+.navbar-brand {
+    padding: 0 !important;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img,
 .navbar-brand .logo-navbar,
 .navbar-logo {
-    max-height: 45px;
+    height: calc(70px - 1.6rem); /* Alto del navbar menos el padding del navbar */
+    max-height: 54px; /* Respaldo por si el cálculo no funciona */
     width: auto;
     object-fit: contain;
     transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    border-radius: 8%;
 }
 
+.navbar-brand img:hover,
 .navbar-brand .logo-navbar:hover,
 .navbar-logo:hover {
-    transform: scale(1.05);
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 2px 10px rgba(255, 215, 0, 0.4);
 }
 
 /* Botón toggler personalizado - Color gris */

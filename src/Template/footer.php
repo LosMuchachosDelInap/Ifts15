@@ -17,14 +17,14 @@
                     <li><a href="#" class="text-light text-decoration-none">
                         <i class="bi bi-chevron-right"></i> Sobre Nosotros
                     </a></li>
-                    <li><a href="#" class="text-light text-decoration-none">
+                    <li><a  href="<?php echo BASE_URL; ?>/src/Views/realizador-productor-tv.php" class="text-light text-decoration-none">
                         <i class="bi bi-chevron-right"></i> Realizador y Productor Televisivo
                     </a></li>
                     <li><a href="#" class="text-light text-decoration-none">
                         <i class="bi bi-chevron-right"></i> Biblioteca
                     </a></li>
                     <li><a href="#" class="text-light text-decoration-none" data-bs-toggle="modal" data-bs-target="#consultasModal" style="color: #FFD700 !important;">
-                        <i class="bi bi-chevron-right"></i> 📧 Contacto (Modal)
+                        <i class="bi bi-chevron-right"></i> Contacto
                     </a></li>
                 </ul>
             </div>
@@ -60,7 +60,7 @@
             </div>
             <div class="col-md-6 text-md-end">
                 <small style="color: white !important;">
-                    Desarrollado para el Instituto de Formación Técnica Superior N° 15
+                    Desarrollado por Les muchaches del Inap
                 </small>
             </div>
         </div>
@@ -69,3 +69,6 @@
 
 <!-- Modal de Consultas -->
 <?php include_once __DIR__ . '/../Components/modalConsultas.php'; ?>
+
+<!-- JavaScript Centralizado del Sistema -->
+<?php include_once __DIR__ . '/../Public/Utilities/JS.php'; ?>

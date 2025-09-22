@@ -35,13 +35,8 @@
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/src/Css/footerCss.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/src/Css/consultasCss.css">
     
-    <!-- Estilo personalizado para navbar -->
+    <!-- Estilo personalizado para sidebar -->
     <style>
-        .navbar-custom {
-            background: linear-gradient(90deg, #000000 0%, #333333 50%, #ffd700 100%) !important;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
-            border-bottom: 2px solid #ffd700 !important;
-        }
         
         /* Sidebar Offcanvas personalizado */
         .offcanvas-custom-header {

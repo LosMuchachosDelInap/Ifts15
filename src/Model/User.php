@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\ConectionBD\ConectionDB;
 use Exception;
+use mysqli_sql_exception;
 
 /**
  * Modelo User - IFTS15

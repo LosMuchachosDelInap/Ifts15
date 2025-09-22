@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-dark navbar-custom fixed-top">
+<nav class="navbar navbar-gradient fixed-top">
     <div class="container-fluid">
         <div class="row w-100 align-items-center">
             

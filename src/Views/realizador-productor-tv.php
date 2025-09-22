@@ -1,29 +1,25 @@
 <?php
 /**
  * Realizador y Productor Televisivo - IFTS15
- * Carrera específica del instituto
+ * Vista específica de la carrera
  */
 
-// Iniciar sesión para compatibilidad con templates
-session_start();
+// Configuración del sistema
+require_once __DIR__ . '/../config.php';
 
-// Configuración directa para esta página
+// Datos específicos de la página
 $pageTitle = 'Realizador y Productor Televisivo - IFTS15';
-
-// Constantes específicas para esta página
-define('SITE_NAME', 'INSTITUTO DE FORMACIÓN TÉCNICA SUPERIOR Nº 15');
 define('CARD_DESCRIPTION', 'Tecnología Digital plantea una visión integral de la TV digital como parte de un todo más amplio: el universo audiovisual. Explora formatos tradicionales así como los nuevos modos de creación, producción y consumo audiovisual en la era digital.');
 
-// Detectar BASE_URL automáticamente
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-$host = $_SERVER['HTTP_HOST'];
-$scriptPath = dirname(dirname($_SERVER['SCRIPT_NAME'])); // Sube dos niveles desde src/Views
-define('BASE_URL', $protocol . '://' . $host . $scriptPath);
+// Variables para el sistema de templates (necesarias para navbar y sidebar)
+$isLoggedIn = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+$userEmail = $_SESSION['email'] ?? '';
+$userRole = $_SESSION['role'] ?? 'estudiante';
 
-// Variables para el sistema de templates
-$isLoggedIn = isset($_SESSION['usuario']) && !empty($_SESSION['usuario']);
-$userEmail = $isLoggedIn ? $_SESSION['usuario'] : '';
-$userRole = $isLoggedIn ? ($_SESSION['role'] ?? 'estudiante') : '';
+// Compatibilidad con sidebar (que espera $_SESSION['usuario'])
+if ($isLoggedIn && !empty($userEmail)) {
+    $_SESSION['usuario'] = $userEmail;
+}
 
 ?>
 
@@ -31,7 +27,122 @@ $userRole = $isLoggedIn ? ($_SESSION['role'] ?? 'estudiante') : '';
 
 <?php include __DIR__ . '/../Template/navBar.php'; ?>
 
-<?php include __DIR__ . '/../Template/sidebar.php'; ?>
+<!-- Sidebar Offcanvas -->
+<?php if ($isLoggedIn): ?>
+    <?php include __DIR__ . '/../Template/sidebar.php'; ?>
+<?php else: ?>
+    <!-- Sidebar para usuarios no logueados -->
+    <div class="offcanvas offcanvas-end text-bg-dark" 
+         tabindex="-1" 
+         id="sidebarOffcanvas" 
+         aria-labelledby="sidebarOffcanvasLabel">
+        
+        <!-- Header del offcanvas -->
+        <div class="offcanvas-header bg-secondary text-white">
+            <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">
+                <i class="bi bi-house-door me-2"></i>
+                Menú Principal
+            </h5>
+            <button type="button" 
+                    class="btn-close btn-close-white" 
+                    data-bs-dismiss="offcanvas" 
+                    aria-label="Close"></button>
+        </div>
+        
+        <!-- Información para usuarios no logueados -->
+        <div class="p-3 border-bottom border-secondary">
+            <div class="text-center">
+                <i class="bi bi-person-plus fs-2 text-warning mb-2"></i>
+                <p class="mb-1 text-light">
+                    <strong>Bienvenido</strong>
+                </p>
+                <p class="mb-0 text-muted small">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Usuario Invitado
+                </p>
+            </div>
+        </div>
+        
+        <!-- Menú de navegación -->
+        <div class="offcanvas-body p-0">
+            <nav class="nav nav-pills flex-column gap-2 p-3">
+                
+                <!-- Sección: Navegación Principal -->
+                <div class="sidebar-heading text-muted mb-2">
+                    <i class="bi bi-compass me-1"></i>
+                    NAVEGACIÓN
+                </div>
+                
+                <a class="nav-link text-light d-flex align-items-center gap-2" 
+                   href="<?php echo BASE_URL; ?>/index.php">
+                    <i class="bi bi-house-door"></i>
+                    <span>Inicio</span>
+                </a>
+                
+                <a class="nav-link text-light d-flex align-items-center gap-2" 
+                   href="<?php echo BASE_URL; ?>/src/Views/realizador-productor-tv.php">
+                    <i class="bi bi-camera-video"></i>
+                    <span>Información de Carrera</span>
+                </a>
+                
+                <!-- Separador -->
+                <hr class="border-secondary my-3">
+                
+                <!-- Sección: Acceso al Sistema -->
+                <div class="sidebar-heading text-muted mb-2">
+                    <i class="bi bi-key me-1"></i>
+                    ACCESO AL SISTEMA
+                </div>
+                
+                <a class="nav-link text-light d-flex align-items-center gap-2" 
+                   href="#modalLogin" 
+                   data-bs-toggle="modal" 
+                   data-bs-target="#modalLogin">
+                    <i class="bi bi-box-arrow-in-right text-success"></i>
+                    <span>Iniciar Sesión</span>
+                </a>
+                
+                <a class="nav-link text-light d-flex align-items-center gap-2" 
+                   href="#modalRegistrar" 
+                   data-bs-toggle="modal" 
+                   data-bs-target="#modalRegistrar">
+                    <i class="bi bi-person-plus text-warning"></i>
+                    <span>Registrarse</span>
+                </a>
+                
+                <!-- Separador -->
+                <hr class="border-secondary my-3">
+                
+                <!-- Sección: Ayuda y Soporte -->
+                <div class="sidebar-heading text-muted mb-2">
+                    <i class="bi bi-question-circle me-1"></i>
+                    AYUDA Y SOPORTE
+                </div>
+                
+                <a class="nav-link text-light d-flex align-items-center gap-2" 
+                   href="#consultasModal" 
+                   data-bs-toggle="modal" 
+                   data-bs-target="#consultasModal">
+                    <i class="bi bi-chat-dots text-info"></i>
+                    <span>Consultas</span>
+                </a>
+                
+                <a class="nav-link text-light d-flex align-items-center gap-2" 
+                   href="javascript:void(0)">
+                    <i class="bi bi-info-circle text-primary"></i>
+                    <span>Acerca de IFTS15</span>
+                </a>
+                
+                <a class="nav-link text-light d-flex align-items-center gap-2" 
+                   href="javascript:void(0)">
+                    <i class="bi bi-telephone text-success"></i>
+                    <span>Contacto</span>
+                </a>
+                
+            </nav>
+        </div>
+    </div>
+<?php endif; ?>
 
 <!-- CSS específico para esta página -->
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>/src/Css/informacionCarreraCss.css">
@@ -111,7 +222,7 @@ $userRole = $isLoggedIn ? ($_SESSION['role'] ?? 'estudiante') : '';
                         <div class="card-body">
                             <dl class="row">
                                 <dt class="col-sm-4">Instituto:</dt>
-                                <dd class="col-sm-8"><?php echo SITE_NAME; ?></dd>
+                                <dd class="col-sm-8">Instituto de Formación Técnica Superior Nº 15</dd>
                                 
                                 <dt class="col-sm-4">Modalidad:</dt>
                                 <dd class="col-sm-8">Presencial con prácticas en estudios de TV</dd>
@@ -459,313 +570,17 @@ $userRole = $isLoggedIn ? ($_SESSION['role'] ?? 'estudiante') : '';
     </div>
 </div>
 
+<!-- Incluir modales del sistema -->
+<?php include __DIR__ . '/../Components/modalRegistrar.php'; ?>
+<?php include __DIR__ . '/../Components/modalConsultas.php'; ?>
+
+<?php if (!$isLoggedIn): ?>
+    <!-- Modales de Login para usuarios no logueados -->
+    <?php include_once(__DIR__ . "/../Components/modalLogin.php"); ?>
+<?php endif; ?>
+
 <!-- Incluir footer del sistema -->
 <?php include __DIR__ . '/../Template/footer.php'; ?>
 
-<!-- Agregar modal de registro específico para esta página -->
-<div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="modalRegistrarLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalRegistrarLabel">
-                    <i class="fas fa-user-plus me-2"></i>
-                    Registro - Realizador y Productor Televisivo
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                <form id="registroForm" method="POST">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="apellido" class="form-label">Apellido</label>
-                                <input type="text" class="form-control" id="apellido" name="apellido" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="telefono" name="telefono">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="carrera" class="form-label">Carrera de Interés</label>
-                        <select class="form-select" id="carrera" name="carrera" required disabled>
-                            <option value="realizador-productor-tv" selected>Realizador y Productor Televisivo</option>
-                        </select>
-                        <div class="form-text">Esta carrera ha sido preseleccionada automáticamente.</div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" form="registroForm" class="btn btn-primary">
-                    <i class="fas fa-save me-2"></i>Registrarse
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Manejar envío del formulario de registro
-        const registroForm = document.getElementById('registroForm');
-        if (registroForm) {
-            registroForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('¡Gracias por tu interés en la carrera de Realizador y Productor Televisivo! Pronto nos pondremos en contacto contigo.');
-                const modal = bootstrap.Modal.getInstance(document.getElementById('modalRegistrar'));
-                if (modal) modal.hide();
-            });
-        }
-    });
-</script>
-
-</body>
-</html>
-
-<!-- Modal de Registro -->
-<div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="modalRegistrarLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalRegistrarLabel">
-                    <i class="fas fa-user-plus me-2"></i>
-                    Registro de Estudiantes - IFTS15
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                <form id="registroForm" method="POST">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="apellido" class="form-label">Apellido</label>
-                                <input type="text" class="form-control" id="apellido" name="apellido" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="telefono" name="telefono">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="carrera" class="form-label">Carrera de Interés</label>
-                        <select class="form-select" id="carrera" name="carrera" required>
-                            <option value="">Seleccionar carrera...</option>
-                            <option value="realizador-productor-tv">Realizador y Productor Televisivo</option>
-                            <option value="otras">Otras carreras</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" form="registroForm" class="btn btn-primary">
-                    <i class="fas fa-save me-2"></i>Registrarse
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal de Consultas -->
-<div class="modal fade" id="modalConsultas" tabindex="-1" aria-labelledby="modalConsultasLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalConsultasLabel">
-                    <i class="fas fa-envelope me-2"></i>
-                    Consultas - IFTS15
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h6>Formulario de Consulta</h6>
-                        <form id="consultaForm" method="POST">
-                            <div class="mb-3">
-                                <label for="consultaNombre" class="form-label">Nombre Completo</label>
-                                <input type="text" class="form-control" id="consultaNombre" name="nombre" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="consultaEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="consultaEmail" name="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="consultaTema" class="form-label">Tema de Consulta</label>
-                                <select class="form-select" id="consultaTema" name="tema" required>
-                                    <option value="">Seleccionar tema...</option>
-                                    <option value="admision">Proceso de Admisión</option>
-                                    <option value="carrera">Información de Carreras</option>
-                                    <option value="inscripcion">Inscripciones</option>
-                                    <option value="becas">Becas y Ayudas</option>
-                                    <option value="otros">Otros</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="consultaMensaje" class="form-label">Mensaje</label>
-                                <textarea class="form-control" id="consultaMensaje" name="mensaje" rows="4" required></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-4">
-                        <h6>Información de Contacto</h6>
-                        <div class="bg-light p-3 rounded">
-                            <p class="small mb-2">
-                                <i class="fas fa-phone text-primary me-2"></i>
-                                <strong>Teléfono:</strong><br>
-                                (011) 4xxx-xxxx
-                            </p>
-                            <p class="small mb-2">
-                                <i class="fas fa-envelope text-primary me-2"></i>
-                                <strong>Email:</strong><br>
-                                info@ifts15.edu.ar
-                            </p>
-                            <p class="small mb-2">
-                                <i class="fas fa-clock text-primary me-2"></i>
-                                <strong>Horario de Atención:</strong><br>
-                                Lun a Vie: 9:00 - 18:00
-                            </p>
-                            <p class="small mb-0">
-                                <i class="fas fa-map-marker-alt text-primary me-2"></i>
-                                <strong>Dirección:</strong><br>
-                                Buenos Aires, Argentina
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" form="consultaForm" class="btn btn-primary">
-                    <i class="fas fa-paper-plane me-2"></i>Enviar Consulta
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-    <!-- Footer autónomo -->
-    <footer class="bg-dark text-light py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5 class="text-warning">
-                        <i class="fas fa-graduation-cap me-2"></i>
-                        IFTS15
-                    </h5>
-                    <p class="small">
-                        Instituto de Formación Técnica Superior N° 15<br>
-                        Formando profesionales en tecnología audiovisual
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <h6 class="text-warning">Enlaces Útiles</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="<?php echo BASE_URL; ?>/" class="text-light text-decoration-none">Inicio</a></li>
-                        <li><a href="#" class="text-light text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalConsultas">Contacto</a></li>
-                        <li><a href="#" class="text-light text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalRegistrar">Inscripciones</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h6 class="text-warning">Contacto</h6>
-                    <p class="small mb-1">
-                        <i class="fas fa-phone me-2"></i>
-                        (011) 4xxx-xxxx
-                    </p>
-                    <p class="small mb-1">
-                        <i class="fas fa-envelope me-2"></i>
-                        info@ifts15.edu.ar
-                    </p>
-                    <p class="small">
-                        <i class="fas fa-map-marker-alt me-2"></i>
-                        Buenos Aires, Argentina
-                    </p>
-                </div>
-            </div>
-            <hr class="my-3">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <p class="small mb-0">
-                        &copy; 2025 IFTS15. Todos los derechos reservados.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Script para manejar los formularios -->
-    <script>
-        // Manejar envío del formulario de registro
-        document.getElementById('registroForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('¡Gracias por tu interés! Pronto nos pondremos en contacto contigo.');
-            bootstrap.Modal.getInstance(document.getElementById('modalRegistrar')).hide();
-        });
-        
-        // Manejar envío del formulario de consulta
-        document.getElementById('consultaForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('¡Tu consulta ha sido enviada! Te responderemos a la brevedad.');
-            bootstrap.Modal.getInstance(document.getElementById('modalConsultas')).hide();
-        });
-        
-        // Smooth scroll para enlaces internos
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const href = this.getAttribute('href');
-                // Solo si el href no es solo "#"
-                if (href && href !== '#') {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-            });
-        });
-    </script>
 </body>
 </html>

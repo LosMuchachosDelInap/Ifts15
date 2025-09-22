@@ -3,6 +3,15 @@
 namespace App\Controllers;
 
 use App\ConectionBD\ConectionDB;
+use App\Model\Person;
+use App\Model\User;
+use Exception;
+use mysqli_sql_exception;
+use Throwable;
+
+/**amespace App\Controllers;
+
+use App\ConectionBD\ConectionDB;
 use App\Model\User;
 use App\Model\Person;
 use Exception;

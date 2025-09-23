@@ -3,30 +3,6 @@
  * Modal de Consultas - IFTS15
  * Archivo: src/Components/modalConsultas.php
  */
-
-// Procesar formulario si viene por AJAX
-if (isset($_POST['action']) && $_POST['action'] === 'enviar_consulta_modal') {
-    header('Content-Type: application/json');
-    
-    $response = ['success' => false, 'message' => ''];
-    
-    $nombre = sanitize($_POST['nombre'] ?? '');
-    $email = sanitize($_POST['email'] ?? '');
-    $telefono = sanitize($_POST['telefono'] ?? '');
-    $carrera = sanitize($_POST['carrera'] ?? '');
-    $consulta = sanitize($_POST['consulta'] ?? '');
-    
-    if (empty($nombre) || empty($email) || empty($consulta)) {
-        $response['message'] = 'Por favor completa todos los campos obligatorios';
-    } else {
-        // Aquí se podría enviar un email o guardar en BD
-        $response['success'] = true;
-        $response['message'] = 'Tu consulta ha sido enviada correctamente. Te responderemos a la brevedad.';
-    }
-    
-    echo json_encode($response);
-    exit;
-}
 ?>
 
 <!-- Modal de Consultas -->
@@ -51,9 +27,9 @@ if (isset($_POST['action']) && $_POST['action'] === 'enviar_consulta_modal') {
                             </h6>
                             
                             <!-- Área de alertas -->
-                            <div id="consultasAlert" class="alert d-none" role="alert"></div>
+                            <div id="consultas-mensaje"></div>
                             
-                            <form id="consultasModalForm">
+                            <form method="post" action="<?php echo BASE_URL; ?>/src/Controllers/consultasController.php">
                                 <input type="hidden" name="action" value="enviar_consulta_modal">
                                 
                                 <div class="row">
@@ -75,7 +51,8 @@ if (isset($_POST['action']) && $_POST['action'] === 'enviar_consulta_modal') {
                                                class="form-control" 
                                                id="modalEmail" 
                                                name="email" 
-                                               required>
+                                               value="<?php echo isset($_SESSION['email']) ? htmlspecialchars($_SESSION['email'], ENT_QUOTES, 'UTF-8') : ''; ?>"
+                                               <?php echo (isset($_SESSION['email']) ? 'readonly' : 'required'); ?>>
                                     </div>
                                 </div>
                                 
@@ -110,7 +87,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'enviar_consulta_modal') {
                                     </label>
                                     <textarea class="form-control" 
                                               id="modalConsulta" 
-                                              name="consulta" 
+                                              name="mensaje" 
                                               rows="4" 
                                               placeholder="Escribe aquí tu consulta..." 
                                               required></textarea>
@@ -247,68 +224,34 @@ if (isset($_POST['action']) && $_POST['action'] === 'enviar_consulta_modal') {
 <!-- JavaScript del Modal de Consultas -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const consultasForm = document.getElementById('consultasModalForm');
-    const consultasAlert = document.getElementById('consultasAlert');
-    const btnEnviar = document.getElementById('btnEnviarConsulta');
-    
-    if (consultasForm) {
-        consultasForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validación básica
-            const nombre = document.getElementById('modalNombre').value.trim();
-            const email = document.getElementById('modalEmail').value.trim();
-            const consulta = document.getElementById('modalConsulta').value.trim();
-            
-            if (!nombre || !email || !consulta) {
-                showAlert('Por favor completa todos los campos obligatorios (*)', 'danger');
-                return;
+    const form = document.querySelector('#consultasModal form');
+    const mensajeDiv = document.getElementById('consultas-mensaje');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            mensajeDiv.innerHTML = data;
+            if (data.includes('alert-success')) {
+                form.querySelector('textarea[name="mensaje"]').value = '';
+                form.querySelector('input[name="nombre"]').value = '';
+                if (!form.querySelector('input[name="email"]').hasAttribute('readonly')) {
+                    form.querySelector('input[name="email"]').value = '';
+                }
+                form.querySelector('input[name="telefono"]').value = '';
+                form.querySelector('select[name="carrera"]').value = '';
             }
-            
-            if (!email.includes('@')) {
-                showAlert('Por favor ingresa un email válido', 'danger');
-                return;
-            }
-            
-            // Deshabilitar botón y mostrar loading
-            btnEnviar.disabled = true;
-            btnEnviar.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Enviando...';
-            
-            // Enviar por fetch (simulado)
-            setTimeout(() => {
-                showAlert('Tu consulta ha sido enviada correctamente. Te responderemos a la brevedad.', 'success');
-                consultasForm.reset();
-                btnEnviar.disabled = false;
-                btnEnviar.innerHTML = '<i class="fa fa-paper-plane"></i> Enviar Consulta';
-                
-                // Cerrar modal después de 2 segundos
-                setTimeout(() => {
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('consultasModal'));
-                    if (modal) {
-                        modal.hide();
-                    }
-                }, 2000);
-            }, 1500);
+        })
+        .catch(error => {
+            mensajeDiv.innerHTML = "<div class='alert alert-danger'>Error de conexión.</div>";
         });
-    }
-    
-    function showAlert(message, type) {
-        consultasAlert.className = `alert alert-${type}`;
-        consultasAlert.innerHTML = `<i class="fa fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i> ${message}`;
-        consultasAlert.classList.remove('d-none');
-        
-        // Auto-hide después de 5 segundos
-        setTimeout(() => {
-            consultasAlert.classList.add('d-none');
-        }, 5000);
-    }
-    
-    // Limpiar alertas cuando se cierre el modal
-    document.getElementById('consultasModal').addEventListener('hidden.bs.modal', function() {
-        consultasAlert.classList.add('d-none');
-        consultasForm.reset();
-        btnEnviar.disabled = false;
-        btnEnviar.innerHTML = '<i class="fa fa-paper-plane"></i> Enviar Consulta';
     });
 });
 </script>

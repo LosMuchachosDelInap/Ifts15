@@ -30,6 +30,13 @@ class AuthController
     public function __construct()
     {
         // Cargar configuración si no está cargada
+        if (!defined('BASE_URL')) {
+            if (getenv('BASE_URL')) {
+                define('BASE_URL', getenv('BASE_URL'));
+            } else {
+                define('BASE_URL', 'http://localhost:8000');
+            }
+        }
         if (!function_exists('env')) {
             require_once __DIR__ . '/../config.php';
         }
@@ -67,7 +74,8 @@ class AuthController
 
         // Validaciones básicas
         if (empty($email) || empty($password)) {
-            $this->redirect('/?error=campos_vacios');
+            $_SESSION['login_message'] = 'Debes completar todos los campos.';
+            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
             return;
         }
 
@@ -85,31 +93,23 @@ class AuthController
             if ($user) {
                 // Login exitoso
                 $datosCompletos = $user->getDatosSesion($this->conn);
-                
-                // Validar que obtuvimos los datos
                 if (!$datosCompletos) {
                     error_log("Error obteniendo datos de sesión para usuario: {$email}");
-                    $this->redirect('/?error=datos_sesion');
+                    $_SESSION['login_message'] = 'Error obteniendo datos de sesión.';
+                    $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
                     return;
                 }
-                
-                // Guardar en sesión
                 foreach ($datosCompletos as $key => $value) {
                     $_SESSION[$key] = $value;
                 }
-                
-                // Variables adicionales para compatibilidad
-                $_SESSION['usuario'] = $datosCompletos['email']; // Para mantener compatibilidad
-                $_SESSION['user_id'] = $datosCompletos['id_usuario']; // Para getCurrentUser()
-
-                // Log de actividad (opcional)
+                $_SESSION['usuario'] = $datosCompletos['email'];
+                $_SESSION['user_id'] = $datosCompletos['id_usuario'];
                 error_log("Login exitoso: {$email}");
-                
                 $this->redirect('/?login=success');
             } else {
-                // Credenciales incorrectas
                 error_log("Intento de login fallido: {$email}");
-                $this->redirect('/?error=credenciales_incorrectas');
+                $_SESSION['login_message'] = 'Usuario o contraseña incorrectos.';
+                $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
             }
             
         } catch (mysqli_sql_exception $e) {
@@ -159,7 +159,8 @@ class AuthController
         $errores = $this->validarDatosRegistro($email, $password, $confirm_password, $nombre, $apellido, $dni, $id_carrera, $id_comision, $id_añoCursada);
         
         if (!empty($errores)) {
-            $this->redirect('/?error=' . urlencode(implode(', ', $errores)));
+            $_SESSION['register_message'] = implode(', ', $errores);
+            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
             return;
         }
 
@@ -214,7 +215,8 @@ class AuthController
             // Log de actividad
             error_log("REGISTRO EXITOSO: {$email}");
 
-            $this->redirect('/?registro=exitoso');
+            $_SESSION['register_message'] = '¡Registro exitoso! Ya puedes ingresar.';
+            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
 
         } catch (Exception $e) {
             // Rollback en caso de error
@@ -222,13 +224,15 @@ class AuthController
             $error_msg = $e->getMessage();
             $debug_info = "Error: {$error_msg} | Datos: nombre={$nombre}, apellido={$apellido}, dni={$dni}, email={$email}, fecha=" . ($fecha_nacimiento ?: 'NULL') . ", telefono={$telefono}, edad={$edad}";
             error_log("ERROR en registro: " . $debug_info);
-            $this->redirect('/?error=' . urlencode($error_msg));
+            $_SESSION['register_message'] = $error_msg;
+            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
         } catch (Throwable $e) {
             // Capturar errores fatales también
             $this->conn->rollback();
             $error_msg = "Error fatal: " . $e->getMessage() . " en " . $e->getFile() . ":" . $e->getLine();
             error_log("ERROR FATAL en registro: " . $error_msg);
-            $this->redirect('/?error=' . urlencode("Error fatal en el registro"));
+            $_SESSION['register_message'] = 'Error fatal en el registro.';
+            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
         }
     }
 

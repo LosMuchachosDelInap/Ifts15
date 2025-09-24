@@ -24,6 +24,13 @@ $añosCursada = $conectarDB->getAñosCursada();
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <!-- Área de alertas -->
+            <?php if (isset($_SESSION['register_message'])): ?>
+                <div class="alert alert-info alert-dismissible fade show mt-2" role="alert">
+                    <strong><?= htmlspecialchars($_SESSION['register_message'], ENT_QUOTES, 'UTF-8') ?></strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php unset($_SESSION['register_message']); endif; ?>
             <form action="<?php echo BASE_URL; ?>/src/Controllers/AuthController.php" method="POST" id="formRegistrar">
                 <input type="hidden" name="action" value="register">
                 <div class="modal-body">
@@ -229,70 +236,11 @@ $añosCursada = $conectarDB->getAñosCursada();
     </div>
 </div>
 
+<?php if (isset($_SESSION['register_message'])): ?>
 <script>
-// Función para calcular la edad automáticamente
-function calcularEdad() {
-    const fechaNacimiento = document.getElementById('registerFechaNacimiento').value;
-    const edadInput = document.getElementById('registerEdad');
-    const edadInfo = document.getElementById('edadInfo');
-    
-    if (fechaNacimiento) {
-        const fechaNac = new Date(fechaNacimiento);
-        const hoy = new Date();
-        
-        // Validar que la fecha no sea futura
-        if (fechaNac > hoy) {
-            edadInput.value = '';
-            edadInput.setCustomValidity('La fecha de nacimiento no puede ser futura');
-            edadInfo.style.display = 'none';
-            return;
-        }
-        
-        // Calcular edad
-        let edad = hoy.getFullYear() - fechaNac.getFullYear();
-        const mesActual = hoy.getMonth();
-        const mesNacimiento = fechaNac.getMonth();
-        
-        // Ajustar si aún no ha cumplido años este año
-        if (mesActual < mesNacimiento || (mesActual === mesNacimiento && hoy.getDate() < fechaNac.getDate())) {
-            edad--;
-        }
-        
-        // Validar edad mínima y máxima
-        if (edad < 16) {
-            edadInput.value = edad;
-            edadInput.setCustomValidity('Debes tener al menos 16 años para registrarte');
-            edadInfo.style.display = 'none';
-        } else if (edad > 99) {
-            edadInput.value = edad;
-            edadInput.setCustomValidity('Edad máxima permitida: 99 años');
-            edadInfo.style.display = 'none';
-        } else {
-            edadInput.value = edad;
-            edadInput.setCustomValidity('');
-            edadInfo.style.display = 'block';
-        }
-    } else {
-        edadInput.value = '';
-        edadInput.setCustomValidity('La fecha de nacimiento es requerida');
-        edadInfo.style.display = 'none';
-    }
-}
-
-// Validar que las contraseñas coincidan
 document.addEventListener('DOMContentLoaded', function() {
-    const password = document.getElementById('registerPassword');
-    const confirmPassword = document.getElementById('registerConfirmPassword');
-    
-    function validarPasswords() {
-        if (password.value !== confirmPassword.value) {
-            confirmPassword.setCustomValidity('Las contraseñas no coinciden');
-        } else {
-            confirmPassword.setCustomValidity('');
-        }
-    }
-    
-    password.addEventListener('input', validarPasswords);
-    confirmPassword.addEventListener('input', validarPasswords);
+    var modal = new bootstrap.Modal(document.getElementById('modalRegistrar'));
+    modal.show();
 });
 </script>
+<?php endif; ?>

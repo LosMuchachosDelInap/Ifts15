@@ -27,9 +27,14 @@
                             </h6>
                             
                             <!-- Área de alertas -->
-                            <div id="consultas-mensaje"></div>
+                            <?php if (isset($_SESSION['consultas_message'])): ?>
+                                <div class="alert alert-info alert-dismissible fade show mt-2" role="alert">
+                                    <strong><?= htmlspecialchars($_SESSION['consultas_message'], ENT_QUOTES, 'UTF-8') ?></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            <?php unset($_SESSION['consultas_message']); endif; ?>
                             
-                            <form method="post" action="<?php echo BASE_URL; ?>/src/Controllers/consultasController.php">
+                            <form method="post" action="<?php echo (defined('BASE_URL') ? BASE_URL : '') . '/src/Controllers/consultasController.php'; ?>">
                                 <input type="hidden" name="action" value="enviar_consulta_modal">
                                 
                                 <div class="row">
@@ -201,7 +206,7 @@
                                     ¿Tienes preguntas frecuentes? Consulta nuestra sección de 
                                     preguntas frecuentes donde respondemos las dudas más comunes.
                                 </p>
-                                <a href="<?php echo BASE_URL; ?>/pages/faq.php" class="btn btn-outline-success btn-sm">
+                                <a href="<?php echo (defined('BASE_URL') ? BASE_URL : '') . '/pages/faq.php'; ?>" class="btn btn-outline-success btn-sm">
                                     <i class="fa fa-book"></i> Ver FAQ
                                 </a>
                             </div>
@@ -213,7 +218,7 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <i class="fa fa-times"></i> Cerrar
                 </button>
-                <a href="<?php echo BASE_URL; ?>/pages/consultas.php" class="btn btn-outline-primary">
+                <a href="<?php echo (defined('BASE_URL') ? BASE_URL : '') . '/pages/consultas.php'; ?>" class="btn btn-outline-primary">
                     <i class="fa fa-external-link-alt"></i> Ver página completa
                 </a>
             </div>
@@ -221,37 +226,11 @@
     </div>
 </div>
 
-<!-- JavaScript del Modal de Consultas -->
+<?php if (isset($_SESSION['consultas_message'])): ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('#consultasModal form');
-    const mensajeDiv = document.getElementById('consultas-mensaje');
-
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            mensajeDiv.innerHTML = data;
-            if (data.includes('alert-success')) {
-                form.querySelector('textarea[name="mensaje"]').value = '';
-                form.querySelector('input[name="nombre"]').value = '';
-                if (!form.querySelector('input[name="email"]').hasAttribute('readonly')) {
-                    form.querySelector('input[name="email"]').value = '';
-                }
-                form.querySelector('input[name="telefono"]').value = '';
-                form.querySelector('select[name="carrera"]').value = '';
-            }
-        })
-        .catch(error => {
-            mensajeDiv.innerHTML = "<div class='alert alert-danger'>Error de conexión.</div>";
-        });
-    });
+    var modal = new bootstrap.Modal(document.getElementById('consultasModal'));
+    modal.show();
 });
 </script>
+<?php endif; ?>

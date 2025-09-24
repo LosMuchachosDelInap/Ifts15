@@ -8,18 +8,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Definir BASE_URL
+// Definir BASE_URL desde variable de entorno o fallback
 if (!defined('BASE_URL')) {
-    $protocolo = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-    $host = $_SERVER['HTTP_HOST'];
-    
-    if ($host === 'localhost' || $host === '127.0.0.1' || strpos($host, 'localhost:') === 0) {
-        $carpeta = '/Mis_Proyectos/Ifts15';
+    if (getenv('BASE_URL')) {
+        define('BASE_URL', getenv('BASE_URL'));
     } else {
-        $carpeta = '';
+        define('BASE_URL', 'http://localhost:8000');
     }
-    
-    define('BASE_URL', $protocolo . $host . $carpeta);
 }
 
 // Limpiar todas las variables de sesión

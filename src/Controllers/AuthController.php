@@ -425,20 +425,27 @@ if (basename($_SERVER['PHP_SELF']) === 'AuthController.php') {
         // Determinar qué acción realizar
         $action = $_GET['action'] ?? $_POST['action'] ?? '';
         
+
         if (empty($action)) {
-            throw new Exception('Acción no especificada');
+            http_response_code(400);
+            echo '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Acceso inválido</title></head><body style="font-family:sans-serif;text-align:center;margin-top:10%"><h2>Acceso inválido</h2><p>No se especificó ninguna acción para este controlador.</p><a href="/index.php">Volver al inicio</a></body></html>';
+            exit;
         }
 
         // Verificar método de solicitud según la acción
         if ($action === 'logout') {
             // Logout permite GET y POST
             if ($_SERVER['REQUEST_METHOD'] !== 'GET' && $_SERVER['REQUEST_METHOD'] !== 'POST') {
-                throw new Exception('Método de solicitud no permitido para logout');
+                http_response_code(405);
+                echo '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Método no permitido</title></head><body style="font-family:sans-serif;text-align:center;margin-top:10%"><h2>Método no permitido</h2><p>El método de solicitud no es válido para logout.</p><a href="/index.php">Volver al inicio</a></body></html>';
+                exit;
             }
         } else {
             // Login y Register solo permiten POST
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-                throw new Exception('Método de solicitud no permitido');
+                http_response_code(405);
+                echo '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Método no permitido</title></head><body style="font-family:sans-serif;text-align:center;margin-top:10%"><h2>Método no permitido</h2><p>El método de solicitud no es válido para esta acción.</p><a href="/index.php">Volver al inicio</a></body></html>';
+                exit;
             }
         }
 

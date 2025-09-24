@@ -1,3 +1,42 @@
+<script>
+// Calcula la edad automáticamente al cambiar la fecha de nacimiento
+function calcularEdad() {
+    var fechaInput = document.getElementById('registerFechaNacimiento');
+    var edadInput = document.getElementById('registerEdad');
+    var edadInfo = document.getElementById('edadInfo');
+    if (!fechaInput || !edadInput) return;
+    var fecha = fechaInput.value;
+    if (!fecha) {
+        edadInput.value = '';
+        if (edadInfo) edadInfo.style.display = 'none';
+        return;
+    }
+    var hoy = new Date();
+    var nacimiento = new Date(fecha);
+    var edad = hoy.getFullYear() - nacimiento.getFullYear();
+    var m = hoy.getMonth() - nacimiento.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
+        edad--;
+    }
+    edadInput.value = edad;
+    if (edadInfo) {
+        if (edad >= 16 && edad <= 99) {
+            edadInfo.style.display = 'inline';
+        } else {
+            edadInfo.style.display = 'none';
+        }
+    }
+}
+// Inicializar edad si ya hay fecha cargada
+document.addEventListener('DOMContentLoaded', function() {
+    var fechaInput = document.getElementById('registerFechaNacimiento');
+    if (fechaInput) {
+        calcularEdad();
+        fechaInput.addEventListener('change', calcularEdad);
+    }
+});
+</script>
+
 <?php
 /**
  * Modal Registrar - IFTS15
@@ -6,14 +45,21 @@
 
 // Obtener datos académicos desde la base de datos
 use App\ConectionBD\ConectionDB;
-
-$conectarDB = new ConectionDB();
-$carreras = $conectarDB->getCarreras();
-$comisiones = $conectarDB->getComisiones();
-$añosCursada = $conectarDB->getAñosCursada();
+$carreras = $comisiones = $añosCursada = [];
+$modalError = null;
+try {
+    $conectarDB = new ConectionDB();
+    $carreras = $conectarDB->getCarreras();
+    $comisiones = $conectarDB->getComisiones();
+    $añosCursada = $conectarDB->getAñosCursada();
+} catch (\Throwable $e) {
+    $modalError = 'Error al cargar datos académicos: ' . $e->getMessage();
+}
 ?>
 
-<!-- Modal Registrar -->
+<?php if ($modalError): ?>
+    <div class="alert alert-danger m-3">⚠️ <?= htmlspecialchars($modalError) ?></div>
+<?php endif; ?>
 <div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="modalRegistrarLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -162,9 +208,13 @@ $añosCursada = $conectarDB->getAñosCursada();
                                 <label for="registerCarrera" class="form-label">Carrera *</label>
                                 <select class="form-select" id="registerCarrera" name="id_carrera" required>
                                     <option value="">Seleccionar carrera...</option>
-                                    <?php foreach ($carreras as $carrera): ?>
-                                        <option value="<?= $carrera['id_carrera'] ?>"><?= htmlspecialchars($carrera['carrera']) ?></option>
-                                    <?php endforeach; ?>
+                                    <?php if (empty($carreras)): ?>
+                                        <option value="" disabled style="color:red;">No hay carreras habilitadas</option>
+                                    <?php else: ?>
+                                        <?php foreach ($carreras as $carrera): ?>
+                                            <option value="<?= $carrera['id_carrera'] ?>"><?= htmlspecialchars($carrera['carrera']) ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
                             </div>
                         </div>
@@ -174,9 +224,13 @@ $añosCursada = $conectarDB->getAñosCursada();
                                 <label for="registerComision" class="form-label">Comisión *</label>
                                 <select class="form-select" id="registerComision" name="id_comision" required>
                                     <option value="">Seleccionar comisión...</option>
-                                    <?php foreach ($comisiones as $comision): ?>
-                                        <option value="<?= $comision['id_comision'] ?>">Comisión <?= htmlspecialchars($comision['comision']) ?></option>
-                                    <?php endforeach; ?>
+                                    <?php if (empty($comisiones)): ?>
+                                        <option value="" disabled style="color:red;">No hay comisiones habilitadas</option>
+                                    <?php else: ?>
+                                        <?php foreach ($comisiones as $comision): ?>
+                                            <option value="<?= $comision['id_comision'] ?>">Comisión <?= htmlspecialchars($comision['comision']) ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
                             </div>
                         </div>
@@ -186,9 +240,13 @@ $añosCursada = $conectarDB->getAñosCursada();
                                 <label for="registerAñoCursada" class="form-label">Año a Cursar *</label>
                                 <select class="form-select" id="registerAñoCursada" name="id_añoCursada" required>
                                     <option value="">Seleccionar año...</option>
-                                    <?php foreach ($añosCursada as $año): ?>
-                                        <option value="<?= $año['id_añoCursada'] ?>"><?= $año['año'] ?>° Año</option>
-                                    <?php endforeach; ?>
+                                    <?php if (empty($añosCursada)): ?>
+                                        <option value="" disabled style="color:red;">No hay años habilitados</option>
+                                    <?php else: ?>
+                                        <?php foreach ($añosCursada as $año): ?>
+                                            <option value="<?= $año['id_añoCursada'] ?>"><?= $año['año'] ?>° Año</option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
                             </div>
                         </div>
@@ -239,8 +297,52 @@ $añosCursada = $conectarDB->getAñosCursada();
 <?php if (isset($_SESSION['register_message'])): ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    var modal = new bootstrap.Modal(document.getElementById('modalRegistrar'));
-    modal.show();
+    var modalEl = document.getElementById('modalRegistrar');
+    if (modalEl) {
+        try {
+            var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.show();
+        } catch (e) {
+            console.error('No se pudo abrir el modalRegistrar:', e);
+        }
+    }
+});
+</script>
+// Calcula la edad automáticamente al cambiar la fecha de nacimiento
+function calcularEdad() {
+    var fechaInput = document.getElementById('registerFechaNacimiento');
+    var edadInput = document.getElementById('registerEdad');
+    var edadInfo = document.getElementById('edadInfo');
+    if (!fechaInput || !edadInput) return;
+    var fecha = fechaInput.value;
+    if (!fecha) {
+        edadInput.value = '';
+        if (edadInfo) edadInfo.style.display = 'none';
+        return;
+    }
+    var hoy = new Date();
+    var nacimiento = new Date(fecha);
+    var edad = hoy.getFullYear() - nacimiento.getFullYear();
+    var m = hoy.getMonth() - nacimiento.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
+        edad--;
+    }
+    edadInput.value = edad;
+    if (edadInfo) {
+        if (edad >= 16 && edad <= 99) {
+            edadInfo.style.display = 'inline';
+        } else {
+            edadInfo.style.display = 'none';
+        }
+    }
+}
+// Inicializar edad si ya hay fecha cargada
+document.addEventListener('DOMContentLoaded', function() {
+    var fechaInput = document.getElementById('registerFechaNacimiento');
+    if (fechaInput) {
+        calcularEdad();
+        fechaInput.addEventListener('change', calcularEdad);
+    }
 });
 </script>
 <?php endif; ?>

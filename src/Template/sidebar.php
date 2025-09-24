@@ -288,3 +288,5 @@ $userRole = $currentUser['role'];
 
 <!-- Modal de Consultas -->
 <?php include_once __DIR__ . '/../Components/modalConsultas.php'; ?>
+<!-- Modal de Registro (para que funcione desde el sidebar) -->
+<?php include_once __DIR__ . '/../Components/modalRegistrar.php'; ?>

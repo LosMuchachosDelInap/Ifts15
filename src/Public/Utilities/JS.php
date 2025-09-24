@@ -25,11 +25,11 @@
             const originalHandleFocusin = ModalPrototype._handleFocusin;
             const originalEnforceFocus = ModalPrototype._enforceFocus;
 
-            // Hook para aplicar el fix solo al modal de consultas
+            // Hook para aplicar el fix a consultasModal y modalRegistrar
             document.addEventListener('show.bs.modal', function(e) {
                 const modal = e.target;
-                if (modal && modal.id === 'consultasModal') {
-                    // Deshabilitar focus trap SOLO para consultasModal
+                if (modal && (modal.id === 'consultasModal' || modal.id === 'modalRegistrar')) {
+                    // Deshabilitar focus trap SOLO para estos modales
                     ModalPrototype._initializeFocusTrap = function() { return; };
                     ModalPrototype._handleFocusin = function() { return; };
                     if (typeof originalEnforceFocus === 'function') {
@@ -37,6 +37,16 @@
                     }
                 } else {
                     // Restaurar comportamiento estándar para otros modales
+                    if (originalInitializeFocusTrap) ModalPrototype._initializeFocusTrap = originalInitializeFocusTrap;
+                    if (originalHandleFocusin) ModalPrototype._handleFocusin = originalHandleFocusin;
+                    if (originalEnforceFocus) ModalPrototype._enforceFocus = originalEnforceFocus;
+                }
+            });
+
+            // Restaurar el focus trap al cerrar el modal para evitar recursión
+            document.addEventListener('hidden.bs.modal', function(e) {
+                const modal = e.target;
+                if (modal && (modal.id === 'consultasModal' || modal.id === 'modalRegistrar')) {
                     if (originalInitializeFocusTrap) ModalPrototype._initializeFocusTrap = originalInitializeFocusTrap;
                     if (originalHandleFocusin) ModalPrototype._handleFocusin = originalHandleFocusin;
                     if (originalEnforceFocus) ModalPrototype._enforceFocus = originalEnforceFocus;

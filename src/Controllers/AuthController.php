@@ -1,6 +1,10 @@
 <?php
-
 namespace App\Controllers;
+
+// Iniciar sesión antes de cualquier output
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 use App\ConectionBD\ConectionDB;
 use App\Model\Person;
@@ -8,13 +12,6 @@ use App\Model\User;
 use Exception;
 use mysqli_sql_exception;
 use Throwable;
-
-/**amespace App\Controllers;
-
-use App\ConectionBD\ConectionDB;
-use App\Model\User;
-use App\Model\Person;
-use Exception;
 
 /**
  * AuthController - IFTS15
@@ -75,7 +72,7 @@ class AuthController
         // Validaciones básicas
         if (empty($email) || empty($password)) {
             $_SESSION['login_message'] = 'Debes completar todos los campos.';
-            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
+            $this->redirect('/index.php');
             return;
         }
 
@@ -96,7 +93,7 @@ class AuthController
                 if (!$datosCompletos) {
                     error_log("Error obteniendo datos de sesión para usuario: {$email}");
                     $_SESSION['login_message'] = 'Error obteniendo datos de sesión.';
-                    $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
+                    $this->redirect('/index.php');
                     return;
                 }
                 foreach ($datosCompletos as $key => $value) {
@@ -109,7 +106,7 @@ class AuthController
             } else {
                 error_log("Intento de login fallido: {$email}");
                 $_SESSION['login_message'] = 'Usuario o contraseña incorrectos.';
-                $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
+                $this->redirect('/index.php');
             }
             
         } catch (mysqli_sql_exception $e) {
@@ -160,7 +157,7 @@ class AuthController
         
         if (!empty($errores)) {
             $_SESSION['register_message'] = implode(', ', $errores);
-            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
+            $this->redirect('/index.php');
             return;
         }
 
@@ -216,7 +213,7 @@ class AuthController
             error_log("REGISTRO EXITOSO: {$email}");
 
             $_SESSION['register_message'] = '¡Registro exitoso! Ya puedes ingresar.';
-            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
+            $this->redirect('/index.php');
 
         } catch (Exception $e) {
             // Rollback en caso de error
@@ -225,14 +222,14 @@ class AuthController
             $debug_info = "Error: {$error_msg} | Datos: nombre={$nombre}, apellido={$apellido}, dni={$dni}, email={$email}, fecha=" . ($fecha_nacimiento ?: 'NULL') . ", telefono={$telefono}, edad={$edad}";
             error_log("ERROR en registro: " . $debug_info);
             $_SESSION['register_message'] = $error_msg;
-            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
+            $this->redirect('/index.php');
         } catch (Throwable $e) {
             // Capturar errores fatales también
             $this->conn->rollback();
             $error_msg = "Error fatal: " . $e->getMessage() . " en " . $e->getFile() . ":" . $e->getLine();
             error_log("ERROR FATAL en registro: " . $error_msg);
             $_SESSION['register_message'] = 'Error fatal en el registro.';
-            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/');
+            $this->redirect('/index.php');
         }
     }
 

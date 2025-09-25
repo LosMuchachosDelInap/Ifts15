@@ -3,6 +3,17 @@
  * Modal de Consultas - IFTS15
  * Archivo: src/Components/modalConsultas.php
  */
+
+// Cargar carreras desde la base de datos
+use App\ConectionBD\ConectionDB;
+$carreras = [];
+$modalError = null;
+try {
+    $conectarDB = new ConectionDB();
+    $carreras = $conectarDB->getCarreras();
+} catch (\Throwable $e) {
+    $modalError = 'Error al cargar carreras: ' . $e->getMessage();
+}
 ?>
 
 <!-- Modal de Consultas -->
@@ -77,11 +88,13 @@
                                         </label>
                                         <select class="form-control" id="modalCarrera" name="carrera">
                                             <option value="">Seleccionar carrera...</option>
-                                            <option value="realizador-tv">Realizador y Productor Televisivo</option>
-                                            <option value="analisis-sistemas">Análisis de Sistemas</option>
-                                            <option value="ciencia-datos">Ciencia de Datos e IA</option>
-                                            <option value="admin-publica">Administración Pública</option>
-                                            <option value="otro">Otro / Información general</option>
+                                            <?php if (empty($carreras)): ?>
+                                                <option value="" disabled style="color:red;">No hay carreras habilitadas</option>
+                                            <?php else: ?>
+                                                <?php foreach ($carreras as $carrera): ?>
+                                                    <option value="<?= $carrera['id_carrera'] ?>"><?= htmlspecialchars($carrera['carrera']) ?></option>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </select>
                                     </div>
                                 </div>

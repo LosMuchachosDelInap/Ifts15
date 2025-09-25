@@ -8,13 +8,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Definir BASE_URL desde variable de entorno o fallback
-if (!defined('BASE_URL')) {
-    if (getenv('BASE_URL')) {
-        define('BASE_URL', getenv('BASE_URL'));
-    } else {
-        define('BASE_URL', 'http://localhost:8000');
-    }
+
+// Cargar configuración central para BASE_URL y variables de entorno
+if (!function_exists('env')) {
+    require_once __DIR__ . '/../config.php';
 }
 
 // Limpiar todas las variables de sesión

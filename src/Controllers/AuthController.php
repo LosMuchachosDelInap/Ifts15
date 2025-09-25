@@ -26,16 +26,14 @@ class AuthController
     
     public function __construct()
     {
-        // Cargar configuración si no está cargada
-        if (!defined('BASE_URL')) {
-            if (getenv('BASE_URL')) {
-                define('BASE_URL', getenv('BASE_URL'));
-            } else {
-                define('BASE_URL', 'http://localhost:8000');
-            }
-        }
+        // Cargar configuración primero
         if (!function_exists('env')) {
             require_once __DIR__ . '/../config.php';
+        }
+        // Definir BASE_URL solo si no está definida
+        if (!defined('BASE_URL')) {
+            $baseUrl = $_ENV['BASE_URL'] ?? 'http://localhost:8000';
+            define('BASE_URL', $baseUrl);
         }
         
         try {

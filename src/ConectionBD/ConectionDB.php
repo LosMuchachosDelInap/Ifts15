@@ -135,11 +135,5 @@ class ConectionDB
         return $años;
     }
 
-    /**
-     * Destructor - cierra automáticamente la conexión
-     */
-    public function __destruct()
-    {
-        $this->closeConnection();
-    }
+    // Eliminado destructor automático para evitar cierre prematuro de la conexión
 }

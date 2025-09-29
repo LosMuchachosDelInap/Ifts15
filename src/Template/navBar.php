@@ -49,8 +49,8 @@
                     <button class="navbar-toggler" 
                             type="button" 
                             data-bs-toggle="offcanvas" 
-                            data-bs-target="#sidebarOffcanvas" 
-                            aria-controls="sidebarOffcanvas" 
+                            data-bs-target="#sidebarOffcanvasGuest" 
+                            aria-controls="sidebarOffcanvasGuest" 
                             aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>

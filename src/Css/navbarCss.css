@@ -106,9 +106,9 @@ Archivo: src/Css/navbarCss.css
   }
 }
 
-/* Botón toggler personalizado - Color gris */
+/* Botón toggler personalizado */
 .navbar-toggler {
-  border-color: #e8c715 !important;
+  border-color: #5A6268 !important;
   background-color: #ebc428 !important;
   color: #ffffff !important;
   padding: 4px 8px;

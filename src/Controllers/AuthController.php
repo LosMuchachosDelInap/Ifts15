@@ -99,8 +99,9 @@ class AuthController
                 }
                 $_SESSION['usuario'] = $datosCompletos['email'];
                 $_SESSION['user_id'] = $datosCompletos['id_usuario'];
+                $_SESSION['logged_in'] = true;
                 error_log("Login exitoso: {$email}");
-                $this->redirect('/?login=success');
+                $this->redirect('/index.php');
             } else {
                 error_log("Intento de login fallido: {$email}");
                 $_SESSION['login_message'] = 'Usuario o contraseña incorrectos.';

@@ -38,10 +38,10 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
         <?php include __DIR__ . '/src/Template/sidebar.php'; ?>
     <?php else: ?>
         <!-- Sidebar para usuarios no logueados -->
-        <div class="offcanvas offcanvas-end text-bg-dark" 
-             tabindex="-1" 
-             id="sidebarOffcanvas" 
-             aria-labelledby="sidebarOffcanvasLabel">
+       <div class="offcanvas offcanvas-end text-bg-dark" 
+           tabindex="-1" 
+           id="sidebarOffcanvasGuest" 
+           aria-labelledby="sidebarOffcanvasLabel">
             
             <!-- Header del offcanvas -->
             <div class="offcanvas-header bg-secondary text-white">
@@ -332,12 +332,27 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                                     <?php endif; ?>
                                     
                                     <!-- Estadísticas -->
-                                    <?php
-                                    require_once __DIR__ . '/src/Controllers/EstadisticasController.php';
-                                    $alumnos = EstadisticasController::getCantidadAlumnos($conn);
-                                    $profesores = EstadisticasController::getCantidadProfesores($conn);
-                                    $carreras = EstadisticasController::getCantidadCarreras($conn);
-                                    ?>
+                                        <?php
+                                        require_once __DIR__ . '/src/Controllers/EstadisticasController.php';
+                                        $alumnos = $profesores = $carreras = 0;
+                                        $conexionValida = false;
+                                        if ($conn) {
+                                            try {
+                                                if ($conn->ping()) {
+                                                    $conexionValida = true;
+                                                    $alumnos = EstadisticasController::getCantidadAlumnos($conn);
+                                                    $profesores = EstadisticasController::getCantidadProfesores($conn);
+                                                    $carreras = EstadisticasController::getCantidadCarreras($conn);
+                                                }
+                                            } catch (Throwable $e) {
+                                                error_log('Error al verificar conexión MySQLi: ' . $e->getMessage());
+                                                $conexionValida = false;
+                                            }
+                                        }
+                                        if (!$conexionValida) {
+                                            echo '<div class="alert alert-danger">No se pudo conectar a la base de datos para mostrar estadísticas.</div>';
+                                        }
+                                        ?>
                                     <div class="row text-center mt-4">
                                         <div class="col-6 col-md-3 mb-3">
                                             <div class="card bg-info text-white">

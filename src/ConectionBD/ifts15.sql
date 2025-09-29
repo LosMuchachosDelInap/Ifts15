@@ -20,7 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `ifts15`
 --
-
+CREATE DATABASE IF NOT EXISTS `ifts15` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `ifts15`;
 -- --------------------------------------------------------
 
 --

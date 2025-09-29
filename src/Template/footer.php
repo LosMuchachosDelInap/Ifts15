@@ -4,7 +4,7 @@
         <div class="row" style="background: #343a40 !important; display: flex; align-items: stretch;">
             <div class="col-md-4 mb-3" style="background: #343a40 !important; padding: 15px !important; display: flex; flex-direction: column;">
                 <h5 style="color: #FFD700 !important;">
-                    <i class="bi bi-mortarboard"></i> IFTS15
+                    <img src="/src/Public/images/logo_solo_circulo.png" alt="Logo IFTS15" style="height:32px;vertical-align:middle;margin-right:8px;"> IFTS15
                 </h5>
                 <p class="small" style="color: white !important;">
                     Instituto de Formación Técnica Superior N° 15<br>

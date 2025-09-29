@@ -332,13 +332,19 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                                     <?php endif; ?>
                                     
                                     <!-- Estadísticas -->
+                                    <?php
+                                    require_once __DIR__ . '/src/Controllers/EstadisticasController.php';
+                                    $alumnos = EstadisticasController::getCantidadAlumnos($conn);
+                                    $profesores = EstadisticasController::getCantidadProfesores($conn);
+                                    $carreras = EstadisticasController::getCantidadCarreras($conn);
+                                    ?>
                                     <div class="row text-center mt-4">
                                         <div class="col-6 col-md-3 mb-3">
                                             <div class="card bg-info text-white">
                                                 <div class="card-body py-3">
                                                     <i class="bi bi-people-fill fs-2 mb-2"></i>
-                                                    <h5 class="mb-0">250+</h5>
-                                                    <small>Estudiantes</small>
+                                                    <h5 class="mb-0"><?php echo $alumnos; ?></h5>
+                                                    <small>Alumnos</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -346,7 +352,7 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                                             <div class="card bg-success text-white">
                                                 <div class="card-body py-3">
                                                     <i class="bi bi-mortarboard-fill fs-2 mb-2"></i>
-                                                    <h5 class="mb-0">15</h5>
+                                                    <h5 class="mb-0"><?php echo $profesores; ?></h5>
                                                     <small>Profesores</small>
                                                 </div>
                                             </div>
@@ -355,8 +361,8 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                                             <div class="card bg-warning text-dark">
                                                 <div class="card-body py-3">
                                                     <i class="bi bi-camera-video-fill fs-2 mb-2"></i>
-                                                    <h5 class="mb-0">8</h5>
-                                                    <small>Estudios</small>
+                                                    <h5 class="mb-0"><?php echo $carreras; ?></h5>
+                                                    <small>Carreras</small>
                                                 </div>
                                             </div>
                                         </div>

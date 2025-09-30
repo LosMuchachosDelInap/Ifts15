@@ -79,7 +79,10 @@
 </footer>
 
 <!-- Modal de Consultas -->
+
 <?php include_once __DIR__ . '/../Components/modalConsultas.php'; ?>
+<?php include_once __DIR__ . '/../Components/modalLogin.php'; ?>
+<?php include_once __DIR__ . '/../Components/modalRegistrar.php'; ?>
 
 <!-- JavaScript Centralizado del Sistema -->
 <?php include_once __DIR__ . '/../Public/Utilities/JS.php'; ?>

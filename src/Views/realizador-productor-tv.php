@@ -570,14 +570,7 @@ if ($isLoggedIn && !empty($userEmail)) {
     </div>
 </div>
 
-<!-- Incluir modales del sistema -->
-<?php include __DIR__ . '/../Components/modalRegistrar.php'; ?>
-<?php include __DIR__ . '/../Components/modalConsultas.php'; ?>
 
-<?php if (!$isLoggedIn): ?>
-    <!-- Modales de Login para usuarios no logueados -->
-    <?php include_once(__DIR__ . "/../Components/modalLogin.php"); ?>
-<?php endif; ?>
 
 <!-- Incluir footer del sistema -->
 <?php include __DIR__ . '/../Template/footer.php'; ?>

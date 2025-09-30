@@ -560,20 +560,10 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
         </div>
     </main>
 
-    <?php include __DIR__ . '/src/Template/footer.php'; ?>
+<!-- Incluir footer del sistema -->
+     <?php include __DIR__ . '/src/Template/footer.php'; ?>
 
-    <?php if (!$isLoggedIn): ?>
-        <!-- Modales de Login y Registro -->
-        <?php include_once(__DIR__ . "/src/Components/modalLogin.php"); ?>
-        <?php include_once(__DIR__ . "/src/Components/modalRegistrar.php"); ?>
-        
-        <!-- Modal de Consultas se incluye desde footer/sidebar -->
-    <?php endif; ?>
-
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
-            crossorigin="anonymous"></script>
+    <!-- Bootstrap JS Bundle se incluye solo en el footer para evitar duplicados -->
     
     <!-- JavaScript personalizado -->
     <script>

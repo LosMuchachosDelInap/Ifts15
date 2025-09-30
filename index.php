@@ -594,9 +594,9 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
             });
             
             // Funcionalidad del footer
-            const currentYear = new Date().getFullYear();
+           /* const currentYear = new Date().getFullYear();
             document.querySelector('footer p').innerHTML = 
-                '© ' + currentYear + ' IFTS N° 15. Todos los derechos reservados.';
+                '© ' + currentYear + ' IFTS N° 15. Todos los derechos reservados.';*/
             
             // Smooth scroll para enlaces internos
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {

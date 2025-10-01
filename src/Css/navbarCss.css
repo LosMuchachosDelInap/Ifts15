@@ -227,6 +227,29 @@ Archivo: src/Css/navbarCss.css
 }
 
 /* ========================================
+   BOTONES DEL NAVBAR
+   ======================================== */
+
+ /* estilos personalizados para Iniciar Sesión */    
+.navbar .btn.btn-primary { 
+border-color: black;
+font-weight: 1000;
+
+}
+
+/* estilos personalizados para Registrarse */ 
+.navbar .btn.btn-outline-light {
+border-color: rgb(116, 114, 112);
+color: rgb(116, 114, 112);
+font-weight: 1000;    
+}
+
+.navbar .btn.btn-outline-light:hover {
+  background-color: #fff;
+  color: #e8c715;
+  border-color: #e8c715;
+}
+/* ========================================
    MODALES DEL NAVBAR
    ======================================== */
 

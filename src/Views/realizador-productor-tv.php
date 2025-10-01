@@ -88,27 +88,7 @@ if ($isLoggedIn && !empty($userEmail)) {
                 <!-- Separador -->
                 <hr class="border-secondary my-3">
                 
-                <!-- Sección: Acceso al Sistema -->
-                <div class="sidebar-heading text-muted mb-2">
-                    <i class="bi bi-key me-1"></i>
-                    ACCESO AL SISTEMA
-                </div>
-                
-                <a class="nav-link text-light d-flex align-items-center gap-2" 
-                   href="#modalLogin" 
-                   data-bs-toggle="modal" 
-                   data-bs-target="#modalLogin">
-                    <i class="bi bi-box-arrow-in-right text-success"></i>
-                    <span>Iniciar Sesión</span>
-                </a>
-                
-                <a class="nav-link text-light d-flex align-items-center gap-2" 
-                   href="#modalRegistrar" 
-                   data-bs-toggle="modal" 
-                   data-bs-target="#modalRegistrar">
-                    <i class="bi bi-person-plus text-warning"></i>
-                    <span>Registrarse</span>
-                </a>
+                <!-- Sección: Acceso al Sistema eliminada, ahora en navbar -->
                 
                 <!-- Separador -->
                 <hr class="border-secondary my-3">

@@ -21,21 +21,28 @@
             </a>
         </div>
 
-        <!-- Menú derecho: usuario -->
-        <div class="d-flex align-items-center flex-shrink-0 ms-auto" style="z-index:3;">
-            <?php if ($isLoggedIn): ?>
-                <div class="dropdown">
-                    <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle me-1"></i>
-                        <span class="d-none d-sm-inline"><?php echo htmlspecialchars($userEmail); ?></span>
+            <!-- Menú derecho: usuario o botones de acceso -->
+            <div class="d-flex align-items-center flex-shrink-0 ms-auto" style="z-index:3; gap: 0.5rem;">
+                <?php if ($isLoggedIn): ?>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <span class="d-none d-sm-inline"><?php echo htmlspecialchars($userEmail); ?></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><span class="dropdown-item-text text-muted"><?php echo ucfirst($userRole); ?></span></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/src/Controllers/cerrarSesion.php">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <button type="button" class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <li><span class="dropdown-item-text text-muted"><?php echo ucfirst($userRole); ?></span></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/src/Controllers/cerrarSesion.php">Cerrar Sesión</a></li>
-                    </ul>
-                </div>
-            <?php endif; ?>
-        </div>
+                    <button type="button" class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalRegistrar">
+                        <i class="bi bi-person-plus me-1"></i> Registrarse
+                    </button>
+                <?php endif; ?>
+            </div>
     </div>
 </nav>

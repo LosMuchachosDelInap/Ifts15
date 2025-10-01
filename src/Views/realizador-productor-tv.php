@@ -31,7 +31,7 @@ if ($isLoggedIn && !empty($userEmail)) {
 <?php if ($isLoggedIn): ?>
     <?php include __DIR__ . '/../Template/sidebar.php'; ?>
 <?php else: ?>
-    <!-- Sidebar para usuarios no logueados -->
+       <!-- Sidebar para usuarios no logueados / aca tambien se puede cambiar desde donde sale el sidebar "offcanvas-end/star/up/down"-->
     <div class="offcanvas offcanvas-end text-bg-dark" 
          tabindex="-1" 
          id="sidebarOffcanvas" 

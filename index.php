@@ -37,7 +37,7 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
     <?php if ($isLoggedIn): ?>
         <?php include __DIR__ . '/src/Template/sidebar.php'; ?>
     <?php else: ?>
-        <!-- Sidebar para usuarios no logueados -->
+        <!-- Sidebar para usuarios no logueados / aca tambien se puede cambiar desde donde sale el sidebar "offcanvas-end/star/up/down"-->
        <div class="offcanvas offcanvas-end text-bg-dark" 
            tabindex="-1" 
            id="sidebarOffcanvasGuest" 

@@ -6,10 +6,10 @@ Sistema web desarrollado para el Instituto de Formación Técnica Superior N° 1
 
 - **Diseño Responsivo**: Compatible con dispositivos móviles
 - **Bootstrap 5**: Framework CSS moderno
-- **Base de Datos MySQL**: Operaciones seguras con PDO
+- **Base de Datos MySQL**: Operaciones seguras con MySQLi
 - **Sistema de Usuarios**: Registro y autenticación completos
-- **Gestión Académica**: Carreras, comisiones, años de cursada
-- **Arquitectura Limpia**: PHP estructurado y modular
+- **Gestión Académica**: Carreras, usuarios, roles
+- **Arquitectura Modular**: PHP estructurado en MVC
 
 ## 🚀 Instalación
 
@@ -18,57 +18,69 @@ Sistema web desarrollado para el Instituto de Formación Técnica Superior N° 1
 - PHP 7.4 o superior
 - MySQL 5.7 o superior
 - Servidor web (Apache recomendado)
-- Extensiones PHP: PDO, PDO_MySQL
+- Extensiones PHP: mysqli, mbstring
 
 ### Configuración
 
 1. **Importar base de datos**:
    ```sql
-   mysql -u usuario -p nombre_bd < database/ifts15.sql
+   mysql -u usuario -p nombre_bd < src/ConectionBD/ifts15.sql
    ```
 
 2. **Configurar conexión**:
-   - Editar `config/config.php` 
-   - Actualizar datos de BD
+   - Editar `src/config.php` 
+   - Actualizar datos de BD y variables de entorno
 
 3. **Servidor local**:
    ```
-   http://localhost/ruta-del-proyecto/
+   http://localhost/Mis_Proyectos/Ifts15/
    ```
 
-## 📁 Estructura
+## 📁 Estructura del Proyecto
 
 ```
-ifts15/
-├── assets/          # CSS, JS, imágenes
-├── config/          # Configuración
-├── database/        # SQL de la BD
-├── includes/        # Archivos PHP comunes
-├── layouts/         # Headers, footers, navegación
-├── pages/           # Páginas internas
-├── index.php        # Página principal
-├── login.php        # Acceso al sistema
-└── register.php     # Registro de usuarios
+Ifts15/
+├── index.php                  # Página principal
+├── login.php                  # Login de usuarios
+├── logout.php                 # Logout
+├── register.php               # Registro de usuarios
+├── src/
+│   ├── Components/            # Modales y componentes reutilizables
+│   ├── ConectionBD/           # Conexión y SQL de la base de datos
+│   ├── Controllers/           # Controladores (MVC)
+│   ├── Css/                   # Hojas de estilo CSS
+│   ├── Model/                 # Modelos de datos
+│   ├── Public/
+│   │   ├── images/            # Imágenes del sistema
+│   │   └── Utilities/         # JS y utilidades
+│   ├── Template/              # Templates: navbar, footer, sidebar, head
+│   └── Views/                 # Vistas principales
+├── README.md                  # Este archivo
+└── ...                        # Otros archivos de configuración
 ```
 
-## 🎯 Uso
+## 🎯 Uso Básico
 
-1. **Registrar usuario**: Completar formulario con datos académicos
-2. **Iniciar sesión**: Email y contraseña
-3. **Navegar**: Acceso a secciones según rol
+1. **Registrar usuario**: Completa el formulario de registro
+2. **Iniciar sesión**: Ingresa con email y contraseña
+3. **Navega**: Accede a las secciones según tu rol
 
 ## 🔧 Características Técnicas
 
-- **Roles**: Alumno (por defecto), Profesor, Administrativo, Directivo
-- **Validaciones**: Cliente y servidor
+- **Roles**: Estudiante (por defecto), Profesor, Admin
+- **Validaciones**: Lado cliente y servidor
 - **Seguridad**: Contraseñas hasheadas, protección SQL injection
-- **Transacciones**: Integridad de datos garantizada
+- **MVC**: Separación clara de lógica, datos y vistas
 
 ## 📞 Contacto
 
 Instituto de Formación Técnica Superior N° 15
 
-# O descomprime el archivo ZIP en tu directorio web
+---
+
+**Desarrollado para:** Instituto de Formación Técnica Superior N° 15  
+**Versión:** 1.0.0  
+**Fecha:** 2025
 ```
 
 ### Paso 2: Configurar la Base de Datos

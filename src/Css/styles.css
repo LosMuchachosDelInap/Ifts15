@@ -369,18 +369,23 @@ body {
 }
 
 /* Botón cerrar modal personalizado */
+
+/* Botón cerrar modal/offcanvas: usar ícono oscuro por defecto y tamaño mayor */
 .btn-close {
-    background: rgba(255, 255, 255, 0.8) !important;
+   /* background: none !important;*/
     border-radius: 50% !important;
     opacity: 1 !important;
     font-size: 1.2rem !important;
     padding: 0.5rem !important;
     margin: 0 !important;
+    color: #111 !important;
+    filter: none !important;
 }
 
 .btn-close:hover {
     background: rgba(255, 215, 0, 0.9) !important;
     transform: scale(1.1) !important;
+    color: #000 !important;
 }
 
 /* ========================================

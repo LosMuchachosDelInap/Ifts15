@@ -12,7 +12,9 @@
                         Aguirre 1473, Ciudad Autónoma de Buenos Aires
                     </li>
                     <li class="text-light text-decoration-none">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.6019971962396!2d-58.446394388415655!3d-34.58893595660543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb5f3bcbfb21f%3A0xcfac954535a04ede!2sAguirre%201473%2C%20C1414ATC%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1759233386257!5m2!1ses!2sar" width="70%" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <span class="d-none d-md-block">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.6019971962396!2d-58.446394388415655!3d-34.58893595660543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb5f3bcbfb21f%3A0xcfac954535a04ede!2sAguirre%201473%2C%20C1414ATC%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1759233386257!5m2!1ses!2sar" width="70%" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </span>
                     </li>
                 </ul>
             </div>

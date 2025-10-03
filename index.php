@@ -374,9 +374,9 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                                     
                                     <!-- Botón Ver Información Completa -->
                                     <div class="row mt-4">
-                                        <div class="col-12 text-center">
+                                        <div class="col-12">
                                             <a href="<?php echo BASE_URL; ?>/src/Views/realizador-productor-tv.php" 
-                                               class="btn btn-primary btn-lg">
+                                               class="btn btn-primary btn-lg w-100 d-block">
                                                 <i class="bi bi-info-circle-fill me-2"></i>
                                                 Ver Información Completa de la Carrera
                                             </a>
@@ -386,87 +386,16 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                                 
                                 <!-- Panel Lateral -->
                                 <div class="col-12 col-lg-4">
-                                    <?php if ($isLoggedIn): ?>
-                                        <!-- Usuario Logueado - Accesos Rápidos -->
-                                        <div class="card mb-3">
-                                            <div class="card-header bg-success text-white">
-                                                <h6 class="mb-0">
-                                                    <i class="bi bi-lightning-charge me-2"></i>
-                                                    Accesos Rápidos
-                                                </h6>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="d-grid gap-2">
-                                                    <a href="<?php echo BASE_URL; ?>/src/Views/dashboard.php" 
-                                                       class="btn btn-outline-success btn-sm">
-                                                        <i class="bi bi-speedometer2 me-2"></i>Mi Dashboard
-                                                    </a>
-                                                    <?php if ($userRole === 'estudiante'): ?>
-                                                    <a href="<?php echo BASE_URL; ?>/src/Views/mis-materias.php" 
-                                                       class="btn btn-outline-primary btn-sm">
-                                                        <i class="bi bi-book me-2"></i>Mis Materias
-                                                    </a>
-                                                    <a href="<?php echo BASE_URL; ?>/src/Views/calificaciones.php" 
-                                                       class="btn btn-outline-warning btn-sm">
-                                                        <i class="bi bi-star me-2"></i>Calificaciones
-                                                    </a>
-                                                    <?php elseif ($userRole === 'profesor'): ?>
-                                                    <a href="<?php echo BASE_URL; ?>/src/Views/mis-cursos.php" 
-                                                       class="btn btn-outline-primary btn-sm">
-                                                        <i class="bi bi-easel me-2"></i>Mis Cursos
-                                                    </a>
-                                                    <a href="<?php echo BASE_URL; ?>/src/Views/calificar.php" 
-                                                       class="btn btn-outline-info btn-sm">
-                                                        <i class="bi bi-pencil me-2"></i>Calificar
-                                                    </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php else: ?>
-                                        <!-- Usuario No Logueado - Información y Acceso -->
-                                        <div class="card mb-3">
-                                            <div class="card-header bg-warning text-dark">
-                                                <h6 class="mb-0">
-                                                    <i class="bi bi-person-plus me-2"></i>
-                                                    Acceso al Sistema
-                                                </h6>
-                                            </div>
-                                            <div class="card-body">
-                                                <p class="small mb-3">
-                                                    Inicia sesión para acceder a tus materiales de estudio, 
-                                                    calificaciones y comunicarte con profesores.
-                                                </p>
-                                                <div class="d-grid gap-2">
-                                                    <button type="button" 
-                                                            class="btn btn-primary" 
-                                                            data-bs-toggle="modal" 
-                                                            data-bs-target="#modalLogin">
-                                                        <i class="bi bi-box-arrow-in-right me-2"></i>
-                                                        Iniciar Sesión
-                                                    </button>
-                                                    <button type="button" 
-                                                            class="btn btn-outline-secondary" 
-                                                            data-bs-toggle="modal" 
-                                                            data-bs-target="#modalRegistrar">
-                                                        <i class="bi bi-person-plus me-2"></i>
-                                                        Registrarse
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endif; ?>
-                                    
-                                    <!-- Novedades -->
-                                    <div class="card">
+                                    <!-- Novedades (ahora ocupa todo el alto y ancho del panel lateral) -->
+                                    <div class="card h-100" style="min-height:340px;">
                                         <div class="card-header bg-info text-white">
                                             <h6 class="mb-0">
                                                 <i class="bi bi-megaphone me-2"></i>
                                                 Novedades
                                             </h6>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="small">
+                                        <div class="card-body d-flex flex-column justify-content-between" style="height:100%;">
+                                            <div class="small flex-grow-1">
                                                 <div class="mb-2">
                                                     <i class="bi bi-calendar3 me-1 text-muted"></i>
                                                     <strong>15/09/2025:</strong> Inscripción abierta para 2026
@@ -479,6 +408,12 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                                                     <i class="bi bi-award me-1 text-muted"></i>
                                                     <strong>05/09/2025:</strong> Graduación promoción 2024
                                                 </div>
+                                            </div>
+                                            <!-- Espacio reservado para futuro formulario dinámico de novedades -->
+                                            <div class="mt-3">
+                                                <button class="btn btn-outline-light w-100 disabled" disabled>
+                                                    <i class="bi bi-pencil-square me-1"></i> Agregar/Editar Novedades (próximamente)
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

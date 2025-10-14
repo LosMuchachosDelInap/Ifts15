@@ -386,7 +386,7 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                                 
                                 <!-- Panel Lateral -->
                                 <div class="col-12 col-lg-4">
-                                    <!-- Novedades (ahora ocupa todo el alto y ancho del panel lateral) -->
+                                    <!-- Novedades dinámicas: solo para administrador -->
                                     <div class="card h-100" style="min-height:340px;">
                                         <div class="card-header bg-info text-white">
                                             <h6 class="mb-0">
@@ -395,26 +395,29 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                                             </h6>
                                         </div>
                                         <div class="card-body d-flex flex-column justify-content-between" style="height:100%;">
-                                            <div class="small flex-grow-1">
-                                                <div class="mb-2">
-                                                    <i class="bi bi-calendar3 me-1 text-muted"></i>
-                                                    <strong>15/09/2025:</strong> Inscripción abierta para 2026
-                                                </div>
-                                                <div class="mb-2">
-                                                    <i class="bi bi-camera-video me-1 text-muted"></i>
-                                                    <strong>10/09/2025:</strong> Nuevos equipos de grabación
-                                                </div>
-                                                <div class="mb-0">
-                                                    <i class="bi bi-award me-1 text-muted"></i>
-                                                    <strong>05/09/2025:</strong> Graduación promoción 2024
-                                                </div>
-                                            </div>
-                                            <!-- Espacio reservado para futuro formulario dinámico de novedades -->
-                                            <div class="mt-3">
-                                                <button class="btn btn-outline-light w-100 disabled" disabled>
-                                                    <i class="bi bi-pencil-square me-1"></i> Agregar/Editar Novedades (próximamente)
-                                                </button>
-                                            </div>
+                                            <?php
+                                            // Solo el usuario administrador y Administrativo puede agregar novedades
+                                            if ($isLoggedIn && (strtolower($userRole) === 'administrador' || strtolower($userRole) === 'administrativo')) {
+                                                include __DIR__ . '/src/Components/modalNovedades.php';
+                                            } else {
+                                                // Solo mostrar la tabla de novedades
+                                                require_once __DIR__ . '/src/Controllers/novedadesController.php';
+                                                echo '<div class="table-responsive" style="min-height:220px;max-height:320px;overflow-y:auto;">';
+                                                echo '<table class="table table-borderless align-middle mb-0">';
+                                                echo '<thead><tr><th style="width: 160px;">Fecha</th><th>Novedad</th></tr></thead><tbody>';
+                                                if (isset($novedades) && count($novedades) > 0) {
+                                                    foreach ($novedades as $nov) {
+                                                        echo '<tr>';
+                                                        echo '<td class="text-muted small">' . date('d/m/Y H:i', strtotime($nov['idCreate'])) . '</td>';
+                                                        echo '<td>' . htmlspecialchars($nov['novedad']) . '</td>';
+                                                        echo '</tr>';
+                                                    }
+                                                } else {
+                                                    echo '<tr><td colspan="2" class="text-center text-muted">No hay novedades aún.</td></tr>';
+                                                }
+                                                echo '</tbody></table></div>';
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
@@ -521,6 +524,5 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
             });
         });
     </script>
-
 </body>
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-09-2025 a las 01:37:02
+-- Tiempo de generación: 14-10-2025 a las 17:04:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,8 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `ifts15`
 --
-CREATE DATABASE IF NOT EXISTS `ifts15` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `ifts15`;
+
 -- --------------------------------------------------------
 
 --
@@ -95,6 +94,21 @@ INSERT INTO `comision` (`id_comision`, `comision`, `habilitado`, `cancelado`, `i
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `novedades`
+--
+
+CREATE TABLE `novedades` (
+  `id_novedades` int(11) NOT NULL,
+  `novedad` varchar(250) NOT NULL,
+  `idCreate` timestamp NOT NULL DEFAULT current_timestamp(),
+  `idUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `habilitado` int(1) NOT NULL DEFAULT 1,
+  `cancelado` int(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `persona`
 --
 
@@ -117,7 +131,8 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`id_persona`, `apellido`, `fecha_nacimiento`, `nombre`, `telefono`, `dni`, `edad`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
-(1, 'prueba', NULL, 'prueba', '1156423659', '265528963', 18, 1, 0, '2025-09-17 22:24:24', '2025-09-17 22:24:24');
+(1, 'prueba', NULL, 'prueba', '1156423659', '265528963', 18, 1, 0, '2025-09-17 22:24:24', '2025-09-17 22:24:24'),
+(2, 'meli', '1978-10-16', 'melu', '115236547', '25365215', 46, 1, 0, '2025-09-29 14:02:46', '2025-09-29 14:02:46');
 
 -- --------------------------------------------------------
 
@@ -170,7 +185,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `email`, `clave`, `id_comision`, `id_carrera`, `id_añoCursada`, `id_rol`, `id_persona`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
-(1, 'prueba@gmail.com', '$2y$12$sVaFyYEqkJ9GQk9XFoQMxuOcbIwXltz5yai4P6fxu4VKRlWBGo8Ou', 2, 1, 2, 1, 1, 1, 0, '2025-09-17 22:24:25', '2025-09-17 22:24:25');
+(1, 'prueba@gmail.com', '$2y$12$sVaFyYEqkJ9GQk9XFoQMxuOcbIwXltz5yai4P6fxu4VKRlWBGo8Ou', 2, 1, 2, 1, 1, 1, 0, '2025-09-17 22:24:25', '2025-09-17 22:24:25'),
+(2, 'melu@hotmail.com', '$2y$10$cfNr0Jv92/A/G3Gnt55rY.86vFvL2Y4XGRMeRyEOJJnJ9RFeI3ZG2', 2, 1, 3, 1, 2, 1, 0, '2025-09-29 14:02:46', '2025-09-29 14:02:46');
 
 --
 -- Índices para tablas volcadas
@@ -193,6 +209,12 @@ ALTER TABLE `carrera`
 --
 ALTER TABLE `comision`
   ADD PRIMARY KEY (`id_comision`);
+
+--
+-- Indices de la tabla `novedades`
+--
+ALTER TABLE `novedades`
+  ADD PRIMARY KEY (`id_novedades`);
 
 --
 -- Indices de la tabla `persona`
@@ -240,10 +262,16 @@ ALTER TABLE `comision`
   MODIFY `id_comision` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `novedades`
+--
+ALTER TABLE `novedades`
+  MODIFY `id_novedades` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -255,7 +283,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas

@@ -13,7 +13,7 @@
 
 <!-- 🔧 FIX CRÍTICO PARA BOOTSTRAP FOCUS TRAP -->
 <script>
-    // Solución para el problema de Focus Trap SOLO en el modal de consultas
+    // Solución para el problema de Focus Trap en modales personalizados
     (function() {
         'use strict';
         const originalBootstrap = window.bootstrap;
@@ -25,10 +25,10 @@
             const originalHandleFocusin = ModalPrototype._handleFocusin;
             const originalEnforceFocus = ModalPrototype._enforceFocus;
 
-            // Hook para aplicar el fix a consultasModal y modalRegistrar
+            // Hook para aplicar el fix a consultasModal, modalRegistrar y modalNovedad
             document.addEventListener('show.bs.modal', function(e) {
                 const modal = e.target;
-                if (modal && (modal.id === 'consultasModal' || modal.id === 'modalRegistrar')) {
+                if (modal && (modal.id === 'consultasModal' || modal.id === 'modalRegistrar' || modal.id === 'modalNovedad')) {
                     // Deshabilitar focus trap SOLO para estos modales
                     ModalPrototype._initializeFocusTrap = function() { return; };
                     ModalPrototype._handleFocusin = function() { return; };
@@ -46,7 +46,7 @@
             // Restaurar el focus trap al cerrar el modal para evitar recursión
             document.addEventListener('hidden.bs.modal', function(e) {
                 const modal = e.target;
-                if (modal && (modal.id === 'consultasModal' || modal.id === 'modalRegistrar')) {
+                if (modal && (modal.id === 'consultasModal' || modal.id === 'modalRegistrar' || modal.id === 'modalNovedad')) {
                     if (originalInitializeFocusTrap) ModalPrototype._initializeFocusTrap = originalInitializeFocusTrap;
                     if (originalHandleFocusin) ModalPrototype._handleFocusin = originalHandleFocusin;
                     if (originalEnforceFocus) ModalPrototype._enforceFocus = originalEnforceFocus;

@@ -533,7 +533,7 @@ if ($isLoggedIn && !empty($userEmail)) {
                                     <i class="fa fa-user-plus text-dark"></i>
                                     Inscribirse Ahora
                                 </button>
-                                <button class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#modalConsultas">
+                                <button class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#consultasModal">
                                     <i class="fa fa-phone text-warning"></i>
                                     Contactar
                                 </button>

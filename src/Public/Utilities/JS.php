@@ -73,12 +73,10 @@
             const consultasModal = document.getElementById('consultasModal');
             if (consultasModal) {
                 try {
-                    // Configurar modal de consultas con fix especial
-                    const modalInstance = new bootstrap.Modal(consultasModal, {
-                        focus: true,
-                        backdrop: true,
-                        keyboard: true
-                    });
+                    // Configurar modal de consultas con fix especial usando getOrCreateInstance
+                    const modalInstance = bootstrap.Modal.getOrCreateInstance(consultasModal);
+                    // Opcional: puedes setear opciones si necesitas
+                    // modalInstance._config = { focus: true, backdrop: true, keyboard: true };
                     consultasModal.addEventListener('show.bs.modal', function () {
                         // Limpiar cualquier modal backdrop previo
                         const backdrops = document.querySelectorAll('.modal-backdrop');
@@ -87,11 +85,11 @@
                                 backdrops[i].remove();
                             }
 
-                                        // Inicializar modalNovedad explícitamente si existe
+                                        // Inicializar modalNovedad explícitamente si existe (usar getOrCreateInstance para evitar error de _config)
                                         const modalNovedad = document.getElementById('modalNovedad');
                                         if (modalNovedad) {
                                             try {
-                                                new bootstrap.Modal(modalNovedad);
+                                                bootstrap.Modal.getOrCreateInstance(modalNovedad);
                                             } catch (e) {
                                                 console.log('Error inicializando modalNovedad:', e);
                                             }

@@ -127,6 +127,7 @@ body {
     background: linear-gradient(135deg, #343a40 0%, #495057 100%);
     color: white;
     border: 2px solid var(--primary-color);
+    padding: 1.5rem !important;
 }
 
 .card-info {

@@ -293,7 +293,8 @@ class AuthController
             return false;
         }
         
-        return $_SESSION['role'] === $role || $_SESSION['role_id'] === $role;
+    // Solo comparar por ID de rol
+    return isset($_SESSION['role_id']) && $_SESSION['role_id'] == $role;
     }
 
     /**
@@ -301,7 +302,8 @@ class AuthController
      */
     public static function isAdmin()
     {
-        return self::hasRole('admin') || self::hasRole(1);
+    // Solo comparar por ID de rol (ejemplo: 6 = Administrador)
+    return self::hasRole(6);
     }
 
     /**

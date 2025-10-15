@@ -1,15 +1,8 @@
-<?php
-// Componente: Modal de Novedades Dinámico
-// Modal para agregar novedades y tabla para mostrar las existentes
-?>
-<!-- Botón para abrir el modal -->
-<div class="d-flex justify-content-end mb-2">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNovedad">
-        <i class="bi bi-plus-circle me-1"></i> Agregar Novedad
-    </button>
-</div>
 
-<!-- Modal de Novedad -->
+<?php
+// Componente: Solo Modal de Novedades (botón y ventana)
+?>
+
 <div class="modal fade" id="modalNovedad" tabindex="-1" aria-labelledby="modalNovedadLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -31,32 +24,4 @@
       </form>
     </div>
   </div>
-</div>
-
-<!-- Tabla de novedades -->
-<div class="table-responsive" style="min-height:220px;max-height:320px;overflow-y:auto;">
-    <table class="table table-borderless align-middle mb-0">
-        <thead>
-            <tr>
-                <th style="width: 160px;">Fecha</th>
-                <th>Novedad</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            // Mostrar novedades (se espera que $novedades venga del controlador)
-            if (isset($novedades) && count($novedades) > 0):
-                foreach ($novedades as $nov): ?>
-                    <tr>
-                        <td class="text-muted small">
-                            <?php echo date('d/m/Y H:i', strtotime($nov['idCreate'])); ?>
-                        </td>
-                        <td><?php echo htmlspecialchars($nov['novedad']); ?></td>
-                    </tr>
-                <?php endforeach;
-            else: ?>
-                <tr><td colspan="2" class="text-center text-muted">No hay novedades aún.</td></tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
 </div>

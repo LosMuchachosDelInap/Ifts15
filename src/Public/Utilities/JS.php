@@ -13,47 +13,6 @@
 
 <!-- 🔧 FIX CRÍTICO PARA BOOTSTRAP FOCUS TRAP -->
 <script>
-    // Solución para el problema de Focus Trap en modales personalizados
-    (function() {
-        'use strict';
-        const originalBootstrap = window.bootstrap;
-        if (originalBootstrap && originalBootstrap.Modal) {
-            // Guardar referencia original
-            const ModalPrototype = originalBootstrap.Modal.prototype;
-            // Guardar originales para restaurar
-            const originalInitializeFocusTrap = ModalPrototype._initializeFocusTrap;
-            const originalHandleFocusin = ModalPrototype._handleFocusin;
-            const originalEnforceFocus = ModalPrototype._enforceFocus;
-
-            // Hook para aplicar el fix a consultasModal, modalRegistrar y modalNovedad
-            document.addEventListener('show.bs.modal', function(e) {
-                const modal = e.target;
-                if (modal && (modal.id === 'consultasModal' || modal.id === 'modalRegistrar' || modal.id === 'modalNovedad')) {
-                    // Deshabilitar focus trap SOLO para estos modales
-                    ModalPrototype._initializeFocusTrap = function() { return; };
-                    ModalPrototype._handleFocusin = function() { return; };
-                    if (typeof originalEnforceFocus === 'function') {
-                        ModalPrototype._enforceFocus = function() { return; };
-                    }
-                } else {
-                    // Restaurar comportamiento estándar para otros modales
-                    if (originalInitializeFocusTrap) ModalPrototype._initializeFocusTrap = originalInitializeFocusTrap;
-                    if (originalHandleFocusin) ModalPrototype._handleFocusin = originalHandleFocusin;
-                    if (originalEnforceFocus) ModalPrototype._enforceFocus = originalEnforceFocus;
-                }
-            });
-
-            // Restaurar el focus trap al cerrar el modal para evitar recursión
-            document.addEventListener('hidden.bs.modal', function(e) {
-                const modal = e.target;
-                if (modal && (modal.id === 'consultasModal' || modal.id === 'modalRegistrar' || modal.id === 'modalNovedad')) {
-                    if (originalInitializeFocusTrap) ModalPrototype._initializeFocusTrap = originalInitializeFocusTrap;
-                    if (originalHandleFocusin) ModalPrototype._handleFocusin = originalHandleFocusin;
-                    if (originalEnforceFocus) ModalPrototype._enforceFocus = originalEnforceFocus;
-                }
-            });
-        }
-    })();
 
     // JavaScript personalizado del sistema
     document.addEventListener('DOMContentLoaded', function() {
@@ -127,6 +86,16 @@
                             for (let i = 1; i < backdrops.length; i++) {
                                 backdrops[i].remove();
                             }
+
+                                        // Inicializar modalNovedad explícitamente si existe
+                                        const modalNovedad = document.getElementById('modalNovedad');
+                                        if (modalNovedad) {
+                                            try {
+                                                new bootstrap.Modal(modalNovedad);
+                                            } catch (e) {
+                                                console.log('Error inicializando modalNovedad:', e);
+                                            }
+                                        }
                         }
                     });
                     consultasModal.addEventListener('shown.bs.modal', function () {

@@ -244,35 +244,31 @@ class User
      */
     public static function obtenerUsuarioCompleto($conn, $id_usuario)
     {
-        // Adaptar consulta a la estructura real de BD
-        $sql = "SELECT u.*, p.nombre, p.apellido, p.dni, p.telefono
+        // Adaptar consulta a la estructura real de BD, incluyendo el nombre del rol
+        $sql = "SELECT u.*, p.nombre, p.apellido, p.dni, p.telefono, r.rol AS role_name
                 FROM usuario u 
                 LEFT JOIN persona p ON u.id_persona = p.id_persona 
+                LEFT JOIN roles r ON u.id_rol = r.id_rol
                 WHERE u.id_usuario = ? AND u.habilitado = 1";
-        
+
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             throw new Exception("Error preparando consulta obtenerUsuarioCompleto: " . $conn->error);
         }
-        
+
         $stmt->bind_param("i", $id_usuario);
-        
+
         if (!$stmt->execute()) {
             throw new Exception("Error ejecutando consulta obtenerUsuarioCompleto: " . $stmt->error);
         }
-        
+
         $resultado = $stmt->get_result();
         if (!$resultado) {
             throw new Exception("Error obteniendo resultado obtenerUsuarioCompleto: " . $stmt->error);
         }
-        
+
         $datos = $resultado->fetch_assoc();
-        
-        // Si encontramos datos, agregar nombre del rol por defecto
-        if ($datos) {
-            $datos['role_name'] = 'Usuario'; // Rol por defecto
-        }
-        
+        // Ya viene el nombre del rol en role_name
         return $datos;
     }
 
@@ -447,6 +443,7 @@ class User
                 'apellido' => $datos['apellido'] ?? 'Sin apellido',
                 'nombre_completo' => trim(($datos['nombre'] ?? '') . ' ' . ($datos['apellido'] ?? '')),
                 'role_id' => $datos['id_rol'] ?? 1, // Usar el id_rol de la BD real
+                'id_rol' => $datos['id_rol'] ?? 1, // Asegura que $_SESSION['id_rol'] esté disponible
                 'role' => $datos['role_name'] ?? 'Usuario',
                 'logged_in' => true,
                 'last_login' => $this->last_login

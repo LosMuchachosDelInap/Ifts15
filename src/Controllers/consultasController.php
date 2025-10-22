@@ -5,11 +5,16 @@ use PHPMailer\PHPMailer\Exception;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../Model/Consulta.php';
+use App\Model\Consulta;
 
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-$dotenv->load();
+if (method_exists($dotenv, 'safeLoad')) {
+    $dotenv->safeLoad();
+} else {
+    try { $dotenv->load(); } catch (Throwable $e) { /* ignore */ }
+}
 
 // Crear directorio de logs si no existe
 if (!file_exists(__DIR__ . '/../../logs')) {

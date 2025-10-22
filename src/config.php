@@ -16,7 +16,17 @@ use App\Database;
 if (!isset($_ENV['BASE_URL']) && !defined('DOTENV_LOADED')) {
     require_once __DIR__ . '/../vendor/autoload.php';
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-    $dotenv->load();
+    // Usar safeLoad para evitar excepción si no existe el archivo .env en desarrollo
+    if (method_exists($dotenv, 'safeLoad')) {
+        $dotenv->safeLoad();
+    } else {
+        // Retrocompatibilidad: intentar load() pero capturar errores
+        try {
+            $dotenv->load();
+        } catch (Throwable $e) {
+            // No hacemos fatal; continuamos con variables de entorno del sistema
+        }
+    }
     define('DOTENV_LOADED', true);
 }
 

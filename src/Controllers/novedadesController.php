@@ -4,6 +4,7 @@ require_once __DIR__ . '/../Model/Novedades.php';
 require_once __DIR__ . '/../ConectionBD/ConectionDB.php';
 
 use App\ConectionBD\ConectionDB;
+use App\Model\Novedades;
 
 $db = new ConectionDB();
 $conn = $db->getConnection();

@@ -1,4 +1,6 @@
 <?php
+namespace App\Model;
+
 /**
  * Modelo de Consulta - IFTS15
  * Archivo: src/Model/Consulta.php

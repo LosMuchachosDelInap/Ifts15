@@ -13,6 +13,7 @@ use App\ConectionBD\ConectionDB;
 use App\Model\Person;
 use App\Model\User;
 use App\Controllers\AuthController;
+use App\Controllers\EstadisticasController;
 
 // Instanciar conexión a la base de datos
 try {
@@ -291,7 +292,6 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                     <?php endif; ?>
                     <!-- Estadísticas -->
                     <?php
-                    require_once __DIR__ . '/src/Controllers/EstadisticasController.php';
                     $alumnos = $profesores = $carreras = 0;
                     $conexionValida = false;
                     if ($conn) {

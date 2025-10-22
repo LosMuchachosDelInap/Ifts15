@@ -1,4 +1,6 @@
 <?php
+namespace App\Model;
+
 // Modelo Novedades: POO, MVC
 class Novedades {
 	private $id_novedades;

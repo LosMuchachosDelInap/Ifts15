@@ -156,15 +156,39 @@ function getCurrentUser() {
     
     // Si no hay user_data pero sí user_id, devolver datos básicos
     if (isset($_SESSION['user_id'])) {
-        return [
-            'id' => $_SESSION['user_id'],
-            'nombre_completo' => $_SESSION['nombre_completo'] ?? $_SESSION['nombre'] ?? 'Usuario',
-            'nombre' => $_SESSION['nombre'] ?? 'Usuario',
-            'apellido' => $_SESSION['apellido'] ?? '',
-            'email' => $_SESSION['usuario'] ?? '',
-            'rol' => $_SESSION['role'] ?? 'estudiante'
+    $rid = $_SESSION['id_rol'] ?? $_SESSION['role_id'] ?? null;
+    $roleNames = [1 => 'Alumno', 2 => 'Profesor', 3 => 'Administrativo', 4 => 'Directivo', 5 => 'Administrador'];
+    return [
+        'id' => $_SESSION['user_id'],
+        'nombre_completo' => $_SESSION['nombre_completo'] ?? $_SESSION['nombre'] ?? 'Usuario',
+        'nombre' => $_SESSION['nombre'] ?? 'Usuario',
+        'apellido' => $_SESSION['apellido'] ?? '',
+        'email' => $_SESSION['usuario'] ?? '',
+        // Usar role_id numérico y nombre legible (según tabla roles)
+        'role_id' => $rid,
+        'role' => $roleNames[intval($rid)] ?? 'Alumno'
         ];
     }
     
     return null;
+}
+
+/**
+ * Obtener id de rol del usuario actual (int|null)
+ */
+function getUserRoleId() {
+    if (!isset($_SESSION)) return null;
+    if (isset($_SESSION['id_rol'])) return intval($_SESSION['id_rol']);
+    if (isset($_SESSION['role_id'])) return intval($_SESSION['role_id']);
+    return null;
+}
+
+/**
+ * Determinar si el usuario actual es administrador (roles administrativos)
+ * Ajustar los ids según la tabla roles: 3=Administrativo, 4=Directivo, 5=Administrador
+ */
+function isAdminRole() {
+    $rid = getUserRoleId();
+    if ($rid === null) return false;
+    return in_array($rid, [3,4,5], true);
 }

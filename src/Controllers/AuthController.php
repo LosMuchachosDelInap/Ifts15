@@ -278,8 +278,8 @@ class AuthController
             'nombre' => $_SESSION['nombre'] ?? null,
             'apellido' => $_SESSION['apellido'] ?? null,
             'nombre_completo' => $_SESSION['nombre_completo'] ?? null,
-            'role_id' => $_SESSION['role_id'] ?? null,
-            'role' => $_SESSION['role'] ?? null,
+            'role_id' => $_SESSION['role_id'] ?? $_SESSION['id_rol'] ?? null,
+            'role' => null,
             'last_login' => $_SESSION['last_login'] ?? null
         ];
     }
@@ -302,8 +302,10 @@ class AuthController
      */
     public static function isAdmin()
     {
-    // Solo comparar por ID de rol (ejemplo: 6 = Administrador)
-    return self::hasRole(6);
+    // Considerar administradores a los roles administrativos/directivos y administrador (3, 4 y 5)
+    if (!self::isLoggedIn()) return false;
+    $rid = $_SESSION['role_id'] ?? $_SESSION['id_rol'] ?? null;
+    return in_array(intval($rid), [3,4,5], true);
     }
 
     /**

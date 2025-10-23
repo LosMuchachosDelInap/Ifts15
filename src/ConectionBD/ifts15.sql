@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-10-2025 a las 17:04:54
+-- Tiempo de generación: 23-10-2025 a las 16:21:50
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -106,6 +106,14 @@ CREATE TABLE `novedades` (
   `cancelado` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Volcado de datos para la tabla `novedades`
+--
+
+INSERT INTO `novedades` (`id_novedades`, `novedad`, `idCreate`, `idUpdate`, `habilitado`, `cancelado`) VALUES
+(1, 'funciona novedades!!!!!', '2025-10-15 15:20:52', '2025-10-15 15:20:52', 1, 0),
+(2, '65465465465465', '2025-10-22 14:50:25', '2025-10-22 14:50:25', 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -157,7 +165,8 @@ INSERT INTO `roles` (`id_rol`, `rol`, `habilitado`, `cancelado`, `idcCreate`, `i
 (1, 'Alumno', 1, 0, '2025-09-16 20:51:28', '2025-09-16 21:02:22'),
 (2, 'Profesor', 1, 0, '2025-09-16 20:51:28', '2025-09-16 21:02:29'),
 (3, 'Administrativo', 1, 0, '2025-09-16 20:51:28', '2025-09-16 21:02:35'),
-(4, 'Directivo', 1, 0, '2025-09-16 20:51:28', '2025-09-16 21:02:41');
+(4, 'Directivo', 1, 0, '2025-09-16 20:51:28', '2025-09-16 21:02:41'),
+(5, 'Administrador', 1, 0, '2025-10-14 15:42:13', '2025-10-14 15:42:13');
 
 -- --------------------------------------------------------
 
@@ -174,8 +183,8 @@ CREATE TABLE `usuario` (
   `id_añoCursada` int(11) DEFAULT NULL,
   `id_rol` int(11) NOT NULL,
   `id_persona` int(11) NOT NULL,
-  `habilitado` int(1) NOT NULL DEFAULT 1,
-  `cancelado` int(1) NOT NULL DEFAULT 0,
+  `habilitado` int(1) NOT NULL DEFAULT 0,
+  `cancelado` int(1) NOT NULL DEFAULT 1,
   `idCreate` timestamp NOT NULL DEFAULT current_timestamp(),
   `idUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -185,7 +194,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `email`, `clave`, `id_comision`, `id_carrera`, `id_añoCursada`, `id_rol`, `id_persona`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
-(1, 'prueba@gmail.com', '$2y$12$sVaFyYEqkJ9GQk9XFoQMxuOcbIwXltz5yai4P6fxu4VKRlWBGo8Ou', 2, 1, 2, 1, 1, 1, 0, '2025-09-17 22:24:25', '2025-09-17 22:24:25'),
+(1, 'prueba@gmail.com', '$2y$12$sVaFyYEqkJ9GQk9XFoQMxuOcbIwXltz5yai4P6fxu4VKRlWBGo8Ou', 2, 1, 2, 3, 1, 1, 0, '2025-09-17 22:24:25', '2025-10-15 15:19:56'),
 (2, 'melu@hotmail.com', '$2y$10$cfNr0Jv92/A/G3Gnt55rY.86vFvL2Y4XGRMeRyEOJJnJ9RFeI3ZG2', 2, 1, 3, 1, 2, 1, 0, '2025-09-29 14:02:46', '2025-09-29 14:02:46');
 
 --
@@ -265,7 +274,7 @@ ALTER TABLE `comision`
 -- AUTO_INCREMENT de la tabla `novedades`
 --
 ALTER TABLE `novedades`
-  MODIFY `id_novedades` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_novedades` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
@@ -277,7 +286,7 @@ ALTER TABLE `persona`
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

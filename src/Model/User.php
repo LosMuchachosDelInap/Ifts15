@@ -34,7 +34,7 @@ class User
         // Si $hash_password es true, hashea la contraseña; si es false, ya viene hasheada
         $this->password_hash = $hash_password ? password_hash($password, PASSWORD_DEFAULT) : $password;
         $this->id_persona = $id_persona;
-        $this->role_id = $role_id; // 1=admin, 2=estudiante, 3=profesor
+    $this->role_id = $role_id; // 1=Alumno, 2=Profesor, 3=Administrativo (según roles de la BD)
         $this->id_carrera = $id_carrera;
         $this->id_comision = $id_comision;
         $this->id_anoCursada = $id_anoCursada;

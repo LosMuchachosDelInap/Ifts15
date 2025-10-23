@@ -28,7 +28,10 @@ try {
 // Verificar estado de sesión
 $isLoggedIn = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
 $userEmail = $_SESSION['email'] ?? '';
-$userRole = $_SESSION['role'] ?? 'estudiante';
+// Preferir id_rol numérico cuando esté presente en la sesión
+$userIdRol = isset($_SESSION['id_rol']) ? intval($_SESSION['id_rol']) : (isset($_SESSION['role_id']) ? intval($_SESSION['role_id']) : null);
+$roleNames = [1 => 'Alumno', 2 => 'Profesor', 3 => 'Administrativo', 4 => 'Directivo', 5 => 'Administrador'];
+$userRole = $roleNames[$userIdRol] ?? 'Alumno';
 ?>
 <?php include __DIR__ . '/src/Template/head.php'; ?>
 
@@ -372,7 +375,7 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
                             <?php
                             // Solo el usuario Administrador y Administrativo puede ver el botón
                             $id_rol = $_SESSION['id_rol'] ?? '';
-                            if ($isLoggedIn && ($id_rol == 3 || $id_rol == 5)) {
+                            if ($isLoggedIn && isAdminRole()) {
                                 // Incluir solo el botón, no el modal completo
                                 echo '<div class="d-flex justify-content-end mb-0">';
                                 echo '<button type="button" class="btn btn-dark btn-sm text-white" data-bs-toggle="modal" data-bs-target="#modalNovedad">';
@@ -460,8 +463,7 @@ $userRole = $_SESSION['role'] ?? 'estudiante';
 
 
 <?php
-$id_rol = $_SESSION['id_rol'] ?? '';
-if ($isLoggedIn && ($id_rol == 3 || $id_rol == 5)) {
+if ($isLoggedIn && isAdminRole()) {
     include __DIR__ . '/src/Components/modalNovedades.php';
 }
 ?>

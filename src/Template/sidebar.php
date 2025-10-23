@@ -6,13 +6,13 @@
  */
 
 // Verificar si el usuario está logueado
-if (!$isLoggedIn) return;
+if (!isset($isLoggedIn) || !$isLoggedIn) return;
 
 // Obtener información del usuario actual desde la sesión
 $currentUser = [];
 if (isset($_SESSION['usuario'])) {
     $currentUser['email'] = $_SESSION['usuario'];
-    
+
     // Intentar obtener el nombre completo de diferentes fuentes
     if (!empty($_SESSION['nombre_completo']) && $_SESSION['nombre_completo'] !== ' ') {
         $currentUser['nombre_completo'] = $_SESSION['nombre_completo'];
@@ -25,12 +25,22 @@ if (isset($_SESSION['usuario'])) {
         $emailParts = explode('@', $currentUser['email']);
         $currentUser['nombre_completo'] = !empty($emailParts[0]) ? ucfirst($emailParts[0]) : 'Usuario';
     }
-    
-    $currentUser['role'] = $_SESSION['role'] ?? 'estudiante';
+
+    $userIdRol = isset($_SESSION['id_rol']) ? intval($_SESSION['id_rol']) : (isset($_SESSION['role_id']) ? intval($_SESSION['role_id']) : null);
+    // Mapear nombre legible del rol según la tabla roles en la BD (agregado id 5 Administrador)
+    $roleNames = [
+        1 => 'Alumno',
+        2 => 'Profesor',
+        3 => 'Administrativo',
+        4 => 'Directivo',
+        5 => 'Administrador'
+    ];
+    $currentUser['role'] = $roleNames[$userIdRol] ?? 'Alumno';
 } else {
     $currentUser['email'] = 'Usuario';
     $currentUser['nombre_completo'] = 'Usuario';
-    $currentUser['role'] = 'estudiante';
+    $currentUser['role'] = 'Alumno';
+    $userIdRol = null;
 }
 
 $userRole = $currentUser['role'];
@@ -95,7 +105,7 @@ $userRole = $currentUser['role'];
                 </a>
                 <div class="collapse" id="academico-menu">
                     <ul class="nav nav-pills flex-column ms-4">
-                        <?php if ($userRole === 'estudiante'): ?>
+                        <?php if ($userIdRol === 1): ?>
                         <li class="nav-item">
                             <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/mis-materias.php">
                                 <i class="bi bi-book me-2"></i> Mis Materias
@@ -111,7 +121,7 @@ $userRole = $currentUser['role'];
                                 <i class="bi bi-clock me-2"></i> Horarios
                             </a>
                         </li>
-                        <?php elseif ($userRole === 'profesor'): ?>
+                        <?php elseif ($userIdRol === 2): ?>
                         <li class="nav-item">
                             <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/mis-cursos.php">
                                 <i class="bi bi-easel me-2"></i> Mis Cursos
@@ -217,7 +227,7 @@ $userRole = $currentUser['role'];
                 </a>
             </li>
             
-            <?php if ($userRole === 'admin'): ?>
+            <?php if (isAdminRole()): ?>
             <!-- Administración (solo admin) -->
             <li class="nav-item mt-3">
                 <h6 class="sidebar-heading px-3 text-muted">

@@ -12,9 +12,12 @@ $pageTitle = 'Realizador y Productor Televisivo - IFTS15';
 define('CARD_DESCRIPTION', 'Tecnología Digital plantea una visión integral de la TV digital como parte de un todo más amplio: el universo audiovisual. Explora formatos tradicionales así como los nuevos modos de creación, producción y consumo audiovisual en la era digital.');
 
 // Variables para el sistema de templates (necesarias para navbar y sidebar)
+// Estado de sesión y rol numérico
 $isLoggedIn = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
 $userEmail = $_SESSION['email'] ?? '';
-$userRole = $_SESSION['role'] ?? 'estudiante';
+$userIdRol = isset($_SESSION['id_rol']) ? intval($_SESSION['id_rol']) : (isset($_SESSION['role_id']) ? intval($_SESSION['role_id']) : null);
+$roleNames = [1 => 'Alumno', 2 => 'Profesor', 3 => 'Administrativo', 4 => 'Directivo', 5 => 'Administrador'];
+$userRole = $roleNames[$userIdRol] ?? 'Alumno';
 
 // Compatibilidad con sidebar (que espera $_SESSION['usuario'])
 if ($isLoggedIn && !empty($userEmail)) {

@@ -211,7 +211,8 @@ class AuthController
             // Log de actividad
             error_log("REGISTRO EXITOSO: {$email}");
 
-            $_SESSION['register_message'] = '¡Registro exitoso! Ya puedes ingresar.';
+            // Indicar que el registro quedó pendiente de habilitación administrativa
+            $_SESSION['register_message'] = 'Registro recibido. Tu cuenta está pendiente de habilitación por un administrativo.';
             $this->redirect('/index.php');
 
         } catch (Exception $e) {

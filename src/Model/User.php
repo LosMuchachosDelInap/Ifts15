@@ -94,20 +94,22 @@ class User
     {
         try {
             // Adaptar a la estructura de BD existente con campos académicos
-            $stmt = $conn->prepare("INSERT INTO usuario (email, clave, id_persona, id_rol, id_carrera, id_comision, id_añoCursada, habilitado) VALUES (?, ?, ?, ?, ?, ?, ?, 1)");
-            $stmt->bind_param("ssiiiii", 
-                $this->email, 
-                $this->password_hash, 
-                $this->id_persona, 
+            // No especificar 'habilitado' ni 'cancelado' aquí: dejar que la BD aplique los valores por defecto al crear el usuario.
+            $stmt = $conn->prepare("INSERT INTO usuario (email, clave, id_persona, id_rol, id_carrera, id_comision, id_añoCursada) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssiiiii",
+                $this->email,
+                $this->password_hash,
+                $this->id_persona,
                 $this->role_id,
                 $this->id_carrera,
-                $this->id_comision, 
+                $this->id_comision,
                 $this->id_anoCursada
             );
             
             if ($stmt->execute()) {
                 $this->id_usuario = $conn->insert_id;
-                $this->is_active = 1;
+                // Reflejar en el objeto que el usuario inicialmente no está activo (la BD debe marcar habilitado/cancelado por defecto)
+                $this->is_active = 0;
                 return true;
             }
             
@@ -476,7 +478,8 @@ class User
      */
     public function emailExiste($conn)
     {
-        $stmt = $conn->prepare("SELECT id_usuario FROM usuario WHERE email = ? AND id_usuario != ? AND habilitado = 1");
+        // Comprobar existencia del email sin filtrar por habilitado: no permitir duplicados aunque el usuario esté pendiente
+        $stmt = $conn->prepare("SELECT id_usuario FROM usuario WHERE email = ? AND id_usuario != ?");
         $id_actual = $this->id_usuario ?? 0;
         $stmt->bind_param("si", $this->email, $id_actual);
         $stmt->execute();

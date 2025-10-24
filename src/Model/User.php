@@ -297,6 +297,31 @@ class User
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+     /**
+     * Obtener usuarios inactivos (habilitado = 0 AND cancelado = 1)
+     * Opcionalmente se pueden pasar límites para paginación
+     */
+    public static function obtenerInactivos($conn, $limit = null, $offset = 0)
+    {
+        $sql = "SELECT u.*, p.nombre, p.apellido, 'Usuario' as role_name
+                FROM usuario u
+                LEFT JOIN persona p ON u.id_persona = p.id_persona
+                WHERE u.habilitado = 0 AND u.cancelado = 1
+                ORDER BY p.apellido, p.nombre";
+
+        if ($limit) {
+            $sql .= " LIMIT ? OFFSET ?";
+        }
+
+        $stmt = $conn->prepare($sql);
+        if ($limit) {
+            $stmt->bind_param("ii", $limit, $offset);
+        }
+
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     /**
      * Obtener usuarios por rol
      */
@@ -313,6 +338,61 @@ class User
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+    /**
+     * Obtener todos los usuarios (sin filtrar por habilitado) con paginación opcional
+     */
+    public static function obtenerTodos($conn, $limit = null, $offset = 0)
+    {
+        $sql = "SELECT u.*, p.nombre, p.apellido, p.telefono, u.habilitado, u.cancelado, r.rol AS role_name
+                FROM usuario u
+                LEFT JOIN persona p ON u.id_persona = p.id_persona
+                LEFT JOIN roles r ON u.id_rol = r.id_rol
+                ORDER BY p.apellido, p.nombre";
+
+        if ($limit) {
+            $sql .= " LIMIT ? OFFSET ?";
+        }
+
+        $stmt = $conn->prepare($sql);
+        if ($limit) {
+            $stmt->bind_param("ii", $limit, $offset);
+        }
+
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Contar todos los usuarios (para paginación)
+     */
+    public static function contarTodos($conn)
+    {
+        $sql = "SELECT COUNT(*) as total FROM usuario u";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $res = $stmt->get_result()->fetch_assoc();
+        return intval($res['total'] ?? 0);
+    }
+
+    /**
+     * Actualizar campo habilitado de un usuario
+     */
+    public static function actualizarHabilitado($conn, $id_usuario, $habilitado)
+    {
+        // Si se habilita (habilitado = 1) => cancelado = 0
+        // Si se deshabilita (habilitado = 0) => cancelado = 1
+        $sql = "UPDATE usuario SET habilitado = ?, cancelado = CASE WHEN ? = 1 THEN 0 ELSE 1 END WHERE id_usuario = ?";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            error_log('Error preparando actualizarHabilitado: ' . $conn->error);
+            return false;
+        }
+        $stmt->bind_param("iii", $habilitado, $habilitado, $id_usuario);
+        return $stmt->execute();
+    }
+
+
 
     // ========================================
     // AUTENTICACIÓN

@@ -24,7 +24,7 @@
                     <li><a href="#" class="text-light text-decoration-none">
                             <i class="bi bi-chevron-right"></i> Sobre Nosotros
                         </a></li>
-                    <li><a href="<?php echo BASE_URL; ?>/src/Views/realizador-productor-tv.php" class="text-light text-decoration-none">
+                    <li><a href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=realizador-productor-tv" class="text-light text-decoration-none">
                             <i class="bi bi-chevron-right"></i> Realizador y Productor Televisivo
                         </a></li>
                     <li><a href="#" class="text-light text-decoration-none">

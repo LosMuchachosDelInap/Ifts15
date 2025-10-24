@@ -82,8 +82,8 @@ if ($isLoggedIn && !empty($userEmail)) {
                     <span>Inicio</span>
                 </a>
                 
-                <a class="nav-link text-light d-flex align-items-center gap-2" 
-                   href="<?php echo BASE_URL; ?>/src/Views/realizador-productor-tv.php">
+                     <a class="nav-link text-light d-flex align-items-center gap-2" 
+                         href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=realizador-productor-tv">
                     <i class="bi bi-camera-video"></i>
                     <span>Información de Carrera</span>
                 </a>

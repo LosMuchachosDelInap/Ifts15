@@ -90,7 +90,7 @@ $userRole = $roleNames[$userIdRol] ?? 'Alumno';
                 </a>
 
                 <a class="nav-link text-light d-flex align-items-center gap-2"
-                    href="<?php echo BASE_URL; ?>/src/Views/realizador-productor-tv.php">
+                    href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=realizador-productor-tv">
                     <i class="bi bi-camera-video"></i>
                     <span>Información de Carrera</span>
                 </a>
@@ -355,7 +355,7 @@ $userRole = $roleNames[$userIdRol] ?? 'Alumno';
                     <!-- Botón Ver Información Completa -->
                     <div class="row mt-4">
                         <div class="col-12">
-                            <a href="<?php echo BASE_URL; ?>/src/Views/realizador-productor-tv.php"
+                            <a href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=realizador-productor-tv"
                                 class="btn btn-primary btn-lg w-100 d-block">
                                 <i class="bi bi-info-circle-fill me-2"></i>
                                 Ver Información Completa de la Carrera

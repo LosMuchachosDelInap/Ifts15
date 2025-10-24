@@ -6,6 +6,15 @@
  */
 ?>
 
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+// Exponer configuración mínima al cliente
+?>
+<script>
+window.APP = window.APP || {};
+window.APP.baseUrl = <?= json_encode(defined('BASE_URL') ? BASE_URL : '/') ?>;
+</script>
+
 <!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
@@ -158,3 +167,6 @@
         originalError.apply(console, args);
     };
 </script>
+
+<!-- Módulo específico para novedades (intercepta el submit del modal) -->
+<script src="<?= BASE_URL ?>/src/Public/js/novedades.js" defer></script>

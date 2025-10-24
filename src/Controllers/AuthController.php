@@ -494,10 +494,23 @@ if (basename($_SERVER['PHP_SELF']) === 'AuthController.php') {
     } catch (Exception $e) {
         // Manejo de errores general
         http_response_code(500);
+        // Log detallado para depuración en archivo temporal
+        error_log('[AuthController] Excepción capturada: ' . $e->getMessage());
+        try {
+            $serverInfo = [
+                'REQUEST_URI' => $_SERVER['REQUEST_URI'] ?? null,
+                'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'] ?? null
+            ];
+            $dbg = "[" . date('c') . "] Exception: " . $e->getMessage() . "\nTrace:\n" . $e->getTraceAsString() . "\nPOST: " . var_export($_POST, true) . "\nSERVER: " . var_export($serverInfo, true) . "\n\n";
+            @file_put_contents(__DIR__ . '/../../auth_error_debug.log', $dbg, FILE_APPEND | LOCK_EX);
+        } catch (Exception $inner) {
+            // no hacer nada si falló el log a archivo
+        }
+
         echo json_encode([
             'success' => false,
             'error' => $e->getMessage(),
-            'trace' => DEBUG_MODE ? $e->getTraceAsString() : 'Error interno del servidor'
+            'trace' => defined('DEBUG_MODE') && DEBUG_MODE ? $e->getTraceAsString() : 'Error interno del servidor'
         ]);
         exit;
     }

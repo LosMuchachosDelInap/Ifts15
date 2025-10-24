@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-10-2025 a las 16:21:50
+-- Tiempo de generación: 24-10-2025 a las 16:09:09
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -90,6 +90,19 @@ INSERT INTO `comision` (`id_comision`, `comision`, `habilitado`, `cancelado`, `i
 (1, 'A', 1, 0, '2025-09-16 17:53:28', '2025-09-16 17:54:47'),
 (2, 'B', 1, 0, '2025-09-16 17:53:28', '2025-09-16 17:54:57'),
 (3, 'C', 1, 0, '2025-09-16 17:53:28', '2025-09-16 17:55:05');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `fotoperfil`
+--
+
+CREATE TABLE `fotoperfil` (
+  `id_fotoPerfil` int(11) NOT NULL,
+  `urlFoto` varchar(250) NOT NULL,
+  `habilitado` int(11) NOT NULL DEFAULT 1,
+  `cancelado` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -181,8 +194,9 @@ CREATE TABLE `usuario` (
   `id_comision` int(11) DEFAULT NULL,
   `id_carrera` int(11) DEFAULT NULL,
   `id_añoCursada` int(11) DEFAULT NULL,
-  `id_rol` int(11) NOT NULL,
-  `id_persona` int(11) NOT NULL,
+  `id_rol` int(11) DEFAULT NULL,
+  `id_persona` int(11) DEFAULT NULL,
+  `id_fotoPerfil` int(11) DEFAULT NULL,
   `habilitado` int(1) NOT NULL DEFAULT 0,
   `cancelado` int(1) NOT NULL DEFAULT 1,
   `idCreate` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -193,9 +207,9 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `email`, `clave`, `id_comision`, `id_carrera`, `id_añoCursada`, `id_rol`, `id_persona`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
-(1, 'prueba@gmail.com', '$2y$12$sVaFyYEqkJ9GQk9XFoQMxuOcbIwXltz5yai4P6fxu4VKRlWBGo8Ou', 2, 1, 2, 3, 1, 1, 0, '2025-09-17 22:24:25', '2025-10-15 15:19:56'),
-(2, 'melu@hotmail.com', '$2y$10$cfNr0Jv92/A/G3Gnt55rY.86vFvL2Y4XGRMeRyEOJJnJ9RFeI3ZG2', 2, 1, 3, 1, 2, 1, 0, '2025-09-29 14:02:46', '2025-09-29 14:02:46');
+INSERT INTO `usuario` (`id_usuario`, `email`, `clave`, `id_comision`, `id_carrera`, `id_añoCursada`, `id_rol`, `id_persona`, `id_fotoPerfil`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
+(1, 'prueba@gmail.com', '$2y$12$sVaFyYEqkJ9GQk9XFoQMxuOcbIwXltz5yai4P6fxu4VKRlWBGo8Ou', 2, 1, 2, 3, 1, 0, 1, 0, '2025-09-17 22:24:25', '2025-10-15 15:19:56'),
+(2, 'melu@hotmail.com', '$2y$10$cfNr0Jv92/A/G3Gnt55rY.86vFvL2Y4XGRMeRyEOJJnJ9RFeI3ZG2', 2, 1, 3, 1, 2, 0, 1, 0, '2025-09-29 14:02:46', '2025-09-29 14:02:46');
 
 --
 -- Índices para tablas volcadas
@@ -218,6 +232,12 @@ ALTER TABLE `carrera`
 --
 ALTER TABLE `comision`
   ADD PRIMARY KEY (`id_comision`);
+
+--
+-- Indices de la tabla `fotoperfil`
+--
+ALTER TABLE `fotoperfil`
+  ADD PRIMARY KEY (`id_fotoPerfil`);
 
 --
 -- Indices de la tabla `novedades`
@@ -246,7 +266,8 @@ ALTER TABLE `usuario`
   ADD KEY `id_persona` (`id_persona`),
   ADD KEY `id_carrera` (`id_carrera`,`id_añoCursada`),
   ADD KEY `id_comision` (`id_comision`),
-  ADD KEY `id_añoCursada` (`id_añoCursada`);
+  ADD KEY `id_añoCursada` (`id_añoCursada`),
+  ADD KEY `id_fotoPerfil` (`id_fotoPerfil`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -269,6 +290,12 @@ ALTER TABLE `carrera`
 --
 ALTER TABLE `comision`
   MODIFY `id_comision` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `fotoperfil`
+--
+ALTER TABLE `fotoperfil`
+  MODIFY `id_fotoPerfil` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `novedades`

@@ -105,7 +105,7 @@ $csrfToken = $_SESSION['csrf_usuario_toggle'];
                 // prevenir dobles envíos: deshabilitar el checkbox hasta recibir respuesta
                 cb.disabled = true;
 
-                fetch('<?= BASE_URL ?>/src/Controllers/usuarioController.php?action=toggle', {
+                fetch('<?= BASE_URL ?>/src/Controllers/UsuarioController.php?action=toggle', {
                         method: 'POST',
                         credentials: 'same-origin',
                         headers: {

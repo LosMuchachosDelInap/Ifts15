@@ -106,6 +106,30 @@ class UsuarioController
                     $newToken = bin2hex(openssl_random_pseudo_bytes(32));
                 }
                 $_SESSION['csrf_usuario_toggle'] = $newToken;
+                    // Si se habilitó al usuario, notificar por mail
+                    if ($habilitado == 1) {
+                        try {
+                            // obtener datos del usuario para notificar
+                            $datosUsuario = User::obtenerUsuarioCompleto($this->conn, $id);
+                            if ($datosUsuario && !empty($datosUsuario['email'])) {
+                                // incluir utilidad de envio de mails
+                                require_once __DIR__ . '/../Public/Utilities/envioMail.php';
+                                $to = $datosUsuario['email'];
+                                $nombre = trim(($datosUsuario['nombre'] ?? '') . ' ' . ($datosUsuario['apellido'] ?? ''));
+                                $subject = 'Tu cuenta en IFTS15 ha sido habilitada';
+                                $body = '<p>Hola ' . htmlspecialchars($nombre) . ',</p>';
+                                $body .= '<p>Tu cuenta en el campus IFTS15 ha sido habilitada. Ya podés iniciar sesión con tu correo y contraseña.</p>';
+                                $body .= '<p>Si no reconocés esta acción, contactá con el área de soporte.</p>';
+                                $body .= '<p>Saludos,<br>Equipo IFTS15</p>';
+                                $resMail = envio_mail($to, $subject, $body, $_ENV['MAIL_FROM'] ?? null, $_ENV['MAIL_FROM_NAME'] ?? null, true, $to);
+                                if (!$resMail['success']) {
+                                    error_log('Error enviando mail habilitacion a ' . $to . ': ' . $resMail['message']);
+                                }
+                            }
+                        } catch (Exception $e) {
+                            error_log('Excepción al notificar habilitación por mail: ' . $e->getMessage());
+                        }
+                    }
                 echo json_encode(['success' => true, 'new_csrf' => $newToken]);
             } else {
                 http_response_code(500);

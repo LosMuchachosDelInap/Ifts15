@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 // Iniciar sesión antes de cualquier output
@@ -23,7 +24,7 @@ class AuthController
 {
     private $conn;
     private $dbConnection; // Mantener la instancia viva
-    
+
     public function __construct()
     {
         // Cargar configuración primero
@@ -35,11 +36,11 @@ class AuthController
             $baseUrl = $_ENV['BASE_URL'] ?? 'http://localhost:8000';
             define('BASE_URL', $baseUrl);
         }
-        
+
         try {
             $this->dbConnection = new ConectionDB();
             $this->conn = $this->dbConnection->getConnection();
-            
+
             if (!$this->conn) {
                 throw new Exception('No se pudo establecer conexión con la base de datos');
             }
@@ -84,7 +85,7 @@ class AuthController
 
             // Intentar autenticar
             $user = User::autenticar($this->conn, $email, $password);
-            
+
             if ($user) {
                 // Login exitoso
                 $datosCompletos = $user->getDatosSesion($this->conn);
@@ -107,7 +108,6 @@ class AuthController
                 $_SESSION['login_message'] = 'Usuario o contraseña incorrectos.';
                 $this->redirect('/index.php');
             }
-            
         } catch (mysqli_sql_exception $e) {
             error_log("Error MySQL en login: " . $e->getMessage() . " - Código: " . $e->getCode());
             $this->redirect('/?error=bd_mysql');
@@ -123,7 +123,7 @@ class AuthController
     public function register()
     {
         error_log("INICIO registro - REQUEST_METHOD: " . $_SERVER['REQUEST_METHOD']);
-        
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->redirect('/?error=metodo_invalido');
             return;
@@ -139,21 +139,21 @@ class AuthController
         $fecha_nacimiento = trim($_POST['fecha_nacimiento'] ?? '');
         $telefono = trim($_POST['telefono'] ?? '');
         $edad = intval($_POST['edad'] ?? 0);
-        
+
         // Obtener datos académicos
         $id_carrera = intval($_POST['id_carrera'] ?? 0);
         $id_comision = intval($_POST['id_comision'] ?? 0);
         $id_añoCursada = intval($_POST['id_añoCursada'] ?? 0);
-        
+
         error_log("DATOS recibidos - email: {$email}, nombre: {$nombre}, apellido: {$apellido}, dni: {$dni}, edad: {$edad}");
         error_log("DATOS ACADEMICOS - carrera: {$id_carrera}, comision: {$id_comision}, año: {$id_añoCursada}");
-        
+
         // Convertir fecha vacía a NULL para la base de datos
         $fecha_nacimiento = empty($fecha_nacimiento) ? null : $fecha_nacimiento;
 
         // Validaciones
         $errores = $this->validarDatosRegistro($email, $password, $confirm_password, $nombre, $apellido, $dni, $id_carrera, $id_comision, $id_añoCursada);
-        
+
         if (!empty($errores)) {
             $_SESSION['register_message'] = implode(', ', $errores);
             $this->redirect('/index.php');
@@ -168,7 +168,7 @@ class AuthController
             error_log("CREANDO objeto Person");
             // 1. Crear persona
             $persona = new Person($nombre, $apellido, $fecha_nacimiento, $dni, $telefono, null, null, null, $edad);
-            
+
             error_log("VALIDANDO persona");
             // Validar persona
             $erroresPersona = $persona->validar();
@@ -191,7 +191,7 @@ class AuthController
             error_log("CREANDO usuario");
             // 2. Crear usuario con datos académicos
             $user = new User($email, $password, $persona->getId(), 1, $id_carrera, $id_comision, $id_añoCursada); // 1 = Alumno por defecto
-            
+
             error_log("VALIDANDO usuario");
             // Validar usuario
             $erroresUsuario = $user->validar($this->conn);
@@ -208,13 +208,31 @@ class AuthController
             // Confirmar transacción
             $this->conn->commit();
 
+            // Notificar al usuario por email que su registro fue recibido y está pendiente
+            require_once __DIR__ . '/../Public/Utilities/envioMail.php';
+
+            $subject = 'Registro recibido en IFTS15 — pendiente de habilitación';
+            $body = '<p>Hola ' . htmlspecialchars($nombre) . ',</p>';
+            $body .= '<p>Hemos recibido tu registro en IFTS15. Tu cuenta está pendiente de habilitación por parte de un administrativo.</p>';
+            $body .= '<p>En cuanto te habiliten recibirás un correo de confirmación.</p>';
+            $body .= '<p>Saludos,<br>Equipo IFTS15</p>';
+
+            envio_mail($email, $subject, $body, $_ENV['MAIL_FROM'] ?? null, $_ENV['MAIL_FROM_NAME'] ?? null, true, $email);
+
             // Log de actividad
             error_log("REGISTRO EXITOSO: {$email}");
-
+            
+            // Notificar admins (si quieres)
+            $admins = array_map('trim', explode(',', $_ENV['ADMIN_EMAILS'] ?? ''));
+            if (!empty($admins)) {
+                $subjectAdmin = 'Nuevo registro pendiente en IFTS15';
+                $bodyAdmin = '<p>Se registró un nuevo usuario: <b>' . htmlspecialchars($nombre . ' ' . $apellido) . '</b> (' . htmlspecialchars($email) . ').</p>';
+                $bodyAdmin .= '<p>Revisá el panel de administración para habilitarlo.</p>';
+                envio_mail($admins, $subjectAdmin, $bodyAdmin);
+            }
             // Indicar que el registro quedó pendiente de habilitación administrativa
             $_SESSION['register_message'] = 'Registro recibido. Tu cuenta está pendiente de habilitación por un administrativo.';
             $this->redirect('/index.php');
-
         } catch (Exception $e) {
             // Rollback en caso de error
             $this->conn->rollback();
@@ -244,9 +262,14 @@ class AuthController
         // Si se desea destruir la sesión completamente, borrar también la cookie de sesión
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
             );
         }
 
@@ -293,9 +316,9 @@ class AuthController
         if (!self::isLoggedIn()) {
             return false;
         }
-        
-    // Solo comparar por ID de rol
-    return isset($_SESSION['role_id']) && $_SESSION['role_id'] == $role;
+
+        // Solo comparar por ID de rol
+        return isset($_SESSION['role_id']) && $_SESSION['role_id'] == $role;
     }
 
     /**
@@ -303,10 +326,10 @@ class AuthController
      */
     public static function isAdmin()
     {
-    // Considerar administradores a los roles administrativos/directivos y administrador (3, 4 y 5)
-    if (!self::isLoggedIn()) return false;
-    $rid = $_SESSION['role_id'] ?? $_SESSION['id_rol'] ?? null;
-    return in_array(intval($rid), [3,4,5], true);
+        // Considerar administradores a los roles administrativos/directivos y administrador (3, 4 y 5)
+        if (!self::isLoggedIn()) return false;
+        $rid = $_SESSION['role_id'] ?? $_SESSION['id_rol'] ?? null;
+        return in_array(intval($rid), [3, 4, 5], true);
     }
 
     /**
@@ -326,7 +349,7 @@ class AuthController
     public static function requireRole($role)
     {
         self::requireLogin();
-        
+
         if (!self::hasRole($role)) {
             header('Location: ' . BASE_URL . '/?error=acceso_denegado');
             exit;
@@ -336,7 +359,7 @@ class AuthController
     // ========================================
     // MÉTODOS PRIVADOS
     // ========================================
-    
+
     /**
      * Validar datos de registro
      */
@@ -408,7 +431,7 @@ class AuthController
             // Si es algo como "/?login=success", cambiar a "/index.php?login=success"
             $url = str_replace('/?', '/index.php?', $url);
         }
-        
+
         $full_url = BASE_URL . $url;
         error_log("Redirigiendo a: " . $full_url); // Para debug
         header("Location: $full_url");
@@ -425,7 +448,7 @@ if (basename($_SERVER['PHP_SELF']) === 'AuthController.php') {
     try {
         // Determinar qué acción realizar
         $action = $_GET['action'] ?? $_POST['action'] ?? '';
-        
+
 
         if (empty($action)) {
             http_response_code(400);
@@ -456,19 +479,18 @@ if (basename($_SERVER['PHP_SELF']) === 'AuthController.php') {
             case 'login':
                 $authController->login();
                 break;
-            
+
             case 'register':
                 $authController->register();
                 break;
-            
+
             case 'logout':
                 $authController->logout();
                 break;
-                
+
             default:
                 throw new Exception('Acción no válida: ' . $action);
         }
-        
     } catch (Exception $e) {
         // Manejo de errores general
         http_response_code(500);
@@ -480,4 +502,3 @@ if (basename($_SERVER['PHP_SELF']) === 'AuthController.php') {
         exit;
     }
 }
-?>

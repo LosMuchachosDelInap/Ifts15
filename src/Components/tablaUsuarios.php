@@ -23,9 +23,13 @@ $csrfToken = $_SESSION['csrf_usuario_toggle'];
         <div class="d-flex justify-content-between mb-3">
             <h5 class="card-title">Listado de Usuarios</h5>
             <div>
-                <span class="text-muted">Mostrando página <?= intval($page) ?></span>
+                <button type="button" class="btn btn-outline-light btn-sm"  style="color:black" data-bs-toggle="modal" data-bs-target="#modalRegistrar">
+                    <span class="d-inline d-sm-none"><i class="bi bi-person-plus"></i></span>
+                    <span class="d-none d-sm-inline"><i class="bi bi-person-plus me-1"></i> Registrar Usuario</span>
+                </button>
+                <!--<span class="text-muted">Mostrando página <?= intval($page) ?></span> Muestra en que pagina esta-->
             </div>
-        </div>
+        </div>  
 
         <div class="table-responsive">
             <table class="table table-hover align-middle" id="tabla-usuarios">

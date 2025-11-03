@@ -378,6 +378,43 @@ class User
     }
 
     /**
+     * Obtener roles habilitados desde la tabla roles
+     *
+     * @param mysqli $conn
+     * @return array Array de filas con keys ['id_rol','rol']
+     */
+    public static function obtenerRolesHabilitados($conn)
+    {
+        $roles = [];
+        $sql = "SELECT id_rol, rol FROM roles WHERE habilitado = 1 AND cancelado = 0 ORDER BY rol";
+        $result = $conn->query($sql);
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $roles[] = $row;
+            }
+        }
+        return $roles;
+    }
+
+    /**
+     * Verificar si un id_rol existe y está habilitado
+     *
+     * @param mysqli $conn
+     * @param int $id_rol
+     * @return bool
+     */
+    public static function esRolHabilitado($conn, $id_rol)
+    {
+        if (empty($id_rol) || !is_numeric($id_rol)) return false;
+        $stmt = $conn->prepare("SELECT 1 FROM roles WHERE id_rol = ? AND habilitado = 1 AND cancelado = 0 LIMIT 1");
+        if (!$stmt) return false;
+        $stmt->bind_param("i", $id_rol);
+        if (!$stmt->execute()) return false;
+        $res = $stmt->get_result();
+        return (bool) ($res && $res->num_rows > 0);
+    }
+
+    /**
      * Actualizar campo habilitado de un usuario
      */
     public static function actualizarHabilitado($conn, $id_usuario, $habilitado)

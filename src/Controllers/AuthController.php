@@ -144,6 +144,8 @@ class AuthController
         $id_carrera = intval($_POST['id_carrera'] ?? 0);
         $id_comision = intval($_POST['id_comision'] ?? 0);
         $id_añoCursada = intval($_POST['id_añoCursada'] ?? 0);
+    // Si el formulario incluye id_rol y el usuario actual tiene permisos (3 o 5), aceptar la selección
+    $id_rol_seleccionado = intval($_POST['id_rol'] ?? 0);
 
         error_log("DATOS recibidos - email: {$email}, nombre: {$nombre}, apellido: {$apellido}, dni: {$dni}, edad: {$edad}");
         error_log("DATOS ACADEMICOS - carrera: {$id_carrera}, comision: {$id_comision}, año: {$id_añoCursada}");
@@ -190,7 +192,26 @@ class AuthController
 
             error_log("CREANDO usuario");
             // 2. Crear usuario con datos académicos
-            $user = new User($email, $password, $persona->getId(), 1, $id_carrera, $id_comision, $id_añoCursada); // 1 = Alumno por defecto
+            // Por defecto rol = 1 (Alumno). Si el usuario que crea tiene rol administrativo (3 o 5) y envía id_rol, usarlo.
+            $role_for_new = 1;
+            $currentCreatorRole = isset($_SESSION['id_rol']) ? intval($_SESSION['id_rol']) : null;
+            if (in_array($currentCreatorRole, [3, 5], true) && $id_rol_seleccionado > 0) {
+                // Validar que el rol existe y esté habilitado
+                if (!User::esRolHabilitado($this->conn, $id_rol_seleccionado)) {
+                    throw new Exception('El rol seleccionado no existe o no está habilitado.');
+                }
+
+                // Regla adicional:
+                // - Si el rol seleccionado es 4 o 5, sólo puede asignarlo quien tenga id_rol 3 o 5
+                if (in_array($id_rol_seleccionado, [4, 5], true)) {
+                    if (!in_array($currentCreatorRole, [3, 5], true)) {
+                        throw new Exception('No tienes permiso para asignar ese rol.');
+                    }
+                }
+
+                $role_for_new = $id_rol_seleccionado;
+            }
+            $user = new User($email, $password, $persona->getId(), $role_for_new, $id_carrera, $id_comision, $id_añoCursada); // rol dinámico
 
             error_log("VALIDANDO usuario");
             // Validar usuario

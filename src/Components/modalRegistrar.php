@@ -45,13 +45,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Obtener datos académicos desde la base de datos
 use App\ConectionBD\ConectionDB;
-$carreras = $comisiones = $añosCursada = [];
+use App\Model\User;
+$carreras = $comisiones = $añosCursada = $roles = [];
 $modalError = null;
 try {
     $conectarDB = new ConectionDB();
     $carreras = $conectarDB->getCarreras();
     $comisiones = $conectarDB->getComisiones();
     $añosCursada = $conectarDB->getAñosCursada();
+    // Cargar roles habilitados (se usan para mostrar el select si el usuario actual puede asignar roles)
+    try {
+        $roles = User::obtenerRolesHabilitados($conectarDB->getConnection());
+    } catch (\Throwable $e) {
+        // No fatal: el modal puede funcionar aún sin el listado de roles
+        error_log('No se pudieron cargar roles en modalRegistrar (User::obtenerRolesHabilitados): ' . $e->getMessage());
+    }
 } catch (\Throwable $e) {
     $modalError = 'Error al cargar datos académicos: ' . $e->getMessage();
 }
@@ -128,6 +136,36 @@ try {
                                        onchange="calcularEdad()">
                                 <small class="form-text text-muted">La edad se calculará automáticamente</small>
                             </div>
+                            <?php
+                            // Mostrar select de roles sólo si el usuario actual tiene id_rol 3 (Administrativo) o 5 (Administrador)
+                            $currentUserRole = isset($_SESSION['id_rol']) ? intval($_SESSION['id_rol']) : null;
+                            if (in_array($currentUserRole, [3, 5], true)):
+                            ?>
+                                <div class="mb-3">
+                                    <label for="registerRol" class="form-label">Rol *</label>
+                                    <select class="form-select" id="registerRol" name="id_rol" required>
+                                        <option value="">Seleccionar rol...</option>
+                                        <?php if (empty($roles)): ?>
+                                            <option value="" disabled style="color:red;">No hay roles habilitados</option>
+                                        <?php else: ?>
+                                            <?php foreach ($roles as $rol): ?>
+                                                <?php
+                                                // Mostrar reglas:
+                                                // - Si el creador es 3 o 5 muestra todos los roles
+                                                // - Si no, ocultar Directivo (4) y Administrador (5)
+                                                $rolId = intval($rol['id_rol']);
+                                                $creatorRole = isset($_SESSION['id_rol']) ? intval($_SESSION['id_rol']) : null;
+                                                if (!in_array($creatorRole, [3, 5], true) && in_array($rolId, [4, 5], true)) {
+                                                    continue; // no mostrar estas opciones a usuarios sin permisos
+                                                }
+                                                ?>
+                                                <option value="<?= htmlspecialchars($rol['id_rol']) ?>"><?= htmlspecialchars($rol['rol']) ?></option>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </select>
+                                    <small class="form-text text-muted">Asignar rol al nuevo usuario</small>
+                                </div>
+                            <?php endif; ?>
                         </div>
                         
                         <!-- Datos de contacto y cuenta -->

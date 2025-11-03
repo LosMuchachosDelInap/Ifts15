@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Barra Lateral Vertical - IFTS15
  * Archivo: Template/sidebar.php
@@ -47,23 +48,23 @@ $userRole = $currentUser['role'];
 ?>
 
 <!-- Bootstrap Offcanvas Sidebar -->
-<div class="offcanvas offcanvas-start text-bg-dark" 
-     tabindex="-1" 
-     id="sidebarOffcanvas" 
-     aria-labelledby="sidebarOffcanvasLabel">
-    
+<div class="offcanvas offcanvas-start text-bg-dark"
+    tabindex="-1"
+    id="sidebarOffcanvas"
+    aria-labelledby="sidebarOffcanvasLabel">
+
     <!-- Header del offcanvas -->
     <div class="offcanvas-header bg-secondary text-white">
         <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">
             <i class="bi bi-person-circle me-2"></i>
             Panel de Usuario
         </h5>
-        <button type="button" 
-                class="btn-close btn-close-white" 
-                data-bs-dismiss="offcanvas" 
-                aria-label="Close"></button>
+        <button type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
     </div>
-    
+
     <!-- Información del usuario -->
     <div class="p-3 border-bottom border-secondary">
         <div class="text-center">
@@ -79,11 +80,11 @@ $userRole = $currentUser['role'];
             </p>
         </div>
     </div>
-    
+
     <!-- Navegación del sidebar -->
     <div class="offcanvas-body p-0">
         <ul class="nav nav-pills flex-column p-3">
-            
+
             <!-- Dashboard / Inicio -->
             <li class="nav-item mb-2">
                 <a class="nav-link text-light d-flex align-items-center" href="<?php echo BASE_URL; ?>/index.php">
@@ -91,14 +92,14 @@ $userRole = $currentUser['role'];
                     Dashboard
                 </a>
             </li>
-            
+
             <!-- Académico -->
             <li class="nav-item mb-2">
-                <a class="nav-link text-light d-flex align-items-center" 
-                   data-bs-toggle="collapse" 
-                   data-bs-target="#academico-menu" 
-                   role="button" 
-                   aria-expanded="false">
+                <a class="nav-link text-light d-flex align-items-center"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#academico-menu"
+                    role="button"
+                    aria-expanded="false">
                     <i class="bi bi-mortarboard me-3"></i>
                     Académico
                     <i class="bi bi-chevron-down ms-auto"></i>
@@ -106,49 +107,49 @@ $userRole = $currentUser['role'];
                 <div class="collapse" id="academico-menu">
                     <ul class="nav nav-pills flex-column ms-4">
                         <?php if ($userIdRol === 1): ?>
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/mis-materias.php">
-                                <i class="bi bi-book me-2"></i> Mis Materias
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/calificaciones.php">
-                                <i class="bi bi-star me-2"></i> Calificaciones
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/horarios.php">
-                                <i class="bi bi-clock me-2"></i> Horarios
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/mis-materias.php">
+                                    <i class="bi bi-book me-2"></i> Mis Materias
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/calificaciones.php">
+                                    <i class="bi bi-star me-2"></i> Calificaciones
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/horarios.php">
+                                    <i class="bi bi-clock me-2"></i> Horarios
+                                </a>
+                            </li>
                         <?php elseif ($userIdRol === 2): ?>
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/mis-cursos.php">
-                                <i class="bi bi-easel me-2"></i> Mis Cursos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/calificar.php">
-                                <i class="bi bi-pencil-square me-2"></i> Calificar
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/asistencia.php">
-                                <i class="bi bi-check2-square me-2"></i> Asistencia
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/mis-cursos.php">
+                                    <i class="bi bi-easel me-2"></i> Mis Cursos
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/calificar.php">
+                                    <i class="bi bi-pencil-square me-2"></i> Calificar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/asistencia.php">
+                                    <i class="bi bi-check2-square me-2"></i> Asistencia
+                                </a>
+                            </li>
                         <?php endif; ?>
                     </ul>
                 </div>
             </li>
-            
+
             <!-- Recursos -->
             <li class="nav-item mb-2">
-                <a class="nav-link text-light d-flex align-items-center" 
-                   data-bs-toggle="collapse" 
-                   data-bs-target="#recursos-menu" 
-                   role="button" 
-                   aria-expanded="false">
+                <a class="nav-link text-light d-flex align-items-center"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#recursos-menu"
+                    role="button"
+                    aria-expanded="false">
                     <i class="bi bi-folder me-3"></i>
                     Recursos
                     <i class="bi bi-chevron-down ms-auto"></i>
@@ -173,14 +174,14 @@ $userRole = $currentUser['role'];
                     </ul>
                 </div>
             </li>
-            
+
             <!-- Comunicación -->
             <li class="nav-item mb-2">
-                <a class="nav-link text-light d-flex align-items-center" 
-                   data-bs-toggle="collapse" 
-                   data-bs-target="#comunicacion-menu" 
-                   role="button" 
-                   aria-expanded="false">
+                <a class="nav-link text-light d-flex align-items-center"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#comunicacion-menu"
+                    role="button"
+                    aria-expanded="false">
                     <i class="bi bi-chat-dots me-3"></i>
                     Comunicación
                     <i class="bi bi-chevron-down ms-auto"></i>
@@ -210,7 +211,7 @@ $userRole = $currentUser['role'];
                     </ul>
                 </div>
             </li>
-            
+
             <!-- Perfil -->
             <li class="nav-item mb-2">
                 <a class="nav-link text-light d-flex align-items-center" href="<?php echo BASE_URL; ?>/pages/perfil.php">
@@ -218,78 +219,81 @@ $userRole = $currentUser['role'];
                     Mi Perfil
                 </a>
             </li>
-            
-            <!-- Configuración -->
-            <li class="nav-item mb-2">
-                <a class="nav-link text-light d-flex align-items-center" href="<?php echo BASE_URL; ?>/pages/configuracion.php">
-                    <i class="bi bi-gear me-3"></i>
-                    Configuración
-                </a>
-            </li>
-            
+
             <?php if (isAdminRole()): ?>
-            <!-- Administración (solo admin) -->
-            <li class="nav-item mt-3">
-                <h6 class="sidebar-heading px-3 text-muted">
-                    <i class="bi bi-shield-check"></i> ADMINISTRACIÓN
-                </h6>
-            </li>
-            
-            <li class="nav-item mb-2">
-                <a class="nav-link text-light d-flex align-items-center" 
-                   data-bs-toggle="collapse" 
-                   data-bs-target="#admin-menu" 
-                   role="button" 
-                   aria-expanded="false">
-                    <i class="bi bi-gear-fill me-3"></i>
-                    Sistema
-                    <i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <div class="collapse" id="admin-menu">
-                    <ul class="nav nav-pills flex-column ms-4">
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/UsuarioController.php?action=listar">
-                                <i class="bi bi-people me-2"></i> Usuarios
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/admin/carreras.php">
-                                <i class="bi bi-mortarboard me-2"></i> Carreras
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/admin/materias.php">
-                                <i class="bi bi-book me-2"></i> Materias
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/admin/reportes.php">
-                                <i class="bi bi-bar-chart me-2"></i> Reportes
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                <!-- Administración (solo admin) -->
+                <li class="nav-item mt-3">
+                    <h6 class="sidebar-heading px-3 text-muted">
+                        <i class="bi bi-shield-check"></i> ADMINISTRACIÓN
+                    </h6>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-light d-flex align-items-center"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#admin-menu"
+                        role="button"
+                        aria-expanded="false">
+                        <i class="bi bi-gear-fill me-3"></i>
+                        Sistema
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="admin-menu">
+                        <ul class="nav nav-pills flex-column ms-4">
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/UsuarioController.php?action=listar">
+                                    <i class="bi bi-people me-2"></i> 
+                                    Usuarios
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/carreras.php">
+                                    <i class="bi bi-mortarboard me-2"></i> 
+                                    Carreras
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/materias.php">
+                                    <i class="bi bi-book me-2"></i> 
+                                    Materias
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/reportes.php">
+                                    <i class="bi bi-bar-chart me-2"></i>
+                                     Reportes
+                                </a>
+                            </li>
+                            <!-- Configuración -->
+                            <li class="nav-item mb-2">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/configuracion.php">
+                                    <i class="bi bi-gear me-3"></i>
+                                    Configuración
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             <?php endif; ?>
-            
+
             <!-- Cerrar Sesión -->
             <li class="nav-item mt-3">
-                <a class="nav-link text-light d-flex align-items-center text-danger" 
-                   href="<?php echo BASE_URL; ?>/src/Controllers/cerrarSesion.php">
+                <a class="nav-link text-light d-flex align-items-center text-danger"
+                    href="<?php echo BASE_URL; ?>/src/Controllers/cerrarSesion.php">
                     <i class="bi bi-box-arrow-right me-3"></i>
                     Cerrar Sesión
                 </a>
             </li>
-            
+
         </ul>
-        
+
         <!-- Footer del sidebar -->
         <div class="mt-auto p-3 border-top border-secondary">
             <small style="color: #ffd700 !important; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.8), -1px -1px 3px rgba(0,0,0,0.8), 1px -1px 3px rgba(0,0,0,0.8), -1px 1px 3px rgba(0,0,0,0.8);">
-                <img src="<?php echo BASE_URL; ?>/src/Public/images/logo.png" 
-                     alt="IFTS15" 
-                     height="20" 
-                     class="me-2"> 
+                <img src="<?php echo BASE_URL; ?>/src/Public/images/logo.png"
+                    alt="IFTS15"
+                    height="20"
+                    class="me-2">
                 IFTS15 Sistema Web
             </small>
         </div>

@@ -499,8 +499,16 @@ class User
             $errores[] = "La contraseña es obligatoria";
         }
         
-        if (!in_array($this->role_id, [1, 2, 3])) {
-            $errores[] = "Rol inválido";
+        // Validar rol. Si se pasa conexión, verificar que el rol exista y esté habilitado en la BD.
+        if ($conn) {
+            if (!self::esRolHabilitado($conn, $this->role_id)) {
+                $errores[] = "Rol inválido o no está habilitado";
+            }
+        } else {
+            // Sin conexión asumimos roles básicos 1..5
+            if (!in_array($this->role_id, [1, 2, 3, 4, 5], true)) {
+                $errores[] = "Rol inválido";
+            }
         }
         
         if (empty($this->id_persona)) {

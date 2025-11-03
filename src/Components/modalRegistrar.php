@@ -87,6 +87,9 @@ try {
             <?php unset($_SESSION['register_message']); endif; ?>
             <form action="<?php echo BASE_URL; ?>/src/Controllers/AuthController.php" method="POST" id="formRegistrar">
                 <input type="hidden" name="action" value="register">
+                <?php if (isset($modal_included_from)): ?>
+                    <input type="hidden" name="modal_included_from" value="<?= htmlspecialchars($modal_included_from) ?>">
+                <?php endif; ?>
                 <div class="modal-body">
                     <div class="row">
                         <!-- Datos personales -->

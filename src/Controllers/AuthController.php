@@ -129,6 +129,35 @@ class AuthController
             return;
         }
 
+        // Debug: log de contexto de dónde vino el formulario
+        $modal_source = $_POST['modal_included_from'] ?? null;
+        error_log('REGISTER CONTEXT - modal_included_from=' . ($modal_source ?? 'none') . ' HTTP_REFERER=' . ($_SERVER['HTTP_REFERER'] ?? 'none') . ' REMOTE_ADDR=' . ($_SERVER['REMOTE_ADDR'] ?? 'none') . ' POST_KEYS=' . count($_POST));
+
+        // Escritura temporal de debug para diagnosticar envíos desde el modal (no en producción)
+        try {
+            $debugPath = __DIR__ . '/../register_debug.log';
+            $postCopy = $_POST;
+            // Enmascarar campos sensibles
+            foreach (['password', 'confirm_password', 'clave'] as $sensitive) {
+                if (isset($postCopy[$sensitive])) $postCopy[$sensitive] = '***masked***';
+            }
+            $debugEntry = [
+                'timestamp' => date('c'),
+                'remote_addr' => $_SERVER['REMOTE_ADDR'] ?? null,
+                'referer' => $_SERVER['HTTP_REFERER'] ?? null,
+                'modal_included_from' => $modal_source ?? null,
+                'session' => [
+                    'user_id' => $_SESSION['user_id'] ?? null,
+                    'id_rol' => $_SESSION['id_rol'] ?? null,
+                ],
+                'post' => $postCopy,
+                'files' => array_keys($_FILES ?? []),
+            ];
+            file_put_contents($debugPath, json_encode($debugEntry, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n", FILE_APPEND | LOCK_EX);
+        } catch (\Throwable $e) {
+            error_log('No se pudo escribir register_debug.log: ' . $e->getMessage());
+        }
+
         // Obtener datos del formulario
         $email = trim($_POST['email'] ?? '');
         $password = trim($_POST['password'] ?? '');
@@ -253,6 +282,21 @@ class AuthController
             }
             // Indicar que el registro quedó pendiente de habilitación administrativa
             $_SESSION['register_message'] = 'Registro recibido. Tu cuenta está pendiente de habilitación por un administrativo.';
+            // Registro exitoso: escribir también en register_debug.log
+            try {
+                $debugPath = __DIR__ . '/../register_debug.log';
+                $successEntry = [
+                    'timestamp' => date('c'),
+                    'status' => 'success',
+                    'email' => $email,
+                    'user_id' => $user->getId() ?? null,
+                    'role_assigned' => $role_for_new,
+                ];
+                file_put_contents($debugPath, json_encode($successEntry, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n", FILE_APPEND | LOCK_EX);
+            } catch (\Throwable $e) {
+                error_log('No se pudo escribir success en register_debug.log: ' . $e->getMessage());
+            }
+
             $this->redirect('/index.php');
         } catch (Exception $e) {
             // Rollback en caso de error
@@ -260,6 +304,19 @@ class AuthController
             $error_msg = $e->getMessage();
             $debug_info = "Error: {$error_msg} | Datos: nombre={$nombre}, apellido={$apellido}, dni={$dni}, email={$email}, fecha=" . ($fecha_nacimiento ?: 'NULL') . ", telefono={$telefono}, edad={$edad}";
             error_log("ERROR en registro: " . $debug_info);
+            // Escribir también en register_debug.log para facilitar debugging
+            try {
+                $debugPath = __DIR__ . '/../register_debug.log';
+                $errEntry = [
+                    'timestamp' => date('c'),
+                    'status' => 'error',
+                    'message' => $error_msg,
+                    'debug_info' => $debug_info
+                ];
+                file_put_contents($debugPath, json_encode($errEntry, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n", FILE_APPEND | LOCK_EX);
+            } catch (\Throwable $e2) {
+                error_log('No se pudo escribir error en register_debug.log: ' . $e2->getMessage());
+            }
             $_SESSION['register_message'] = $error_msg;
             $this->redirect('/index.php');
         } catch (Throwable $e) {
@@ -267,6 +324,17 @@ class AuthController
             $this->conn->rollback();
             $error_msg = "Error fatal: " . $e->getMessage() . " en " . $e->getFile() . ":" . $e->getLine();
             error_log("ERROR FATAL en registro: " . $error_msg);
+            try {
+                $debugPath = __DIR__ . '/../register_debug.log';
+                $errEntry = [
+                    'timestamp' => date('c'),
+                    'status' => 'fatal',
+                    'message' => $error_msg
+                ];
+                file_put_contents($debugPath, json_encode($errEntry, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n", FILE_APPEND | LOCK_EX);
+            } catch (\Throwable $e3) {
+                error_log('No se pudo escribir fatal en register_debug.log: ' . $e3->getMessage());
+            }
             $_SESSION['register_message'] = 'Error fatal en el registro.';
             $this->redirect('/index.php');
         }

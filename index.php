@@ -150,7 +150,7 @@ $userRole = $roleNames[$userIdRol] ?? 'Alumno';
         <div class="carousel-inner">
             <!-- Slide 1: Contenidos y Modelos Digitales -->
             <div class="carousel-item active">
-                <img src="/src/Public/images/carrussel_1.png"
+                <img src="/src/Public/images/carrussel_1.jpeg"
                     class="d-block w-100"
                     alt="Contenidos y Modelos Digitales"
                     onerror="this.src='https://via.placeholder.com/1200x400/333333/ffd700?text=IMAGEN+1+NO+ENCONTRADA'">
@@ -164,7 +164,7 @@ $userRole = $roleNames[$userIdRol] ?? 'Alumno';
 
             <!-- Slide 2: Instituto -->
             <div class="carousel-item">
-                <img src="/src/Public/images/carrussel_2.png"
+                <img src="/src/Public/images/carrussel_2.jpeg"
                     class="d-block w-100"
                     alt="Instituto de Formación Técnica Superior 15"
                     onerror="this.src='https://via.placeholder.com/1200x400/495057/ffd700?text=IMAGEN+2+NO+ENCONTRADA'">
@@ -178,7 +178,7 @@ $userRole = $roleNames[$userIdRol] ?? 'Alumno';
 
             <!-- Slide 3: Taller de Prácticas -->
             <div class="carousel-item">
-                <img src="/src/Public/images/carrussel_3.png"
+                <img src="/src/Public/images/carrussel_3.jpeg"
                     class="d-block w-100"
                     alt="Taller de Prácticas Pre Profesionales"
                     onerror="this.src='https://via.placeholder.com/1200x400/1e3a8a/ffd700?text=IMAGEN+3+NO+ENCONTRADA'">

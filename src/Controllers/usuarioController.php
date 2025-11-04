@@ -11,7 +11,7 @@ use App\Model\User;
 use Exception;
 
 // Controlador simple para listar usuarios y cambiar habilitado
-class UsuarioController
+class usuarioController
 {
 	private $conn;
 	private $db;
@@ -145,9 +145,9 @@ class UsuarioController
 }
 
 // Procesamiento de requests cuando se accede directamente al archivo
-if (basename($_SERVER['PHP_SELF']) === 'UsuarioController.php') {
+if (basename($_SERVER['PHP_SELF']) === 'usuarioController.php') {
 	$action = $_GET['action'] ?? $_POST['action'] ?? '';
-	$controller = new UsuarioController();
+	$controller = new usuarioController();
 
 	switch ($action) {
 		case 'listar':

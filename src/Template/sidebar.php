@@ -241,7 +241,7 @@ $userRole = $currentUser['role'];
                     <div class="collapse" id="admin-menu">
                         <ul class="nav nav-pills flex-column ms-4">
                             <li class="nav-item">
-                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/UsuarioController.php?action=listar">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/usuarioController.php?action=listar">
                                     <i class="bi bi-people me-2"></i> 
                                     Usuarios
                                 </a>

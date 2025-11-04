@@ -246,12 +246,12 @@ $userRole = $currentUser['role'];
                                     Usuarios
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/carreras.php">
-                                    <i class="bi bi-mortarboard me-2"></i> 
-                                    Carreras
-                                </a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=realizador-productor-tv">
+                                        <i class="bi bi-mortarboard me-2"></i> 
+                                        Informacion de Carrera
+                                    </a>
+                                </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/materias.php">
                                     <i class="bi bi-book me-2"></i> 
@@ -266,7 +266,7 @@ $userRole = $currentUser['role'];
                             </li>
                             <!-- Configuración -->
                             <li class="nav-item mb-2">
-                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/configuracion.php">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=configuracion">
                                     <i class="bi bi-gear me-3"></i>
                                     Configuración
                                 </a>

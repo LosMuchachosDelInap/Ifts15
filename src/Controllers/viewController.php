@@ -33,8 +33,10 @@ $allowlist = [
     'contacto' => 'public',
     'usuarios' => 'admin',
     'listadoEmpleados' => 'admin',
+    'biblioteca' => 'auth',
     // Vista "Carreras" (nombre físico: realizador-productor-tv.php)
     'realizador-productor-tv' => 'public',
+    'pagina_en_construccion' => 'public',
     // Añadir más vistas aquí según la app. Si una vista no está en la lista, denegamos el acceso por seguridad.
 ];
 

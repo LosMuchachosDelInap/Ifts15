@@ -166,11 +166,6 @@ $userRole = $currentUser['role'];
                                 <i class="bi bi-file-earmark-pdf me-2"></i> Documentos
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/enlaces-utiles.php">
-                                <i class="bi bi-link-45deg me-2"></i> Enlaces Útiles
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </li>
@@ -189,17 +184,17 @@ $userRole = $currentUser['role'];
                 <div class="collapse" id="comunicacion-menu">
                     <ul class="nav nav-pills flex-column ms-4">
                         <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/mensajes.php">
+                             <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=pagina_en_construccion">
                                 <i class="bi bi-envelope me-2"></i> Mensajes
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/foros.php">
+                             <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=pagina_en_construccion">
                                 <i class="bi bi-chat-square-text me-2"></i> Foros
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/pages/anuncios.php">
+                             <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=pagina_en_construccion">
                                 <i class="bi bi-megaphone me-2"></i> Anuncios
                             </a>
                         </li>
@@ -214,7 +209,7 @@ $userRole = $currentUser['role'];
 
             <!-- Perfil -->
             <li class="nav-item mb-2">
-                <a class="nav-link text-light d-flex align-items-center" href="<?php echo BASE_URL; ?>/pages/perfil.php">
+                 <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=pagina_en_construccion">
                     <i class="bi bi-person me-3"></i>
                     Mi Perfil
                 </a>
@@ -259,14 +254,14 @@ $userRole = $currentUser['role'];
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/reportes.php">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=pagina_en_construccion">
                                     <i class="bi bi-bar-chart me-2"></i>
                                      Reportes
                                 </a>
                             </li>
                             <!-- Configuración -->
                             <li class="nav-item mb-2">
-                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=configuracion">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=pagina_en_construccion">
                                     <i class="bi bi-gear me-3"></i>
                                     Configuración
                                 </a>

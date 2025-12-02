@@ -230,7 +230,7 @@ $userRole = $currentUser['role'];
                         role="button"
                         aria-expanded="false">
                         <i class="bi bi-gear-fill me-3"></i>
-                        Sistema
+                        Gestion de Carreras
                         <i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <div class="collapse" id="admin-menu">
@@ -241,16 +241,16 @@ $userRole = $currentUser['role'];
                                     Usuarios
                                 </a>
                             </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=realizador-productor-tv">
-                                        <i class="bi bi-mortarboard me-2"></i> 
-                                        Informacion de Carrera
-                                    </a>
-                                </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/materias.php">
-                                    <i class="bi bi-book me-2"></i> 
-                                    Materias
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=realizador-productor-tv">
+                                    <i class="bi bi-mortarboard me-2"></i> 
+                                    Informacion de Carrera
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light py-1" href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=abm-carreras">
+                                    <i class="bi bi-diagram-3 me-2"></i> 
+                                    ABM Carreras y Materias
                                 </a>
                             </li>
                             <li class="nav-item">

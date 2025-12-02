@@ -166,8 +166,7 @@ if ($isLoggedIn && !empty($userEmail)) {
                 <div class="col-md-4 mb-3">
                     <div class="card h-100 text-center border-danger">
                         <div class="card-body">
-                            <i class="fa fa-tv fa-3x text-danger mb-3"></i>
-                            <h5>Producción TV</h5>
+                            <img src="<?= BASE_URL ?>/src/Public/images/info_carrera_1.jpeg" alt="Realizador y Productor Televisivo" class="img-fluid mb-3" style="max-height:160px; object-fit:cover;">
                             <p class="text-muted">Desde la conceptualización hasta la emisión</p>
                         </div>
                     </div>
@@ -175,8 +174,7 @@ if ($isLoggedIn && !empty($userEmail)) {
                 <div class="col-md-4 mb-3">
                     <div class="card h-100 text-center border-warning">
                         <div class="card-body">
-                            <i class="fa fa-film fa-3x text-warning mb-3"></i>
-                            <h5>Realización</h5>
+                            <img src="<?= BASE_URL ?>/src/Public/images/info_carrera_2.jpeg" alt="Realizador y Productor Televisivo" class="img-fluid mb-3" style="max-height:160px; object-fit:cover;">
                             <p class="text-muted">Dirección creativa y técnica de contenidos</p>
                         </div>
                     </div>
@@ -184,8 +182,8 @@ if ($isLoggedIn && !empty($userEmail)) {
                 <div class="col-md-4 mb-3">
                     <div class="card h-100 text-center border-success">
                         <div class="card-body">
-                            <i class="fa fa-broadcast-tower fa-3x text-success mb-3"></i>
-                            <h5>TV Digital</h5>
+                            <?php // Reemplazamos el icono por una imagen representativa de la carrera ?>
+                            <img src="<?= BASE_URL ?>/src/Public/images/info_carrera_3.jpeg" alt="Realizador y Productor Televisivo" class="img-fluid mb-3" style="max-height:160px; object-fit:cover;">
                             <p class="text-muted">Tecnologías y plataformas digitales modernas</p>
                         </div>
                     </div>

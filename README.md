@@ -1,15 +1,31 @@
 # IFTS15 - Sistema Web Educativo
 
-Sistema web desarrollado para el Instituto de Formación Técnica Superior N° 15.
+> Sistema web moderno desarrollado para el Instituto de Formación Técnica Superior N° 15.  
+> Código limpio, documentado y optimizado para producción.
 
-## 📋 Características
+## ✨ Características Principales
 
-- **Diseño Responsivo**: Compatible con dispositivos móviles
-- **Bootstrap 5**: Framework CSS moderno
-- **Base de Datos MySQL**: Operaciones seguras con MySQLi
-- **Sistema de Usuarios**: Registro y autenticación completos
-- **Gestión Académica**: Carreras, usuarios, roles
-- **Arquitectura Modular**: PHP estructurado en MVC
+- **🎨 Diseño Responsivo**: Interfaz adaptable a todos los dispositivos
+- **🔐 Sistema de Autenticación**: Registro, login y gestión de sesiones seguras
+- **👥 Gestión de Usuarios**: ABM completo con roles y permisos
+- **📚 Gestión Académica**: Administración de carreras y materias con drag & drop
+- **📧 Sistema de Correos**: Notificaciones automáticas por email
+- **🗄️ Base de Datos MySQL**: Operaciones seguras con prepared statements
+- **🏗️ Arquitectura MVC**: Código estructurado y mantenible
+- **📱 Bootstrap 5**: Framework CSS moderno y componentes pre-diseñados
+- **⚡ SortableJS**: Drag & drop fluido para gestión de materias
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Backend**: PHP 7.4+
+- **Base de Datos**: MySQL 5.7+
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Frameworks**: Bootstrap 5.3.2
+- **Librerías**: 
+  - PHPMailer (envío de correos)
+  - phpdotenv (gestión de variables de entorno)
+  - SortableJS (drag & drop)
+- **Iconos**: Bootstrap Icons, Font Awesome
 
 ## 🚀 Instalación
 

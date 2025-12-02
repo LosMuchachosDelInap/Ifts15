@@ -1,15 +1,29 @@
 <?php
-// Vista: usuarios.php
-// Variables esperadas: $usuarios, $page, $limit, $total
-// Asegurar sesión y variables esperadas por las plantillas (navBar, sidebar)
+/**
+ * Vista: Gestión de Usuarios
+ * 
+ * Muestra una tabla con todos los usuarios del sistema
+ * permitiendo a los administradores gestionar sus datos
+ * 
+ * Variables esperadas:
+ * - $usuarios: Array con la lista de usuarios
+ * - $page: Página actual de la paginación
+ * - $limit: Cantidad de registros por página
+ * - $total: Total de registros
+ * 
+ * @package App\Views
+ */
+
+// Asegurar sesión y variables esperadas por las plantillas
 if (session_status() === PHP_SESSION_NONE) {
 	session_start();
 }
 
-// Intentar obtener info rica del usuario desde helpers si están disponibles
+// Obtener información del usuario actual
 if (!function_exists('getCurrentUser')) {
 	require_once __DIR__ . '/../config.php';
 }
+
 $currentUser = getCurrentUser();
 $isLoggedIn = $currentUser !== null;
 $userEmail = $currentUser['email'] ?? $_SESSION['email'] ?? $_SESSION['usuario'] ?? '';

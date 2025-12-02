@@ -21,13 +21,13 @@
             <div class="col-md-4 mb-3" style="background: #343a40 !important; padding: 15px !important; display: flex; flex-direction: column;">
                 <h6 style="color: #FFD700 !important;">Enlaces Útiles</h6>
                 <ul class="list-unstyled" style="flex-grow: 1;">
-                    <li><a href="#" class="text-light text-decoration-none">
+                    <li><a href="/src/Controllers/viewController.php?view=pagina_en_construccion" class="text-light text-decoration-none">
                             <i class="bi bi-chevron-right"></i> Sobre Nosotros
                         </a></li>
                     <li><a href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=realizador-productor-tv" class="text-light text-decoration-none">
                             <i class="bi bi-chevron-right"></i> Realizador y Productor Televisivo
                         </a></li>
-                    <li><a href="#" class="text-light text-decoration-none">
+                    <li><a href="/src/Controllers/viewController.php?view=pagina_en_construccion" class="text-light text-decoration-none">
                             <i class="bi bi-chevron-right"></i> Biblioteca
                         </a></li>
                     <li><a href="#" class="text-light text-decoration-none" data-bs-toggle="modal" data-bs-target="#consultasModal" style="color: #FFD700 !important;">

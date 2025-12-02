@@ -122,40 +122,9 @@ class AuthController
      */
     public function register()
     {
-        error_log("INICIO registro - REQUEST_METHOD: " . $_SERVER['REQUEST_METHOD']);
-
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->redirect('/?error=metodo_invalido');
             return;
-        }
-
-        // Debug: log de contexto de dónde vino el formulario
-        $modal_source = $_POST['modal_included_from'] ?? null;
-        error_log('REGISTER CONTEXT - modal_included_from=' . ($modal_source ?? 'none') . ' HTTP_REFERER=' . ($_SERVER['HTTP_REFERER'] ?? 'none') . ' REMOTE_ADDR=' . ($_SERVER['REMOTE_ADDR'] ?? 'none') . ' POST_KEYS=' . count($_POST));
-
-        // Escritura temporal de debug para diagnosticar envíos desde el modal (no en producción)
-        try {
-            $debugPath = __DIR__ . '/../register_debug.log';
-            $postCopy = $_POST;
-            // Enmascarar campos sensibles
-            foreach (['password', 'confirm_password', 'clave'] as $sensitive) {
-                if (isset($postCopy[$sensitive])) $postCopy[$sensitive] = '***masked***';
-            }
-            $debugEntry = [
-                'timestamp' => date('c'),
-                'remote_addr' => $_SERVER['REMOTE_ADDR'] ?? null,
-                'referer' => $_SERVER['HTTP_REFERER'] ?? null,
-                'modal_included_from' => $modal_source ?? null,
-                'session' => [
-                    'user_id' => $_SESSION['user_id'] ?? null,
-                    'id_rol' => $_SESSION['id_rol'] ?? null,
-                ],
-                'post' => $postCopy,
-                'files' => array_keys($_FILES ?? []),
-            ];
-            file_put_contents($debugPath, json_encode($debugEntry, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n", FILE_APPEND | LOCK_EX);
-        } catch (\Throwable $e) {
-            error_log('No se pudo escribir register_debug.log: ' . $e->getMessage());
         }
 
         // Obtener datos del formulario
@@ -173,11 +142,9 @@ class AuthController
         $id_carrera = intval($_POST['id_carrera'] ?? 0);
         $id_comision = intval($_POST['id_comision'] ?? 0);
         $id_añoCursada = intval($_POST['id_añoCursada'] ?? 0);
-    // Si el formulario incluye id_rol y el usuario actual tiene permisos (3 o 5), aceptar la selección
-    $id_rol_seleccionado = intval($_POST['id_rol'] ?? 0);
-
-        error_log("DATOS recibidos - email: {$email}, nombre: {$nombre}, apellido: {$apellido}, dni: {$dni}, edad: {$edad}");
-        error_log("DATOS ACADEMICOS - carrera: {$id_carrera}, comision: {$id_comision}, año: {$id_añoCursada}");
+        
+        // Si el formulario incluye id_rol y el usuario actual tiene permisos (3 o 5), aceptar la selección
+        $id_rol_seleccionado = intval($_POST['id_rol'] ?? 0);
 
         // Convertir fecha vacía a NULL para la base de datos
         $fecha_nacimiento = empty($fecha_nacimiento) ? null : $fecha_nacimiento;
@@ -192,46 +159,39 @@ class AuthController
         }
 
         try {
-            error_log("INICIANDO transacción");
             // Iniciar transacción
             $this->conn->begin_transaction();
 
-            error_log("CREANDO objeto Person");
             // 1. Crear persona
             $persona = new Person($nombre, $apellido, $fecha_nacimiento, $dni, $telefono, null, null, null, $edad);
 
-            error_log("VALIDANDO persona");
             // Validar persona
             $erroresPersona = $persona->validar();
             if (!empty($erroresPersona)) {
                 throw new Exception("Errores persona: " . implode(', ', $erroresPersona));
             }
 
-            error_log("VERIFICANDO DNI existente");
             // Verificar si DNI ya existe
             if ($persona->dniExiste($this->conn)) {
                 throw new Exception("El DNI ya está registrado");
             }
 
-            error_log("GUARDANDO persona");
             if (!$persona->guardar($this->conn)) {
                 throw new Exception("Error al guardar datos personales");
             }
-            error_log("PERSONA guardada con ID: " . $persona->getId());
 
-            error_log("CREANDO usuario");
             // 2. Crear usuario con datos académicos
             // Por defecto rol = 1 (Alumno). Si el usuario que crea tiene rol administrativo (3 o 5) y envía id_rol, usarlo.
             $role_for_new = 1;
             $currentCreatorRole = isset($_SESSION['id_rol']) ? intval($_SESSION['id_rol']) : null;
+            
             if (in_array($currentCreatorRole, [3, 5], true) && $id_rol_seleccionado > 0) {
                 // Validar que el rol existe y esté habilitado
                 if (!User::esRolHabilitado($this->conn, $id_rol_seleccionado)) {
                     throw new Exception('El rol seleccionado no existe o no está habilitado.');
                 }
 
-                // Regla adicional:
-                // - Si el rol seleccionado es 4 o 5, sólo puede asignarlo quien tenga id_rol 3 o 5
+                // Regla adicional: Si el rol seleccionado es 4 o 5, sólo puede asignarlo quien tenga id_rol 3 o 5
                 if (in_array($id_rol_seleccionado, [4, 5], true)) {
                     if (!in_array($currentCreatorRole, [3, 5], true)) {
                         throw new Exception('No tienes permiso para asignar ese rol.');
@@ -240,21 +200,19 @@ class AuthController
 
                 $role_for_new = $id_rol_seleccionado;
             }
-            $user = new User($email, $password, $persona->getId(), $role_for_new, $id_carrera, $id_comision, $id_añoCursada); // rol dinámico
+            
+            $user = new User($email, $password, $persona->getId(), $role_for_new, $id_carrera, $id_comision, $id_añoCursada);
 
-            error_log("VALIDANDO usuario");
             // Validar usuario
             $erroresUsuario = $user->validar($this->conn);
             if (!empty($erroresUsuario)) {
                 throw new Exception("Errores usuario: " . implode(', ', $erroresUsuario));
             }
 
-            error_log("GUARDANDO usuario");
             if (!$user->guardar($this->conn)) {
                 throw new Exception("Error al crear usuario");
             }
 
-            error_log("CONFIRMANDO transacción");
             // Confirmar transacción
             $this->conn->commit();
 
@@ -272,7 +230,7 @@ class AuthController
             // Log de actividad
             error_log("REGISTRO EXITOSO: {$email}");
             
-            // Notificar admins (si quieres)
+            // Notificar admins
             $admins = array_map('trim', explode(',', $_ENV['ADMIN_EMAILS'] ?? ''));
             if (!empty($admins)) {
                 $subjectAdmin = 'Nuevo registro pendiente en IFTS15';
@@ -280,61 +238,22 @@ class AuthController
                 $bodyAdmin .= '<p>Revisá el panel de administración para habilitarlo.</p>';
                 envio_mail($admins, $subjectAdmin, $bodyAdmin);
             }
+            
             // Indicar que el registro quedó pendiente de habilitación administrativa
             $_SESSION['register_message'] = 'Registro recibido. Tu cuenta está pendiente de habilitación por un administrativo.';
-            // Registro exitoso: escribir también en register_debug.log
-            try {
-                $debugPath = __DIR__ . '/../register_debug.log';
-                $successEntry = [
-                    'timestamp' => date('c'),
-                    'status' => 'success',
-                    'email' => $email,
-                    'user_id' => $user->getId() ?? null,
-                    'role_assigned' => $role_for_new,
-                ];
-                file_put_contents($debugPath, json_encode($successEntry, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n", FILE_APPEND | LOCK_EX);
-            } catch (\Throwable $e) {
-                error_log('No se pudo escribir success en register_debug.log: ' . $e->getMessage());
-            }
-
             $this->redirect('/index.php');
         } catch (Exception $e) {
             // Rollback en caso de error
             $this->conn->rollback();
             $error_msg = $e->getMessage();
-            $debug_info = "Error: {$error_msg} | Datos: nombre={$nombre}, apellido={$apellido}, dni={$dni}, email={$email}, fecha=" . ($fecha_nacimiento ?: 'NULL') . ", telefono={$telefono}, edad={$edad}";
-            error_log("ERROR en registro: " . $debug_info);
-            // Escribir también en register_debug.log para facilitar debugging
-            try {
-                $debugPath = __DIR__ . '/../register_debug.log';
-                $errEntry = [
-                    'timestamp' => date('c'),
-                    'status' => 'error',
-                    'message' => $error_msg,
-                    'debug_info' => $debug_info
-                ];
-                file_put_contents($debugPath, json_encode($errEntry, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n", FILE_APPEND | LOCK_EX);
-            } catch (\Throwable $e2) {
-                error_log('No se pudo escribir error en register_debug.log: ' . $e2->getMessage());
-            }
+            error_log("ERROR en registro: {$error_msg} | Email: {$email}");
             $_SESSION['register_message'] = $error_msg;
             $this->redirect('/index.php');
         } catch (Throwable $e) {
             // Capturar errores fatales también
             $this->conn->rollback();
-            $error_msg = "Error fatal: " . $e->getMessage() . " en " . $e->getFile() . ":" . $e->getLine();
-            error_log("ERROR FATAL en registro: " . $error_msg);
-            try {
-                $debugPath = __DIR__ . '/../register_debug.log';
-                $errEntry = [
-                    'timestamp' => date('c'),
-                    'status' => 'fatal',
-                    'message' => $error_msg
-                ];
-                file_put_contents($debugPath, json_encode($errEntry, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n", FILE_APPEND | LOCK_EX);
-            } catch (\Throwable $e3) {
-                error_log('No se pudo escribir fatal en register_debug.log: ' . $e3->getMessage());
-            }
+            $error_msg = "Error fatal: " . $e->getMessage();
+            error_log("ERROR FATAL en registro: {$error_msg} en {$e->getFile()}:{$e->getLine()}");
             $_SESSION['register_message'] = 'Error fatal en el registro.';
             $this->redirect('/index.php');
         }
@@ -583,23 +502,11 @@ if (basename($_SERVER['PHP_SELF']) === 'AuthController.php') {
     } catch (Exception $e) {
         // Manejo de errores general
         http_response_code(500);
-        // Log detallado para depuración en archivo temporal
         error_log('[AuthController] Excepción capturada: ' . $e->getMessage());
-        try {
-            $serverInfo = [
-                'REQUEST_URI' => $_SERVER['REQUEST_URI'] ?? null,
-                'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'] ?? null
-            ];
-            $dbg = "[" . date('c') . "] Exception: " . $e->getMessage() . "\nTrace:\n" . $e->getTraceAsString() . "\nPOST: " . var_export($_POST, true) . "\nSERVER: " . var_export($serverInfo, true) . "\n\n";
-            @file_put_contents(__DIR__ . '/../../auth_error_debug.log', $dbg, FILE_APPEND | LOCK_EX);
-        } catch (Exception $inner) {
-            // no hacer nada si falló el log a archivo
-        }
-
+        
         echo json_encode([
             'success' => false,
-            'error' => $e->getMessage(),
-            'trace' => defined('DEBUG_MODE') && DEBUG_MODE ? $e->getTraceAsString() : 'Error interno del servidor'
+            'error' => $e->getMessage()
         ]);
         exit;
     }

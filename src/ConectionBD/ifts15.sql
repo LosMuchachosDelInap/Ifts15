@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2025 a las 01:10:00
+-- Tiempo de generación: 02-12-2025 a las 04:06:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -53,6 +53,7 @@ INSERT INTO `añocursada` (`id_añoCursada`, `año`, `habilitado`, `cancelado`, 
 
 CREATE TABLE `carrera` (
   `id_carrera` int(11) NOT NULL,
+  `nombreCarrera` varchar(255) NOT NULL,
   `habilitado` int(1) NOT NULL DEFAULT 1,
   `cancelado` int(11) NOT NULL DEFAULT 0,
   `idCreate` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -63,9 +64,11 @@ CREATE TABLE `carrera` (
 -- Volcado de datos para la tabla `carrera`
 --
 
-INSERT INTO `carrera` (`id_carrera`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
-(1, 1, 0, '2025-09-16 20:52:31', '2025-12-01 23:49:08'),
-(2, 1, 0, '2025-12-01 23:46:55', '2025-12-01 23:47:10');
+INSERT INTO `carrera` (`id_carrera`, `nombreCarrera`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
+(1, 'Realizador y Productor Televisiva', 1, 0, '2025-09-16 20:52:31', '2025-12-02 00:55:18'),
+(2, 'Carrera nueva', 1, 0, '2025-12-01 23:46:55', '2025-12-02 01:15:13'),
+(3, 'COMPRESIÓN DE VIDEO Y AUDIO. REDUNDANCIA, ENTROPÍA E INFORMACIÓN IRRRELEVANTE.', 1, 0, '2025-12-02 01:59:20', '2025-12-02 01:59:20'),
+(4, 'ESTÁNDARES MPEG, SUS CARACTERÍSTICAS. FORMATOS MULTIMEDIA, DISTINTOS PARÁMETROS', 1, 0, '2025-12-02 01:59:51', '2025-12-02 01:59:51');
 
 -- --------------------------------------------------------
 
@@ -112,9 +115,10 @@ CREATE TABLE `materia` (
 --
 
 INSERT INTO `materia` (`id_materia`, `id_carrera`, `nombre_materia`, `habilitado`, `cancelado`, `idCreate`, `idUpdate`) VALUES
-(1, NULL, 'La Imagen', 1, 0, '2025-12-01 22:29:02', '2025-12-01 22:29:02'),
-(2, NULL, 'Digitalizacion', 1, 0, '2025-12-01 22:29:02', '2025-12-01 23:47:06'),
-(3, NULL, 'DIGITALIZACIÓN Y CODIFICACIÓN', 1, 0, '2025-12-01 23:49:01', '2025-12-01 23:49:01');
+(1, NULL, 'LA IMAGEN, LOS CAMPOS EN LA TV DIGITAL', 1, 0, '2025-12-01 22:29:02', '2025-12-02 02:52:28'),
+(2, NULL, 'DIGITALIZACIÓN DE VIDEO COMPUESTO Y POR COMPONENTES', 1, 0, '2025-12-01 22:29:02', '2025-12-02 02:52:30'),
+(3, NULL, 'DIGITALIZACIÓN Y CODIFICACIÓN', 1, 0, '2025-12-01 23:49:01', '2025-12-02 02:52:27'),
+(4, NULL, 'ESTÁNDARES MPEG, SUS CARACTERÍSTICAS. FORMATOS MULTIMEDIA, DISTINTOS PARÁMETROS', 1, 0, '2025-12-02 02:00:48', '2025-12-02 02:52:27');
 
 -- --------------------------------------------------------
 
@@ -307,7 +311,7 @@ ALTER TABLE `añocursada`
 -- AUTO_INCREMENT de la tabla `carrera`
 --
 ALTER TABLE `carrera`
-  MODIFY `id_carrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_carrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `comision`
@@ -319,7 +323,7 @@ ALTER TABLE `comision`
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`

@@ -57,18 +57,16 @@ use App\Model\Materia;
                                 <strong><?= htmlspecialchars($carrera['nombreCarrera']) ?></strong>
                                 <small class="text-muted ms-2">(<?= count($materiasAsociadas) ?> materias)</small>
                             </div>
-                            <div onclick="event.stopPropagation();">
+                            <div>
                                 <button class="btn btn-sm btn-sm-icon btn-outline-primary me-1 btn-editar-carrera" 
                                         data-id="<?= $carrera['id_carrera'] ?>" 
                                         data-nombre="<?= htmlspecialchars($carrera['nombreCarrera']) ?>"
-                                        title="Editar"
-                                        onclick="event.stopPropagation();">
+                                        title="Editar">
                                     <i class="bi bi-pencil"></i>
                                 </button>
                                 <button class="btn btn-sm btn-sm-icon btn-outline-danger btn-eliminar-carrera" 
                                         data-id="<?= $carrera['id_carrera'] ?>"
-                                        title="Eliminar"
-                                        onclick="event.stopPropagation();">
+                                        title="Eliminar">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -109,7 +107,7 @@ use App\Model\Materia;
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Crear carrera
-    document.getElementById('btn-crear-carrera')?.addEventListener('click', function() {
+    document.getElementById('btn-crear-carrera').addEventListener('click', function() {
         const input = document.getElementById('input-nueva-carrera');
         const nombre = input.value.trim();
         
@@ -145,6 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Editar carrera
     document.addEventListener('click', function(e) {
         if (e.target.closest('.btn-editar-carrera')) {
+            e.stopPropagation();
             const btn = e.target.closest('.btn-editar-carrera');
             const id = btn.dataset.id;
             const nombre = btn.dataset.nombre;
@@ -180,6 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Eliminar carrera
     document.addEventListener('click', function(e) {
         if (e.target.closest('.btn-eliminar-carrera')) {
+            e.stopPropagation();
             const btn = e.target.closest('.btn-eliminar-carrera');
             const id = btn.dataset.id;
             
@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Inicializar drop zones con SortableJS
+    // Inicializar drop zones
     initDropZones();
 });
 

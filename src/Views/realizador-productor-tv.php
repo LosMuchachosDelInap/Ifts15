@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Realizador y Productor Televisivo - IFTS15
  * Vista específica de la carrera
@@ -9,7 +10,6 @@ require_once __DIR__ . '/../config.php';
 
 // Datos específicos de la página
 $pageTitle = 'Realizador y Productor Televisivo - IFTS15';
-define('CARD_DESCRIPTION', 'Tecnología Digital plantea una visión integral de la TV digital como parte de un todo más amplio: el universo audiovisual. Explora formatos tradicionales así como los nuevos modos de creación, producción y consumo audiovisual en la era digital.');
 
 // Variables para el sistema de templates (necesarias para navbar y sidebar)
 // Estado de sesión y rol numérico
@@ -34,24 +34,24 @@ if ($isLoggedIn && !empty($userEmail)) {
 <?php if ($isLoggedIn): ?>
     <?php include __DIR__ . '/../Template/sidebar.php'; ?>
 <?php else: ?>
-       <!-- Sidebar para usuarios no logueados / aca tambien se puede cambiar desde donde sale el sidebar "offcanvas-end/star/up/down"-->
-    <div class="offcanvas offcanvas-end text-bg-dark" 
-        tabindex="-1" 
-        id="sidebarOffcanvasGuest" 
+    <!-- Sidebar para usuarios no logueados / aca tambien se puede cambiar desde donde sale el sidebar "offcanvas-end/star/up/down"-->
+    <div class="offcanvas offcanvas-end text-bg-dark"
+        tabindex="-1"
+        id="sidebarOffcanvasGuest"
         aria-labelledby="sidebarOffcanvasLabel">
-        
+
         <!-- Header del offcanvas -->
         <div class="offcanvas-header bg-secondary text-white">
             <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">
                 <i class="bi bi-house-door me-2"></i>
                 Menú Principal
             </h5>
-            <button type="button" 
-                    class="btn-close btn-close-white" 
-                    data-bs-dismiss="offcanvas" 
-                    aria-label="Close"></button>
+            <button type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
         </div>
-        
+
         <!-- Información para usuarios no logueados -->
         <div class="p-3 border-bottom border-secondary">
             <div class="text-center">
@@ -65,63 +65,63 @@ if ($isLoggedIn && !empty($userEmail)) {
                 </p>
             </div>
         </div>
-        
+
         <!-- Menú de navegación -->
         <div class="offcanvas-body p-0">
             <nav class="nav nav-pills flex-column gap-2 p-3">
-                
+
                 <!-- Sección: Navegación Principal -->
                 <div class="sidebar-heading text-muted mb-2">
                     <i class="bi bi-compass me-1"></i>
                     NAVEGACIÓN
                 </div>
-                
-                <a class="nav-link text-light d-flex align-items-center gap-2" 
-                   href="<?php echo BASE_URL; ?>/index.php">
+
+                <a class="nav-link text-light d-flex align-items-center gap-2"
+                    href="<?php echo BASE_URL; ?>/index.php">
                     <i class="bi bi-house-door"></i>
                     <span>Inicio</span>
                 </a>
-                
-                     <a class="nav-link text-light d-flex align-items-center gap-2" 
-                         href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=realizador-productor-tv">
+
+                <a class="nav-link text-light d-flex align-items-center gap-2"
+                    href="<?php echo BASE_URL; ?>/src/Controllers/viewController.php?view=realizador-productor-tv">
                     <i class="bi bi-camera-video"></i>
                     <span>Información de Carrera</span>
                 </a>
-                
+
                 <!-- Separador -->
                 <hr class="border-secondary my-3">
-                
+
                 <!-- Sección: Acceso al Sistema eliminada, ahora en navbar -->
-                
+
                 <!-- Separador -->
                 <hr class="border-secondary my-3">
-                
+
                 <!-- Sección: Ayuda y Soporte -->
                 <div class="sidebar-heading text-muted mb-2">
                     <i class="bi bi-question-circle me-1"></i>
                     AYUDA Y SOPORTE
                 </div>
-                
-                <a class="nav-link text-light d-flex align-items-center gap-2" 
-                   href="#consultasModal" 
-                   data-bs-toggle="modal" 
-                   data-bs-target="#consultasModal">
+
+                <a class="nav-link text-light d-flex align-items-center gap-2"
+                    href="#consultasModal"
+                    data-bs-toggle="modal"
+                    data-bs-target="#consultasModal">
                     <i class="bi bi-chat-dots text-info"></i>
                     <span>Consultas</span>
                 </a>
-                
-                <a class="nav-link text-light d-flex align-items-center gap-2" 
-                   href="javascript:void(0)">
+
+                <a class="nav-link text-light d-flex align-items-center gap-2"
+                    href="javascript:void(0)">
                     <i class="bi bi-info-circle text-primary"></i>
                     <span>Acerca de IFTS15</span>
                 </a>
-                
-                <a class="nav-link text-light d-flex align-items-center gap-2" 
-                   href="javascript:void(0)">
+
+                <a class="nav-link text-light d-flex align-items-center gap-2"
+                    href="javascript:void(0)">
                     <i class="bi bi-telephone text-success"></i>
                     <span>Contacto</span>
                 </a>
-                
+
             </nav>
         </div>
     </div>
@@ -145,7 +145,7 @@ if ($isLoggedIn && !empty($userEmail)) {
                                 Tecnicatura Superior en Realizador y Productor Televisivo
                             </h1>
                             <p class="lead mb-0">
-                                <?php echo CARD_DESCRIPTION; ?>
+                                <?php echo htmlspecialchars($_ENV['CARD_DESCRIPTION'] ?? ''); ?>
                             </p>
                         </div>
                         <div class="col-md-4 text-center">
@@ -182,7 +182,8 @@ if ($isLoggedIn && !empty($userEmail)) {
                 <div class="col-md-4 mb-3">
                     <div class="card h-100 text-center border-success">
                         <div class="card-body">
-                            <?php // Reemplazamos el icono por una imagen representativa de la carrera ?>
+                            <?php // Reemplazamos el icono por una imagen representativa de la carrera 
+                            ?>
                             <img src="<?= BASE_URL ?>/src/Public/images/info_carrera_3.jpeg" alt="Realizador y Productor Televisivo" class="img-fluid mb-3" style="max-height:160px; object-fit:cover;">
                             <p class="text-muted">Tecnologías y plataformas digitales modernas</p>
                         </div>
@@ -204,26 +205,26 @@ if ($isLoggedIn && !empty($userEmail)) {
                             <dl class="row">
                                 <dt class="col-sm-4">Instituto:</dt>
                                 <dd class="col-sm-8">Instituto de Formación Técnica Superior Nº 15</dd>
-                                
+
                                 <dt class="col-sm-4">Modalidad:</dt>
                                 <dd class="col-sm-8">Presencial con prácticas en estudios de TV</dd>
-                                
+
                                 <dt class="col-sm-4">Título de Egreso:</dt>
                                 <dd class="col-sm-8">Técnico Superior en Realizador y Productor Televisivo</dd>
-                                
+
                                 <dt class="col-sm-4">Requisitos:</dt>
                                 <dd class="col-sm-8">Nivel Medio Aprobado + Entrevista vocacional</dd>
-                                
+
                                 <dt class="col-sm-4">Duración:</dt>
                                 <dd class="col-sm-8">3 años (6 cuatrimestres) + Trabajo Final</dd>
-                                
+
                                 <dt class="col-sm-4">Enfoque:</dt>
                                 <dd class="col-sm-8">Tecnología Digital y Universo Audiovisual</dd>
                             </dl>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="card bg-light">
                         <div class="card-header">
@@ -271,25 +272,25 @@ if ($isLoggedIn && !empty($userEmail)) {
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-5">
+                            <!-- Fundamentacion -->
+                              <h6 class="text-primary">Fundamentacion:</h6>
                             <p class="lead">
-                                <?php echo CARD_DESCRIPTION; ?>
+                                <?php echo htmlspecialchars($_ENV['CARRERA_DESCRIPTION'] ?? ''); ?>
                             </p>
-                            <p>
-                                Nuestra carrera se fundamenta en una comprensión profunda de que la TV digital 
-                                no es un medio aislado, sino parte de un ecosistema audiovisual más amplio que 
-                                incluye plataformas digitales, streaming, redes sociales y nuevas formas de 
-                                consumo de contenido.
-                            </p>
+                            <!-- Objetivo -->
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-7">
                             <div class="bg-light p-3 rounded">
-                                <h6 class="text-primary">Metodología:</h6>
-                                <ul class="small mb-0">
-                                    <li>Aprendizaje basado en proyectos</li>
-                                    <li>Prácticas en estudios reales</li>
-                                    <li>Producción de contenidos</li>
-                                    <li>Trabajo multidisciplinario</li>
+                                <h6 class="text-primary">Objetivo:</h6>
+                                <ul class="mb-0">
+                                    <li>Describir las características de la TV digital como parte del universo audiovisual.</li>
+                                    <li>Reconocer los factores que influyen en la dinámica de la TV digital.</li>
+                                    <li>Identificar y caracterizar formatos tradicionales y nuevos de formas de desarrollo,
+                                        producción y comercialización de productos audiovisuales en la era digital.</li>
+                                    <li>Realizar investigaciones de mercado y de campo.</li>
+                                    <li>Describir los modelos de financiamiento tradicionales y alternativos.</li>
+                                    <li>Elaborar un plan de marketing para una serie web.</li>
                                 </ul>
                             </div>
                         </div>
@@ -392,7 +393,7 @@ if ($isLoggedIn && !empty($userEmail)) {
                                 </li>
                             </ul>
                         </div>
-                        
+
                         <!-- Segundo Año -->
                         <div class="col-md-4 mb-3">
                             <h5 class="text-warning border-bottom pb-2">
@@ -422,7 +423,7 @@ if ($isLoggedIn && !empty($userEmail)) {
                                 </li>
                             </ul>
                         </div>
-                        
+
                         <!-- Tercer Año -->
                         <div class="col-md-4 mb-3">
                             <h5 class="text-success border-bottom pb-2">
@@ -557,4 +558,5 @@ if ($isLoggedIn && !empty($userEmail)) {
 <?php include __DIR__ . '/../Template/footer.php'; ?>
 
 </body>
+
 </html>

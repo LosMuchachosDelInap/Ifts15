@@ -61,12 +61,14 @@ use App\Model\Materia;
                                 <button class="btn btn-sm btn-sm-icon btn-outline-primary me-1 btn-editar-carrera" 
                                         data-id="<?= $carrera['id_carrera'] ?>" 
                                         data-nombre="<?= htmlspecialchars($carrera['nombreCarrera']) ?>"
-                                        title="Editar">
+                                        title="Editar"
+                                        onclick="event.stopPropagation();">
                                     <i class="bi bi-pencil"></i>
                                 </button>
                                 <button class="btn btn-sm btn-sm-icon btn-outline-danger btn-eliminar-carrera" 
                                         data-id="<?= $carrera['id_carrera'] ?>"
-                                        title="Eliminar">
+                                        title="Eliminar"
+                                        onclick="event.stopPropagation();">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>

@@ -299,7 +299,9 @@ $userRole = $roleNames[$userIdRol] ?? 'Alumno';
                     $conexionValida = false;
                     if ($conn) {
                         try {
-                            if ($conn->ping()) {
+                            // Verificar conexión intentando una query simple
+                            $testQuery = $conn->query("SELECT 1");
+                            if ($testQuery) {
                                 $conexionValida = true;
                                 $alumnos = EstadisticasController::getCantidadAlumnos($conn);
                                 $profesores = EstadisticasController::getCantidadProfesores($conn);

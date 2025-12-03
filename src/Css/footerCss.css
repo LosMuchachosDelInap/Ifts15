@@ -44,9 +44,9 @@ footer hr {
     border-color: #495057;
 }
 
-footer .bi {
+/*footer .bi {
     color: #ffd700;
-}
+}*/
 
 footer p.small {
     line-height: 1.6;
@@ -108,7 +108,7 @@ footer hr {
 }
 
 footer .bi {
-    color: #FFD700 !important;
+  /*  color: #FFD700 !important;*/
     margin-right: 8px !important;
 }
 

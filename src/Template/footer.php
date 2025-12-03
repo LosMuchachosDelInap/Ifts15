@@ -2,7 +2,8 @@
 <footer class="bg-dark text-white mt-5" style="background: #343a40 !important; padding: 30px 0 20px 0 !important; display: block !important; visibility: visible !important;">
     <div class="container py-4" style="background: #343a40 !important;">
         <div class="row" style="background: #343a40 !important; display: flex; align-items: stretch;">
-            <div class="col-md-4 mb-3" style="background: #343a40 !important; padding: 15px !important; display: flex; flex-direction: column;">
+            <!--Maps-->
+            <div class="col-md-3 mb-3" style="background: #343a40 !important; padding: 15px !important; display: flex; flex-direction: column;">
                 <h6 style="color: #FFD700 !important;">
                     <img src="/src/Public/images/logo_solo_circulo.png" alt="Logo IFTS15" style="height: 28px;vertical-align:middle;margin-right:8px;"> IFTS15
                 </h6>
@@ -18,7 +19,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-4 mb-3" style="background: #343a40 !important; padding: 15px !important; display: flex; flex-direction: column;">
+            <!--Enlaces utiles-->
+            <div class="col-md-3 mb-3" style="background: #343a40 !important; padding: 15px !important; display: flex; flex-direction: column;">
                 <h6 style="color: #FFD700 !important;">Enlaces Útiles</h6>
                 <ul class="list-unstyled" style="flex-grow: 1;">
                     <li><a href="/src/Controllers/viewController.php?view=pagina_en_construccion" class="text-light text-decoration-none">
@@ -35,7 +37,8 @@
                         </a></li>
                 </ul>
             </div>
-            <div class="col-md-4 mb-3" style="background: #343a40 !important; padding: 15px !important; display: flex; flex-direction: column;">
+            <!--Contacto-->
+            <div class="col-md-3 mb-3" style="background: #343a40 !important; padding: 15px !important; display: flex; flex-direction: column;">
                 <h6 style="color: #FFD700 !important;">Contacto</h6>
                 <ul class="list-unstyled" style="flex-grow: 1;">
                     <li class="text-light text-decoration-none">
@@ -49,6 +52,28 @@
                     <li class="text-light text-decoration-none">
                         <i class="bi bi-envelope" style="color: #FFD700;"></i>
                         cursos@ropirdz.com.ar
+                    </li>
+                      <li class="text-light text-decoration-none">
+                        <i class="bi bi-envelope" style="color: #FFD700;"></i>
+                        infoifts15@gmail.com
+                    </li>
+                </ul>
+            </div>
+            <!--Redes sociales-->
+            <div class="col-md-3 mb-3" style="background: #343a40 !important; padding: 15px !important; display: flex; flex-direction: column;">
+                <h6 style="color: #FFD700 !important;">Redes Sociales</h6>
+                <ul class="list-unstyled" style="flex-grow: 1;">
+                    <li class="text-light text-decoration-none">
+                        <i class="bi bi-youtube" style="color: #ff0008ff;"></i>
+                        <a href="https://www.youtube.com/@iftsn15">youtube</a><br>
+                    </li>
+                    <li class="text-light text-decoration-none">
+                        <i class="bi bi-facebook" style="color: #0084ffff;"></i>
+                        <a href="facebook.com/15ifts">facebook</a><br>
+                    </li>
+                    <li class="text-light text-decoration-none">
+                        <i class="bi bi-instagram" style="color: #ff00d0ff;"></i>
+                        <a href="instagram.com/iftsn15">instagram</a>
                     </li>
                 </ul>
             </div>

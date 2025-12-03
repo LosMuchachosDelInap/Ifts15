@@ -10,11 +10,11 @@
                 <ul class="list-unstyled" style="flex-grow: 1;">
                     <li class="text-light text-decoration-none">
                         <i class="bi bi-geo-alt" style="color: #FFD700;"></i>
-                        Aguirre 1473, Ciudad Autónoma de Buenos Aires
+                        Loyola 1500, B1806 Buenos Aires
                     </li>
                     <li class="text-light text-decoration-none">
                         <span class="d-none d-md-block">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.6019971962396!2d-58.446394388415655!3d-34.58893595660543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb5f3bcbfb21f%3A0xcfac954535a04ede!2sAguirre%201473%2C%20C1414ATC%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1759233386257!5m2!1ses!2sar" width="70%" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.6206359454677!2d-58.44578502353153!3d-34.588464456694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb5f3a7cbbb97%3A0x6ab20f460a2395ad!2sLoyola%201500%2C%20C1414%20AVF%2C%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1764794541823!5m2!1ses-419!2sar" width="300" height="125" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </span>
                     </li>
                 </ul>

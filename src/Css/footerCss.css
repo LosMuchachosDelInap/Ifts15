@@ -44,10 +44,6 @@ footer hr {
     border-color: #495057;
 }
 
-/*footer .bi {
-    color: #ffd700;
-}*/
-
 footer p.small {
     line-height: 1.6;
 }
@@ -105,11 +101,6 @@ footer .list-unstyled li {
 footer hr {
     border-color: #495057 !important;
     margin: 20px 0 !important;
-}
-
-footer .bi {
-  /*  color: #FFD700 !important;*/
-    margin-right: 8px !important;
 }
 
 /* Responsive */

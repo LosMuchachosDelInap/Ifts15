@@ -194,7 +194,7 @@ if ($isLoggedIn && !empty($userEmail)) {
             <!-- Información del IFTS15 -->
             <div class="row mb-4">
                 <div class="col-md-8">
-                    <div class="card info-card">
+                    <div class="card info-card h-100">
                         <div class="card-header card-header-gray">
                             <h4 class="mb-0">
                                 <i class="fa fa-info-circle"></i>
@@ -206,17 +206,20 @@ if ($isLoggedIn && !empty($userEmail)) {
                                 <dt class="col-sm-4">Instituto:</dt>
                                 <dd class="col-sm-8">Instituto de Formación Técnica Superior Nº 15</dd>
 
-                                <dt class="col-sm-4">Modalidad:</dt>
-                                <dd class="col-sm-8">Presencial con prácticas en estudios de TV</dd>
+                                <dt class="col-sm-4">Área de formación:</dt>
+                                <dd class="col-sm-8">Comunicación y Producción Audiovisual</dd>
 
-                                <dt class="col-sm-4">Título de Egreso:</dt>
-                                <dd class="col-sm-8">Técnico Superior en Realizador y Productor Televisivo</dd>
+                                <dt class="col-sm-4">Título Otorgado:</dt>
+                                <dd class="col-sm-8">Tecnicatura Superior en Realización Audiovisual</dd>
 
                                 <dt class="col-sm-4">Requisitos:</dt>
                                 <dd class="col-sm-8">Nivel Medio Aprobado + Entrevista vocacional</dd>
 
                                 <dt class="col-sm-4">Duración:</dt>
-                                <dd class="col-sm-8">3 años (6 cuatrimestres) + Trabajo Final</dd>
+                                <dd class="col-sm-8">2 años y medio/ 5 cuatrimestres</dd>
+
+                                <dt class="col-sm-4">Cantidad de horas:</dt>
+                                <dd class="col-sm-8">2104 horas cátedra</dd>
 
                                 <dt class="col-sm-4">Enfoque:</dt>
                                 <dd class="col-sm-8">Tecnología Digital y Universo Audiovisual</dd>
@@ -226,35 +229,24 @@ if ($isLoggedIn && !empty($userEmail)) {
                 </div>
 
                 <div class="col-md-4">
-                    <div class="card bg-light">
+                    <div class="card bg-light h-100">
                         <div class="card-header">
-                            <h5 class="mb-0">
+                            <h4 class="mb-0">
                                 <i class="fa fa-tools"></i>
-                                Tecnologías y Equipos
-                            </h5>
+                                Perfil del/a egresado/a:
+                            </h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 mb-2">
-                                    <span class="badge bg-danger">Avid Media Composer</span>
-                                </div>
-                                <div class="col-12 mb-2">
-                                    <span class="badge bg-primary">Adobe Premiere Pro</span>
-                                </div>
-                                <div class="col-12 mb-2">
-                                    <span class="badge bg-success">Final Cut Pro</span>
-                                </div>
-                                <div class="col-12 mb-2">
-                                    <span class="badge bg-warning">After Effects</span>
-                                </div>
-                                <div class="col-12 mb-2">
-                                    <span class="badge bg-info">Pro Tools</span>
-                                </div>
-                                <div class="col-12 mb-2">
-                                    <span class="badge bg-secondary">Cámaras 4K</span>
-                                </div>
-                                <div class="col-12 mb-2">
-                                    <span class="badge bg-dark">Estudios HD</span>
+                                    <span>
+                                        Podrás planificar la producción y ejecutar la realización de
+                                        un producto audiovisual. Desarrollar la producción de una pieza audiovisual en sus
+                                        aspectos artísticos y técnicos, tanto en inicio como durante el registro del material
+                                        audiovisual; de participar y planificar los procesos de postproducción. Asimismo,
+                                        podrás evaluar las posibilidades y variables socioeconómicas que influyen en la
+                                        realización del producto audiovisual.
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -274,275 +266,276 @@ if ($isLoggedIn && !empty($userEmail)) {
                     <div class="row">
                         <div class="col-md-5">
                             <!-- Fundamentacion -->
-                              <h6 class="text-primary">Fundamentacion:</h6>
+                            <h6 class="text-primary">Fundamentacion:</h6>
                             <p class="lead">
                                 <?php echo htmlspecialchars($_ENV['CARRERA_DESCRIPTION'] ?? ''); ?>
                             </p>
                             <!-- Objetivo -->
+                            </div>
+                            <div class="col-md-7">
+                                <div class="bg-light p-3 rounded">
+                                    <h6 class="text-primary">Objetivo:</h6>
+                                    <ul class="mb-0">
+                                        <li>Describir las características de la TV digital como parte del universo audiovisual.</li>
+                                        <li>Reconocer los factores que influyen en la dinámica de la TV digital.</li>
+                                        <li>Identificar y caracterizar formatos tradicionales y nuevos de formas de desarrollo,
+                                            producción y comercialización de productos audiovisuales en la era digital.</li>
+                                        <li>Realizar investigaciones de mercado y de campo.</li>
+                                        <li>Describir los modelos de financiamiento tradicionales y alternativos.</li>
+                                        <li>Elaborar un plan de marketing para una serie web.</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-7">
-                            <div class="bg-light p-3 rounded">
-                                <h6 class="text-primary">Objetivo:</h6>
-                                <ul class="mb-0">
-                                    <li>Describir las características de la TV digital como parte del universo audiovisual.</li>
-                                    <li>Reconocer los factores que influyen en la dinámica de la TV digital.</li>
-                                    <li>Identificar y caracterizar formatos tradicionales y nuevos de formas de desarrollo,
-                                        producción y comercialización de productos audiovisuales en la era digital.</li>
-                                    <li>Realizar investigaciones de mercado y de campo.</li>
-                                    <li>Describir los modelos de financiamiento tradicionales y alternativos.</li>
-                                    <li>Elaborar un plan de marketing para una serie web.</li>
+                    </div>
+                </div>
+
+                <!-- Perfil del Egresado -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fa fa-user-graduate text-success"></i>
+                            Perfil del Egresado
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-danger">Como Realizador:</h6>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item border-0 px-0">
+                                        <i class="fa fa-check text-success me-2"></i>
+                                        Dirigir la puesta en escena televisiva
+                                    </li>
+                                    <li class="list-group-item border-0 px-0">
+                                        <i class="fa fa-check text-success me-2"></i>
+                                        Coordinar equipos técnicos y artísticos
+                                    </li>
+                                    <li class="list-group-item border-0 px-0">
+                                        <i class="fa fa-check text-success me-2"></i>
+                                        Desarrollar conceptos creativos innovadores
+                                    </li>
+                                    <li class="list-group-item border-0 px-0">
+                                        <i class="fa fa-check text-success me-2"></i>
+                                        Adaptar contenidos a nuevos formatos
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-primary">Como Productor:</h6>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item border-0 px-0">
+                                        <i class="fa fa-check text-success me-2"></i>
+                                        Gestionar proyectos audiovisuales integrales
+                                    </li>
+                                    <li class="list-group-item border-0 px-0">
+                                        <i class="fa fa-check text-success me-2"></i>
+                                        Administrar recursos y presupuestos
+                                    </li>
+                                    <li class="list-group-item border-0 px-0">
+                                        <i class="fa fa-check text-success me-2"></i>
+                                        Negociar contratos y derechos
+                                    </li>
+                                    <li class="list-group-item border-0 px-0">
+                                        <i class="fa fa-check text-success me-2"></i>
+                                        Identificar oportunidades de mercado
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Perfil del Egresado -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h4 class="mb-0">
-                        <i class="fa fa-user-graduate text-success"></i>
-                        Perfil del Egresado
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6 class="text-danger">Como Realizador:</h6>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item border-0 px-0">
-                                    <i class="fa fa-check text-success me-2"></i>
-                                    Dirigir la puesta en escena televisiva
-                                </li>
-                                <li class="list-group-item border-0 px-0">
-                                    <i class="fa fa-check text-success me-2"></i>
-                                    Coordinar equipos técnicos y artísticos
-                                </li>
-                                <li class="list-group-item border-0 px-0">
-                                    <i class="fa fa-check text-success me-2"></i>
-                                    Desarrollar conceptos creativos innovadores
-                                </li>
-                                <li class="list-group-item border-0 px-0">
-                                    <i class="fa fa-check text-success me-2"></i>
-                                    Adaptar contenidos a nuevos formatos
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 class="text-primary">Como Productor:</h6>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item border-0 px-0">
-                                    <i class="fa fa-check text-success me-2"></i>
-                                    Gestionar proyectos audiovisuales integrales
-                                </li>
-                                <li class="list-group-item border-0 px-0">
-                                    <i class="fa fa-check text-success me-2"></i>
-                                    Administrar recursos y presupuestos
-                                </li>
-                                <li class="list-group-item border-0 px-0">
-                                    <i class="fa fa-check text-success me-2"></i>
-                                    Negociar contratos y derechos
-                                </li>
-                                <li class="list-group-item border-0 px-0">
-                                    <i class="fa fa-check text-success me-2"></i>
-                                    Identificar oportunidades de mercado
-                                </li>
-                            </ul>
+                <!-- Plan de Estudios -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fa fa-graduation-cap text-info"></i>
+                            Plan de Estudios - Enfoque Práctico
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Primer Año -->
+                            <div class="col-md-4 mb-3">
+                                <h5 class="text-danger border-bottom pb-2">
+                                    <i class="fa fa-play-circle"></i>
+                                    Primer Año - Fundamentos
+                                </h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-video text-danger me-2"></i>
+                                        Introducción a la TV Digital
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-cut text-primary me-2"></i>
+                                        Edición y Postproducción I
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-camera text-success me-2"></i>
+                                        Lenguaje Audiovisual
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-history text-warning me-2"></i>
+                                        Historia de los Medios
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-pen text-info me-2"></i>
+                                        Guión Televisivo
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Segundo Año -->
+                            <div class="col-md-4 mb-3">
+                                <h5 class="text-warning border-bottom pb-2">
+                                    <i class="fa fa-cogs"></i>
+                                    Segundo Año - Producción
+                                </h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-tv text-danger me-2"></i>
+                                        Producción Televisiva I
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-microphone text-primary me-2"></i>
+                                        Audio y Sonido Digital
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-magic text-success me-2"></i>
+                                        Efectos Especiales
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-chart-line text-warning me-2"></i>
+                                        Marketing Audiovisual
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-balance-scale text-info me-2"></i>
+                                        Aspectos Legales
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Tercer Año -->
+                            <div class="col-md-4 mb-3">
+                                <h5 class="text-success border-bottom pb-2">
+                                    <i class="fa fa-rocket"></i>
+                                    Tercer Año - Especialización
+                                </h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-broadcast-tower text-danger me-2"></i>
+                                        Producción Televisiva II
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-users text-primary me-2"></i>
+                                        Dirección de Equipos
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-wifi text-success me-2"></i>
+                                        Transmedia y Streaming
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-briefcase text-warning me-2"></i>
+                                        Gestión de Proyectos
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center">
+                                        <i class="fa fa-star text-info me-2"></i>
+                                        Trabajo Final Integrador
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Plan de Estudios -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h4 class="mb-0">
-                        <i class="fa fa-graduation-cap text-info"></i>
-                        Plan de Estudios - Enfoque Práctico
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <!-- Primer Año -->
-                        <div class="col-md-4 mb-3">
-                            <h5 class="text-danger border-bottom pb-2">
-                                <i class="fa fa-play-circle"></i>
-                                Primer Año - Fundamentos
-                            </h5>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-video text-danger me-2"></i>
-                                    Introducción a la TV Digital
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-cut text-primary me-2"></i>
-                                    Edición y Postproducción I
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-camera text-success me-2"></i>
-                                    Lenguaje Audiovisual
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-history text-warning me-2"></i>
-                                    Historia de los Medios
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-pen text-info me-2"></i>
-                                    Guión Televisivo
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Segundo Año -->
-                        <div class="col-md-4 mb-3">
-                            <h5 class="text-warning border-bottom pb-2">
-                                <i class="fa fa-cogs"></i>
-                                Segundo Año - Producción
-                            </h5>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-tv text-danger me-2"></i>
-                                    Producción Televisiva I
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-microphone text-primary me-2"></i>
-                                    Audio y Sonido Digital
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-magic text-success me-2"></i>
-                                    Efectos Especiales
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-chart-line text-warning me-2"></i>
-                                    Marketing Audiovisual
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-balance-scale text-info me-2"></i>
-                                    Aspectos Legales
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Tercer Año -->
-                        <div class="col-md-4 mb-3">
-                            <h5 class="text-success border-bottom pb-2">
-                                <i class="fa fa-rocket"></i>
-                                Tercer Año - Especialización
-                            </h5>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-broadcast-tower text-danger me-2"></i>
-                                    Producción Televisiva II
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-users text-primary me-2"></i>
-                                    Dirección de Equipos
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-wifi text-success me-2"></i>
-                                    Transmedia y Streaming
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-briefcase text-warning me-2"></i>
-                                    Gestión de Proyectos
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="fa fa-star text-info me-2"></i>
-                                    Trabajo Final Integrador
-                                </li>
-                            </ul>
+                <!-- Instalaciones -->
+                <div class="card mb-4">
+                    <div class="card-header bg-gray-dark">
+                        <h4 class="mb-0">
+                            <i class="fa fa-building"></i>
+                            Instalaciones y Estudios - IFTS15
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>🎬 Estudio de TV</h6>
+                                <ul class="small">
+                                    <li>Set de grabación profesional</li>
+                                    <li>Sistema de iluminación LED</li>
+                                    <li>Cámaras 4K con teleprompter</li>
+                                    <li>Mesa de mezclas de audio</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>💻 Sala de Edición</h6>
+                                <ul class="small">
+                                    <li>Estaciones con software profesional</li>
+                                    <li>Monitores calibrados para color</li>
+                                    <li>Sistemas de almacenamiento SAN</li>
+                                    <li>Equipos de masterización</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Instalaciones -->
-            <div class="card mb-4">
-                <div class="card-header bg-gray-dark">
-                    <h4 class="mb-0">
-                        <i class="fa fa-building"></i>
-                        Instalaciones y Estudios - IFTS15
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6>🎬 Estudio de TV</h6>
-                            <ul class="small">
-                                <li>Set de grabación profesional</li>
-                                <li>Sistema de iluminación LED</li>
-                                <li>Cámaras 4K con teleprompter</li>
-                                <li>Mesa de mezclas de audio</li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>💻 Sala de Edición</h6>
-                            <ul class="small">
-                                <li>Estaciones con software profesional</li>
-                                <li>Monitores calibrados para color</li>
-                                <li>Sistemas de almacenamiento SAN</li>
-                                <li>Equipos de masterización</li>
-                            </ul>
+                <!-- Campo laboral -->
+                <div class="card mb-4">
+                    <div class="card-header bg-gray-info">
+                        <h4 class="mb-0">
+                            <i class="fa fa-briefcase"></i>
+                            Oportunidades Profesionales
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-danger">Medios Tradicionales:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fa fa-check text-success me-2"></i>Canales de TV abierta y cable</li>
+                                    <li><i class="fa fa-check text-success me-2"></i>Productoras audiovisuales</li>
+                                    <li><i class="fa fa-check text-success me-2"></i>Estudios de grabación</li>
+                                    <li><i class="fa fa-check text-success me-2"></i>Agencias de publicidad</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-primary">Nuevos Medios:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fa fa-check text-success me-2"></i>Plataformas de streaming</li>
+                                    <li><i class="fa fa-check text-success me-2"></i>Contenido para redes sociales</li>
+                                    <li><i class="fa fa-check text-success me-2"></i>Producción independiente</li>
+                                    <li><i class="fa fa-check text-success me-2"></i>Consultoría en medios digitales</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Campo laboral -->
-            <div class="card mb-4">
-                <div class="card-header bg-gray-info">
-                    <h4 class="mb-0">
-                        <i class="fa fa-briefcase"></i>
-                        Oportunidades Profesionales
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6 class="text-danger">Medios Tradicionales:</h6>
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-check text-success me-2"></i>Canales de TV abierta y cable</li>
-                                <li><i class="fa fa-check text-success me-2"></i>Productoras audiovisuales</li>
-                                <li><i class="fa fa-check text-success me-2"></i>Estudios de grabación</li>
-                                <li><i class="fa fa-check text-success me-2"></i>Agencias de publicidad</li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 class="text-primary">Nuevos Medios:</h6>
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-check text-success me-2"></i>Plataformas de streaming</li>
-                                <li><i class="fa fa-check text-success me-2"></i>Contenido para redes sociales</li>
-                                <li><i class="fa fa-check text-success me-2"></i>Producción independiente</li>
-                                <li><i class="fa fa-check text-success me-2"></i>Consultoría en medios digitales</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Call to Action específico IFTS15 -->
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="card cta-card text-white">
-                        <div class="card-body text-center">
-                            <h3 class="mb-3">🎬 ¡Comienza tu carrera en TV!</h3>
-                            <p class="lead mb-4">
-                                Únete al IFTS15 y forma parte de la nueva generación de realizadores y productores televisivos
-                            </p>
-                            <div class="btn-group btn-group-rounded" role="group">
-                                <button class="btn btn-warning btn-lg" data-bs-toggle="modal" data-bs-target="#modalRegistrar">
-                                    <i class="fa fa-user-plus text-dark"></i>
-                                    Inscribirse Ahora
-                                </button>
-                                <button class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#consultasModal">
-                                    <i class="fa fa-phone text-warning"></i>
-                                    Contactar
-                                </button>
-                                <a href="<?php echo BASE_URL; ?>/" class="btn btn-warning btn-lg">
-                                    <i class="fa fa-home text-dark"></i>
-                                    Volver al Inicio
-                                </a>
+                <!-- Call to Action específico IFTS15 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card cta-card text-white">
+                            <div class="card-body text-center">
+                                <h3 class="mb-3">🎬 ¡Comienza tu carrera en TV!</h3>
+                                <p class="lead mb-4">
+                                    Únete al IFTS15 y forma parte de la nueva generación de realizadores y productores televisivos
+                                </p>
+                                <div class="btn-group btn-group-rounded" role="group">
+                                    <button class="btn btn-warning btn-lg" data-bs-toggle="modal" data-bs-target="#modalRegistrar">
+                                        <i class="fa fa-user-plus text-dark"></i>
+                                        Inscribirse Ahora
+                                    </button>
+                                    <button class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#consultasModal">
+                                        <i class="fa fa-phone text-warning"></i>
+                                        Contactar
+                                    </button>
+                                    <a href="<?php echo BASE_URL; ?>/" class="btn btn-warning btn-lg">
+                                        <i class="fa fa-home text-dark"></i>
+                                        Volver al Inicio
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -550,13 +543,12 @@ if ($isLoggedIn && !empty($userEmail)) {
             </div>
         </div>
     </div>
-</div>
 
 
 
-<!-- Incluir footer del sistema -->
-<?php include __DIR__ . '/../Template/footer.php'; ?>
+    <!-- Incluir footer del sistema -->
+    <?php include __DIR__ . '/../Template/footer.php'; ?>
 
-</body>
+    </body>
 
-</html>
+    </html>

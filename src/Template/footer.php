@@ -43,7 +43,7 @@
                 <ul class="list-unstyled" style="flex-grow: 1;">
                     <li class="text-light text-decoration-none">
                         <i class="bi bi-geo-alt" style="color: #FFD700;"></i>
-                        Horario: 19:00 hs a 21:10 hs<br>
+                        Horario: 19:00 hs a 23:00 hs<br>
                     </li>
                     <li class="text-light text-decoration-none">
                         <i class="bi bi-telephone" style="color: #FFD700;"></i>

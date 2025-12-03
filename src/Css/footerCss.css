@@ -604,3 +604,66 @@ footer::after,
         opacity: 0.6;
     }
 }
+
+/* ========================================
+   ICONOS DE REDES SOCIALES - FIX CHROME
+   ======================================== */
+
+/* Estilos específicos para iconos de redes sociales */
+footer .bi-youtube,
+.footer .bi-youtube {
+    color: #ff0008 !important;
+    font-size: 1.2em !important;
+    margin-right: 8px !important;
+    vertical-align: middle !important;
+    display: inline-block !important;
+}
+
+footer .bi-facebook,
+.footer .bi-facebook {
+    color: #0084ff !important;
+    font-size: 1.2em !important;
+    margin-right: 8px !important;
+    vertical-align: middle !important;
+    display: inline-block !important;
+}
+
+footer .bi-instagram,
+.footer .bi-instagram {
+    color: #ff00d0 !important;
+    font-size: 1.2em !important;
+    margin-right: 8px !important;
+    vertical-align: middle !important;
+    display: inline-block !important;
+}
+
+/* Asegurar que los enlaces de redes sociales mantengan estilo */
+footer .list-unstyled a,
+.footer .list-unstyled a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    display: inline-block !important;
+}
+
+footer .list-unstyled a:hover,
+.footer .list-unstyled a:hover {
+    color: #FFD700 !important;
+    transform: translateX(3px) !important;
+}
+
+/* Forzar que los iconos Bootstrap sean visibles en Chrome */
+footer i[class^="bi-"],
+footer i[class*=" bi-"],
+.footer i[class^="bi-"],
+.footer i[class*=" bi-"] {
+    font-family: 'bootstrap-icons' !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}

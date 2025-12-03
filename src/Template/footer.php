@@ -64,16 +64,16 @@
                 <h6 style="color: #FFD700 !important;">Redes Sociales</h6>
                 <ul class="list-unstyled" style="flex-grow: 1;">
                     <li class="text-light text-decoration-none">
-                        <i class="bi bi-youtube" style="color: #ff0008ff;"></i>
-                        <a href="https://www.youtube.com/@iftsn15">youtube</a><br>
+                        <i class="bi bi-youtube"></i>
+                        <a href="https://www.youtube.com/@iftsn15" target="_blank">youtube</a><br>
                     </li>
                     <li class="text-light text-decoration-none">
-                        <i class="bi bi-facebook" style="color: #0084ffff;"></i>
-                        <a href="facebook.com/15ifts">facebook</a><br>
+                        <i class="bi bi-facebook"></i>
+                        <a href="https://facebook.com/15ifts" target="_blank">facebook</a><br>
                     </li>
                     <li class="text-light text-decoration-none">
-                        <i class="bi bi-instagram" style="color: #ff00d0ff;"></i>
-                        <a href="instagram.com/iftsn15">instagram</a>
+                        <i class="bi bi-instagram"></i>
+                        <a href="https://instagram.com/iftsn15" target="_blank">instagram</a>
                     </li>
                 </ul>
             </div>
